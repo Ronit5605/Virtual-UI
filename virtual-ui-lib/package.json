@@ -1,0 +1,22 @@
+{
+  "name": "@ronit5605/virtual-ui-library",
+  "version": "1.0.0",
+  "description": "Virtual UI React Component Library",
+  "author": "Ankush",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  }
+}
