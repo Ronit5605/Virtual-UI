@@ -16,7 +16,7 @@ import {
   setUserData
 } from './redux/userSlice';
 
-export const ServerUrl = "http://localhost:8000";
+export const ServerUrl = import.meta.env.VITE_SERVER_URL;
 
 function App() {
   const dispatch = useDispatch();
