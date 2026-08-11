@@ -182,6 +182,8 @@ export const saveComponent = async (req, res) => {
 
 
 export const publishComponent = async (req, res) => {
+  let publishStep = "preparing the component";
+
   try {
 
     const user = await User.findById(req.userId);
@@ -202,13 +204,13 @@ export const publishComponent = async (req, res) => {
       });
     }
 
-    if (component.owner.toString() !== req.userId.toString()) {
+    if (!component.owner || component.owner.toString() !== req.userId.toString()) {
       return res.status(403).json({
         message: "You can only publish your own components"
       });
     }
 
-    const libPath = path.join(process.cwd(), "../virtual-ui-lib");
+    const libPath = path.resolve(process.cwd(), "../virtual-ui-lib");
 
     const componentDir = path.join(
       libPath,
@@ -234,9 +236,29 @@ export const publishComponent = async (req, res) => {
     // read index file
     let indexContent = fs.readFileSync(indexFile, "utf8");
 
-    const exportLine =
-      `export { ${component.name} } from "./components/${component.name}/${component.name}.jsx";`;
+    const code = fs.readFileSync(componentFile, "utf8");
 
+let exportLine;
+
+const namedExport = code.match(
+  /export\s+(?:const|function|class)\s+([A-Za-z0-9_$]+)/
+);
+
+const defaultExport = code.match(
+  /export\s+default\s+([A-Za-z0-9_$]+)/
+);
+
+if (namedExport) {
+  exportLine =
+    `export { ${namedExport[1]} as ${component.name} } from "./components/${component.name}/${component.name}.jsx";`;
+} else if (defaultExport) {
+  exportLine =
+    `export { default as ${component.name} } from "./components/${component.name}/${component.name}.jsx";`;
+} else {
+  throw new Error(
+    `Could not detect export from ${component.name}.jsx`
+  );
+}
     // prevent duplicate export
     if (!indexContent.includes(exportLine)) {
       fs.appendFileSync(indexFile, `\n${exportLine}\n`);
@@ -257,6 +279,7 @@ export const publishComponent = async (req, res) => {
     // BUILD LIBRARY
     // -----------------------------
     console.log("Building library...");
+    publishStep = "building the library";
 
     execSync("npm run build", {
       cwd: libPath,
@@ -267,6 +290,7 @@ export const publishComponent = async (req, res) => {
     // UPDATE VERSION
     // -----------------------------
     console.log("Updating version...");
+    publishStep = "updating the package version";
 
     execSync("npm version patch --no-git-tag-version", {
       cwd: libPath,
@@ -277,15 +301,17 @@ export const publishComponent = async (req, res) => {
     // PUBLISH TO NPM
     // -----------------------------
     console.log("Publishing to npm...");
+    publishStep = "publishing the package to npm";
 
     execSync("npm publish --access public", {
       cwd: libPath,
-      stdio: "inherit"
+      encoding: "utf8",
+      stdio: "pipe"
     });
 
     // update component visibility
     component.visibility = "public";
-    component.npmPackage = "virtual-ui-lib";
+    component.npmPackage = "@ronit5605/virtual-ui-library";;
 
     await component.save();
 
@@ -294,14 +320,21 @@ export const publishComponent = async (req, res) => {
     });
 
   } catch (error) {
+  const commandOutput = [error.stdout, error.stderr]
+    .filter(Boolean)
+    .map((output) => output.toString().trim())
+    .join("\n");
+  const npmErrorCode = commandOutput.match(/npm (?:ERR!|error) code ([A-Z0-9_]+)/i)?.[1];
+  const detail = npmErrorCode ? ` (${npmErrorCode})` : "";
 
-    console.error("Publish Error:", error);
+  console.error(`Publish Error while ${publishStep}:`, error.message);
+  if (commandOutput) console.error(commandOutput);
 
-    res.status(500).json({
-      message: "Publish failed",
-      error: error.message
-    });
-  }
+  res.status(500).json({
+    message: `${publishStep} failed${detail}. Check the server log for details.`,
+    error: error.message,
+  });
+}
 };
 
 

@@ -1,6 +1,5 @@
 
 
-export { Loader } from "./components/Loader/Loader.jsx";
 
 export { NotificationToast } from "./components/NotificationToast/NotificationToast.jsx";
 
@@ -51,3 +50,5 @@ export { Card } from "./components/Card/Card.jsx";
 export { Button } from "./components/Button/Button.jsx";
 
 export { AnimatedButton } from "./components/AnimatedButton/AnimatedButton.jsx";
+
+export { LoaderPanel as loding } from "./components/loding/loding.jsx";

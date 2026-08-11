@@ -43,7 +43,6 @@ __export(index_exports, {
   ImageCard: () => ImageCard,
   ImageSlider: () => ImageSlider,
   InvoiceCard: () => InvoiceCard,
-  Loader: () => Loader,
   Navbar: () => Navbar,
   NotificationToast: () => NotificationToast,
   OTPInput: () => OTPInput,
@@ -53,121 +52,13 @@ __export(index_exports, {
   RatingStars: () => RatingStars,
   ReviewCard: () => ReviewCard,
   Sidebar: () => Sidebar,
-  StatCard: () => StatCard
+  StatCard: () => StatCard,
+  loding: () => LoaderPanel
 });
 module.exports = __toCommonJS(index_exports);
 
-// src/components/Loader/Loader.jsx
-var import_react = __toESM(require("react"));
-var Loader = ({
-  type = "spinner",
-  size = 48,
-  accent = "#6366f1",
-  bg = "transparent",
-  label = "",
-  speed = 1
-}) => {
-  const [dots, setDots] = (0, import_react.useState)(0);
-  const [progress, setProgress] = (0, import_react.useState)(0);
-  const alpha = (hex, op) => {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-    return `rgba(${r},${g},${b},${op})`;
-  };
-  (0, import_react.useEffect)(() => {
-    if (type === "dots") {
-      const t = setInterval(() => setDots((d) => (d + 1) % 4), 400 / speed);
-      return () => clearInterval(t);
-    }
-    if (type === "bar") {
-      const t = setInterval(() => setProgress((p) => p >= 100 ? 0 : p + 2), 30 / speed);
-      return () => clearInterval(t);
-    }
-  }, [type, speed]);
-  const dur = `${1 / speed}s`;
-  const wrapStyle = {
-    display: "inline-flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "12px",
-    background: bg,
-    padding: bg !== "transparent" ? "24px" : "0",
-    borderRadius: "16px",
-    fontFamily: "system-ui, sans-serif"
-  };
-  const labelEl = label ? /* @__PURE__ */ import_react.default.createElement("span", { style: { fontSize: "13px", color: "rgba(255,255,255,0.45)", letterSpacing: "0.3px" } }, label) : null;
-  if (type === "spinner") return /* @__PURE__ */ import_react.default.createElement("div", { style: wrapStyle }, /* @__PURE__ */ import_react.default.createElement("svg", { width: size, height: size, viewBox: "0 0 48 48" }, /* @__PURE__ */ import_react.default.createElement(
-    "circle",
-    {
-      cx: "24",
-      cy: "24",
-      r: "20",
-      fill: "none",
-      stroke: alpha(accent, 0.15),
-      strokeWidth: "4"
-    }
-  ), /* @__PURE__ */ import_react.default.createElement(
-    "circle",
-    {
-      cx: "24",
-      cy: "24",
-      r: "20",
-      fill: "none",
-      stroke: accent,
-      strokeWidth: "4",
-      strokeLinecap: "round",
-      strokeDasharray: "31.4 94.2",
-      style: { transformOrigin: "center", animation: `spin ${dur} linear infinite` }
-    }
-  ), /* @__PURE__ */ import_react.default.createElement("style", null, `@keyframes spin { to { transform: rotate(360deg); } }`)), labelEl);
-  if (type === "pulse") return /* @__PURE__ */ import_react.default.createElement("div", { style: wrapStyle }, /* @__PURE__ */ import_react.default.createElement("div", { style: { position: "relative", width: size, height: size } }, /* @__PURE__ */ import_react.default.createElement("div", { style: {
-    position: "absolute",
-    inset: 0,
-    borderRadius: "50%",
-    background: alpha(accent, 0.2),
-    animation: `pulse ${dur} ease-out infinite`
-  } }), /* @__PURE__ */ import_react.default.createElement("div", { style: {
-    position: "absolute",
-    inset: "25%",
-    borderRadius: "50%",
-    background: accent
-  } }), /* @__PURE__ */ import_react.default.createElement("style", null, `@keyframes pulse { 0%{transform:scale(1);opacity:1} 100%{transform:scale(2);opacity:0} }`)), labelEl);
-  if (type === "dots") return /* @__PURE__ */ import_react.default.createElement("div", { style: wrapStyle }, /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", gap: "8px", alignItems: "center" } }, [0, 1, 2].map((i) => /* @__PURE__ */ import_react.default.createElement("div", { key: i, style: {
-    width: size / 5,
-    height: size / 5,
-    borderRadius: "50%",
-    background: dots === i ? accent : alpha(accent, 0.25),
-    transition: "background 0.2s"
-  } }))), labelEl);
-  if (type === "bar") return /* @__PURE__ */ import_react.default.createElement("div", { style: wrapStyle }, /* @__PURE__ */ import_react.default.createElement("div", { style: {
-    width: size * 3,
-    height: size / 8,
-    background: alpha(accent, 0.15),
-    borderRadius: "99px",
-    overflow: "hidden"
-  } }, /* @__PURE__ */ import_react.default.createElement("div", { style: {
-    height: "100%",
-    borderRadius: "99px",
-    background: accent,
-    width: `${progress}%`,
-    transition: "width 0.03s linear"
-  } })), labelEl);
-  if (type === "ring") return /* @__PURE__ */ import_react.default.createElement("div", { style: wrapStyle }, /* @__PURE__ */ import_react.default.createElement("div", { style: {
-    width: size,
-    height: size,
-    borderRadius: "50%",
-    border: `4px solid ${alpha(accent, 0.15)}`,
-    borderTop: `4px solid ${accent}`,
-    borderRight: `4px solid ${accent}`,
-    animation: `spin ${dur} linear infinite`
-  } }), /* @__PURE__ */ import_react.default.createElement("style", null, `@keyframes spin { to { transform: rotate(360deg); } }`), labelEl);
-  return null;
-};
-
 // src/components/NotificationToast/NotificationToast.jsx
-var import_react2 = __toESM(require("react"));
+var import_react = __toESM(require("react"));
 var NotificationToast = ({
   title = "New Message",
   message = "You have a new notification from the team.",
@@ -178,8 +69,8 @@ var NotificationToast = ({
   radius = "14px",
   showProgress = true
 }) => {
-  const [visible, setVisible] = (0, import_react2.useState)(true);
-  const [progress, setProgress] = (0, import_react2.useState)(100);
+  const [visible, setVisible] = (0, import_react.useState)(true);
+  const [progress, setProgress] = (0, import_react.useState)(100);
   const typeColors = {
     success: "#10b981",
     error: "#ef4444",
@@ -193,7 +84,7 @@ var NotificationToast = ({
     info: "M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20A10 10 0 0012 2z"
   };
   const color = typeColors[type] || accent;
-  (0, import_react2.useEffect)(() => {
+  (0, import_react.useEffect)(() => {
     if (!showProgress) return;
     const step = 100 / (duration / 50);
     const timer = setInterval(() => {
@@ -209,7 +100,7 @@ var NotificationToast = ({
     return () => clearInterval(timer);
   }, [duration, showProgress]);
   if (!visible) return null;
-  return /* @__PURE__ */ import_react2.default.createElement("div", { style: {
+  return /* @__PURE__ */ import_react.default.createElement("div", { style: {
     background: bg,
     borderRadius: radius,
     padding: "16px 18px",
@@ -220,7 +111,7 @@ var NotificationToast = ({
     border: `1px solid rgba(255,255,255,0.08)`,
     position: "relative",
     overflow: "hidden"
-  } }, /* @__PURE__ */ import_react2.default.createElement("div", { style: { display: "flex", alignItems: "flex-start", gap: "12px" } }, /* @__PURE__ */ import_react2.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "flex", alignItems: "flex-start", gap: "12px" } }, /* @__PURE__ */ import_react.default.createElement("div", { style: {
     width: 36,
     height: 36,
     borderRadius: "10px",
@@ -230,7 +121,7 @@ var NotificationToast = ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center"
-  } }, /* @__PURE__ */ import_react2.default.createElement(
+  } }, /* @__PURE__ */ import_react.default.createElement(
     "svg",
     {
       width: "16",
@@ -242,8 +133,8 @@ var NotificationToast = ({
       strokeLinecap: "round",
       strokeLinejoin: "round"
     },
-    /* @__PURE__ */ import_react2.default.createElement("path", { d: typeIcons[type] || typeIcons.info })
-  )), /* @__PURE__ */ import_react2.default.createElement("div", { style: { flex: 1, minWidth: 0 } }, /* @__PURE__ */ import_react2.default.createElement("div", { style: { fontSize: "14px", fontWeight: "700", marginBottom: "3px" } }, title), /* @__PURE__ */ import_react2.default.createElement("div", { style: { fontSize: "12px", color: "rgba(255,255,255,0.5)", lineHeight: 1.5 } }, message)), /* @__PURE__ */ import_react2.default.createElement(
+    /* @__PURE__ */ import_react.default.createElement("path", { d: typeIcons[type] || typeIcons.info })
+  )), /* @__PURE__ */ import_react.default.createElement("div", { style: { flex: 1, minWidth: 0 } }, /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "14px", fontWeight: "700", marginBottom: "3px" } }, title), /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "12px", color: "rgba(255,255,255,0.5)", lineHeight: 1.5 } }, message)), /* @__PURE__ */ import_react.default.createElement(
     "button",
     {
       onClick: () => setVisible(false),
@@ -257,7 +148,7 @@ var NotificationToast = ({
         lineHeight: 1
       }
     },
-    /* @__PURE__ */ import_react2.default.createElement(
+    /* @__PURE__ */ import_react.default.createElement(
       "svg",
       {
         width: "14",
@@ -268,16 +159,16 @@ var NotificationToast = ({
         strokeWidth: "2.5",
         strokeLinecap: "round"
       },
-      /* @__PURE__ */ import_react2.default.createElement("path", { d: "M18 6L6 18M6 6l12 12" })
+      /* @__PURE__ */ import_react.default.createElement("path", { d: "M18 6L6 18M6 6l12 12" })
     )
-  )), showProgress && /* @__PURE__ */ import_react2.default.createElement("div", { style: {
+  )), showProgress && /* @__PURE__ */ import_react.default.createElement("div", { style: {
     position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
     height: "3px",
     background: "rgba(255,255,255,0.07)"
-  } }, /* @__PURE__ */ import_react2.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react.default.createElement("div", { style: {
     height: "100%",
     width: `${progress}%`,
     background: color,
@@ -287,7 +178,7 @@ var NotificationToast = ({
 };
 
 // src/components/AvatarCard/AvatarCard.jsx
-var import_react3 = __toESM(require("react"));
+var import_react2 = __toESM(require("react"));
 var AvatarCard = ({
   name = "Aryan Sharma",
   role = "Frontend Developer",
@@ -300,7 +191,7 @@ var AvatarCard = ({
   bg = "#0f172a",
   radius = "20px"
 }) => {
-  const [followed, setFollowed] = (0, import_react3.useState)(false);
+  const [followed, setFollowed] = (0, import_react2.useState)(false);
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -313,7 +204,7 @@ var AvatarCard = ({
     { label: "Following", value: following },
     { label: "Projects", value: projects }
   ];
-  return /* @__PURE__ */ import_react3.default.createElement("div", { style: {
+  return /* @__PURE__ */ import_react2.default.createElement("div", { style: {
     background: bg,
     borderRadius: radius,
     padding: "24px 20px",
@@ -324,14 +215,14 @@ var AvatarCard = ({
     border: "1px solid rgba(255,255,255,0.08)",
     position: "relative",
     overflow: "hidden"
-  } }, /* @__PURE__ */ import_react3.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react2.default.createElement("div", { style: {
     position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     height: "3px",
     background: `linear-gradient(90deg, ${accent}, ${alpha(accent, 0.3)})`
-  } }), /* @__PURE__ */ import_react3.default.createElement("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "16px" } }, /* @__PURE__ */ import_react3.default.createElement("div", { style: {
+  } }), /* @__PURE__ */ import_react2.default.createElement("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "16px" } }, /* @__PURE__ */ import_react2.default.createElement("div", { style: {
     width: 72,
     height: 72,
     borderRadius: "50%",
@@ -344,7 +235,7 @@ var AvatarCard = ({
     color: "#fff",
     border: `3px solid ${alpha(accent, 0.4)}`,
     marginBottom: "12px"
-  } }, !avatar && initials), /* @__PURE__ */ import_react3.default.createElement("div", { style: { fontSize: "16px", fontWeight: "700", marginBottom: "3px" } }, name), /* @__PURE__ */ import_react3.default.createElement("div", { style: {
+  } }, !avatar && initials), /* @__PURE__ */ import_react2.default.createElement("div", { style: { fontSize: "16px", fontWeight: "700", marginBottom: "3px" } }, name), /* @__PURE__ */ import_react2.default.createElement("div", { style: {
     fontSize: "12px",
     fontWeight: "600",
     color: accent,
@@ -352,14 +243,14 @@ var AvatarCard = ({
     padding: "2px 10px",
     borderRadius: "20px",
     border: `1px solid ${alpha(accent, 0.3)}`
-  } }, role)), /* @__PURE__ */ import_react3.default.createElement("p", { style: {
+  } }, role)), /* @__PURE__ */ import_react2.default.createElement("p", { style: {
     fontSize: "12px",
     color: "rgba(255,255,255,0.45)",
     textAlign: "center",
     lineHeight: 1.6,
     marginBottom: "18px",
     padding: "0 4px"
-  } }, bio), /* @__PURE__ */ import_react3.default.createElement("div", { style: {
+  } }, bio), /* @__PURE__ */ import_react2.default.createElement("div", { style: {
     display: "flex",
     justifyContent: "space-around",
     background: "rgba(255,255,255,0.04)",
@@ -367,11 +258,11 @@ var AvatarCard = ({
     borderRadius: "12px",
     padding: "12px 8px",
     marginBottom: "16px"
-  } }, stats.map((s) => /* @__PURE__ */ import_react3.default.createElement("div", { key: s.label, style: { textAlign: "center" } }, /* @__PURE__ */ import_react3.default.createElement("div", { style: { fontSize: "18px", fontWeight: "800" } }, s.value >= 1e3 ? (s.value / 1e3).toFixed(1) + "k" : s.value), /* @__PURE__ */ import_react3.default.createElement("div", { style: { fontSize: "10px", color: "rgba(255,255,255,0.4)", marginTop: "2px" } }, s.label)))));
+  } }, stats.map((s) => /* @__PURE__ */ import_react2.default.createElement("div", { key: s.label, style: { textAlign: "center" } }, /* @__PURE__ */ import_react2.default.createElement("div", { style: { fontSize: "18px", fontWeight: "800" } }, s.value >= 1e3 ? (s.value / 1e3).toFixed(1) + "k" : s.value), /* @__PURE__ */ import_react2.default.createElement("div", { style: { fontSize: "10px", color: "rgba(255,255,255,0.4)", marginTop: "2px" } }, s.label)))));
 };
 
 // src/components/PricingCard/PricingCard.jsx
-var import_react4 = __toESM(require("react"));
+var import_react3 = __toESM(require("react"));
 var PricingCard = ({
   planName = "Pro Plan",
   description = "For teams that need more power.",
@@ -399,7 +290,7 @@ var PricingCard = ({
     const b = parseInt(hex.slice(5, 7), 16);
     return `rgba(${r},${g},${b},${op})`;
   };
-  return /* @__PURE__ */ import_react4.default.createElement("div", { style: {
+  return /* @__PURE__ */ import_react3.default.createElement("div", { style: {
     background: bg,
     borderRadius: radius,
     padding: "28px 24px",
@@ -410,14 +301,14 @@ var PricingCard = ({
     border: `1px solid ${alpha(accent, 0.25)}`,
     position: "relative",
     overflow: "hidden"
-  } }, /* @__PURE__ */ import_react4.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react3.default.createElement("div", { style: {
     position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     height: "3px",
     background: `linear-gradient(90deg, ${accent}, ${alpha(accent, 0.3)})`
-  } }), badgeText && /* @__PURE__ */ import_react4.default.createElement("div", { style: {
+  } }), badgeText && /* @__PURE__ */ import_react3.default.createElement("div", { style: {
     display: "inline-flex",
     alignItems: "center",
     gap: "6px",
@@ -431,7 +322,7 @@ var PricingCard = ({
     color: accent,
     letterSpacing: "0.5px",
     textTransform: "uppercase"
-  } }, /* @__PURE__ */ import_react4.default.createElement("div", { style: { width: 6, height: 6, borderRadius: "50%", background: accent } }), badgeText), /* @__PURE__ */ import_react4.default.createElement("div", { style: { fontSize: "20px", fontWeight: "800", marginBottom: "4px" } }, planName), /* @__PURE__ */ import_react4.default.createElement("div", { style: { fontSize: "13px", color: "rgba(255,255,255,0.45)", marginBottom: "20px", lineHeight: 1.5 } }, description), /* @__PURE__ */ import_react4.default.createElement("div", { style: { display: "flex", alignItems: "flex-end", gap: "3px", marginBottom: "4px" } }, /* @__PURE__ */ import_react4.default.createElement("span", { style: { fontSize: "18px", fontWeight: "700", color: "rgba(255,255,255,0.5)", lineHeight: 2 } }, currency), /* @__PURE__ */ import_react4.default.createElement("span", { style: { fontSize: "52px", fontWeight: "800", color: "#fff", lineHeight: 1 } }, Math.round(price))), /* @__PURE__ */ import_react4.default.createElement("div", { style: { fontSize: "12px", color: "rgba(255,255,255,0.35)", marginBottom: "20px" } }, period), /* @__PURE__ */ import_react4.default.createElement("div", { style: { height: "1px", background: "rgba(255,255,255,0.07)", marginBottom: "16px" } }), /* @__PURE__ */ import_react4.default.createElement("ul", { style: { listStyle: "none", padding: 0, margin: "0 0 22px", display: "flex", flexDirection: "column", gap: "10px" } }, features.map((f, i) => /* @__PURE__ */ import_react4.default.createElement("li", { key: i, style: { display: "flex", alignItems: "center", gap: "10px", fontSize: "13px", color: "rgba(255,255,255,0.75)" } }, /* @__PURE__ */ import_react4.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react3.default.createElement("div", { style: { width: 6, height: 6, borderRadius: "50%", background: accent } }), badgeText), /* @__PURE__ */ import_react3.default.createElement("div", { style: { fontSize: "20px", fontWeight: "800", marginBottom: "4px" } }, planName), /* @__PURE__ */ import_react3.default.createElement("div", { style: { fontSize: "13px", color: "rgba(255,255,255,0.45)", marginBottom: "20px", lineHeight: 1.5 } }, description), /* @__PURE__ */ import_react3.default.createElement("div", { style: { display: "flex", alignItems: "flex-end", gap: "3px", marginBottom: "4px" } }, /* @__PURE__ */ import_react3.default.createElement("span", { style: { fontSize: "18px", fontWeight: "700", color: "rgba(255,255,255,0.5)", lineHeight: 2 } }, currency), /* @__PURE__ */ import_react3.default.createElement("span", { style: { fontSize: "52px", fontWeight: "800", color: "#fff", lineHeight: 1 } }, Math.round(price))), /* @__PURE__ */ import_react3.default.createElement("div", { style: { fontSize: "12px", color: "rgba(255,255,255,0.35)", marginBottom: "20px" } }, period), /* @__PURE__ */ import_react3.default.createElement("div", { style: { height: "1px", background: "rgba(255,255,255,0.07)", marginBottom: "16px" } }), /* @__PURE__ */ import_react3.default.createElement("ul", { style: { listStyle: "none", padding: 0, margin: "0 0 22px", display: "flex", flexDirection: "column", gap: "10px" } }, features.map((f, i) => /* @__PURE__ */ import_react3.default.createElement("li", { key: i, style: { display: "flex", alignItems: "center", gap: "10px", fontSize: "13px", color: "rgba(255,255,255,0.75)" } }, /* @__PURE__ */ import_react3.default.createElement("div", { style: {
     width: "18px",
     height: "18px",
     borderRadius: "50%",
@@ -441,7 +332,7 @@ var PricingCard = ({
     justifyContent: "center",
     background: alpha(accent, 0.18),
     border: `1px solid ${alpha(accent, 0.4)}`
-  } }, /* @__PURE__ */ import_react4.default.createElement(
+  } }, /* @__PURE__ */ import_react3.default.createElement(
     "svg",
     {
       width: "10",
@@ -453,8 +344,8 @@ var PricingCard = ({
       strokeLinecap: "round",
       strokeLinejoin: "round"
     },
-    /* @__PURE__ */ import_react4.default.createElement("polyline", { points: "1.5,6 4.5,9 10.5,3" })
-  )), f))), /* @__PURE__ */ import_react4.default.createElement(
+    /* @__PURE__ */ import_react3.default.createElement("polyline", { points: "1.5,6 4.5,9 10.5,3" })
+  )), f))), /* @__PURE__ */ import_react3.default.createElement(
     "button",
     {
       onClick: onCtaClick,
@@ -479,7 +370,7 @@ var PricingCard = ({
 };
 
 // src/components/Navbar/Navbar.jsx
-var import_react5 = __toESM(require("react"));
+var import_react4 = __toESM(require("react"));
 var Navbar = ({
   logo = "VirtualAI",
   links = ["Home", "Features", "Pricing", "Blog"],
@@ -491,28 +382,28 @@ var Navbar = ({
   onLinkClick = () => {
   }
 }) => {
-  const [scrolled, setScrolled] = (0, import_react5.useState)(false);
-  const [menuOpen, setMenuOpen] = (0, import_react5.useState)(false);
-  const [active, setActive] = (0, import_react5.useState)("Home");
-  const [isMobile, setIsMobile] = (0, import_react5.useState)(false);
+  const [scrolled, setScrolled] = (0, import_react4.useState)(false);
+  const [menuOpen, setMenuOpen] = (0, import_react4.useState)(false);
+  const [active, setActive] = (0, import_react4.useState)("Home");
+  const [isMobile, setIsMobile] = (0, import_react4.useState)(false);
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
     const b = parseInt(hex.slice(5, 7), 16);
     return `rgba(${r},${g},${b},${op})`;
   };
-  (0, import_react5.useEffect)(() => {
+  (0, import_react4.useEffect)(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-  (0, import_react5.useEffect)(() => {
+  (0, import_react4.useEffect)(() => {
     const handler = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
   }, []);
-  (0, import_react5.useEffect)(() => {
+  (0, import_react4.useEffect)(() => {
     if (!isMobile) setMenuOpen(false);
   }, [isMobile]);
   const handleLink = (link) => {
@@ -520,7 +411,7 @@ var Navbar = ({
     setMenuOpen(false);
     onLinkClick(link);
   };
-  return /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, /* @__PURE__ */ import_react5.default.createElement("style", null, `
+  return /* @__PURE__ */ import_react4.default.createElement(import_react4.default.Fragment, null, /* @__PURE__ */ import_react4.default.createElement("style", null, `
         @keyframes nbSlideDown {
           from { opacity: 0; transform: translateY(-8px); }
           to   { opacity: 1; transform: translateY(0); }
@@ -529,7 +420,7 @@ var Navbar = ({
         .nb-cta:hover  { opacity: 0.85 !important; }
         .nb-ham:hover  { background: rgba(255,255,255,0.1) !important; }
         .nb-mlink:hover { background: rgba(255,255,255,0.06) !important; }
-      `), /* @__PURE__ */ import_react5.default.createElement("nav", { style: {
+      `), /* @__PURE__ */ import_react4.default.createElement("nav", { style: {
     position: "sticky",
     top: 0,
     left: 0,
@@ -543,7 +434,7 @@ var Navbar = ({
     fontFamily: "system-ui, -apple-system, sans-serif",
     width: "100%",
     boxSizing: "border-box"
-  } }, /* @__PURE__ */ import_react5.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react4.default.createElement("div", { style: {
     maxWidth: "1200px",
     margin: "0 auto",
     padding: "0 20px",
@@ -553,7 +444,7 @@ var Navbar = ({
     justifyContent: "space-between",
     gap: "16px",
     boxSizing: "border-box"
-  } }, /* @__PURE__ */ import_react5.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px", cursor: "pointer", flexShrink: 0 } }, /* @__PURE__ */ import_react5.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react4.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px", cursor: "pointer", flexShrink: 0 } }, /* @__PURE__ */ import_react4.default.createElement("div", { style: {
     width: isMobile ? "26px" : "30px",
     height: isMobile ? "26px" : "30px",
     borderRadius: "8px",
@@ -565,12 +456,12 @@ var Navbar = ({
     fontWeight: "800",
     color: "#fff",
     flexShrink: 0
-  } }, logo[0]), /* @__PURE__ */ import_react5.default.createElement("span", { style: {
+  } }, logo[0]), /* @__PURE__ */ import_react4.default.createElement("span", { style: {
     fontSize: isMobile ? "14px" : "16px",
     fontWeight: "800",
     color: "#fff",
     letterSpacing: "-0.3px"
-  } }, logo)), !isMobile && /* @__PURE__ */ import_react5.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "2px", flex: 1, justifyContent: "center" } }, links.map((link) => /* @__PURE__ */ import_react5.default.createElement(
+  } }, logo)), !isMobile && /* @__PURE__ */ import_react4.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "2px", flex: 1, justifyContent: "center" } }, links.map((link) => /* @__PURE__ */ import_react4.default.createElement(
     "button",
     {
       key: link,
@@ -591,7 +482,7 @@ var Navbar = ({
       }
     },
     link
-  ))), /* @__PURE__ */ import_react5.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 } }, /* @__PURE__ */ import_react5.default.createElement(
+  ))), /* @__PURE__ */ import_react4.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 } }, /* @__PURE__ */ import_react4.default.createElement(
     "button",
     {
       className: "nb-cta",
@@ -611,7 +502,7 @@ var Navbar = ({
       }
     },
     ctaText
-  ), isMobile && /* @__PURE__ */ import_react5.default.createElement(
+  ), isMobile && /* @__PURE__ */ import_react4.default.createElement(
     "button",
     {
       className: "nb-ham",
@@ -633,7 +524,7 @@ var Navbar = ({
         padding: 0
       }
     },
-    /* @__PURE__ */ import_react5.default.createElement("div", { style: {
+    /* @__PURE__ */ import_react4.default.createElement("div", { style: {
       width: "16px",
       height: "1.5px",
       background: "rgba(255,255,255,0.7)",
@@ -641,7 +532,7 @@ var Navbar = ({
       transform: menuOpen ? "rotate(45deg) translate(4px, 4px)" : "none",
       transition: "transform 0.25s"
     } }),
-    /* @__PURE__ */ import_react5.default.createElement("div", { style: {
+    /* @__PURE__ */ import_react4.default.createElement("div", { style: {
       width: "16px",
       height: "1.5px",
       background: "rgba(255,255,255,0.7)",
@@ -649,7 +540,7 @@ var Navbar = ({
       opacity: menuOpen ? 0 : 1,
       transition: "opacity 0.2s"
     } }),
-    /* @__PURE__ */ import_react5.default.createElement("div", { style: {
+    /* @__PURE__ */ import_react4.default.createElement("div", { style: {
       width: "16px",
       height: "1.5px",
       background: "rgba(255,255,255,0.7)",
@@ -657,7 +548,7 @@ var Navbar = ({
       transform: menuOpen ? "rotate(-45deg) translate(4px, -4px)" : "none",
       transition: "transform 0.25s"
     } })
-  ))), isMobile && menuOpen && /* @__PURE__ */ import_react5.default.createElement("div", { style: {
+  ))), isMobile && menuOpen && /* @__PURE__ */ import_react4.default.createElement("div", { style: {
     animation: "nbSlideDown 0.2s ease",
     borderTop: "1px solid rgba(255,255,255,0.06)",
     padding: "10px 16px 16px",
@@ -665,7 +556,7 @@ var Navbar = ({
     flexDirection: "column",
     gap: "3px",
     background: alpha(bg, 0.98)
-  } }, links.map((link) => /* @__PURE__ */ import_react5.default.createElement(
+  } }, links.map((link) => /* @__PURE__ */ import_react4.default.createElement(
     "button",
     {
       key: link,
@@ -690,7 +581,7 @@ var Navbar = ({
       }
     },
     link,
-    active === link && /* @__PURE__ */ import_react5.default.createElement(
+    active === link && /* @__PURE__ */ import_react4.default.createElement(
       "svg",
       {
         width: "14",
@@ -701,9 +592,9 @@ var Navbar = ({
         strokeWidth: "2.5",
         strokeLinecap: "round"
       },
-      /* @__PURE__ */ import_react5.default.createElement("polyline", { points: "9 18 15 12 9 6" })
+      /* @__PURE__ */ import_react4.default.createElement("polyline", { points: "9 18 15 12 9 6" })
     )
-  )), /* @__PURE__ */ import_react5.default.createElement("div", { style: { height: "1px", background: "rgba(255,255,255,0.07)", margin: "8px 0" } }), /* @__PURE__ */ import_react5.default.createElement(
+  )), /* @__PURE__ */ import_react4.default.createElement("div", { style: { height: "1px", background: "rgba(255,255,255,0.07)", margin: "8px 0" } }), /* @__PURE__ */ import_react4.default.createElement(
     "button",
     {
       onClick: () => {
@@ -728,7 +619,7 @@ var Navbar = ({
 };
 
 // src/components/Footer/Footer.jsx
-var import_react6 = __toESM(require("react"));
+var import_react5 = __toESM(require("react"));
 var Footer = ({
   logo = "VirtualAI",
   links = ["Home", "Features", "Pricing", "Blog", "Contact"],
@@ -736,21 +627,21 @@ var Footer = ({
   accent = "#6366f1",
   bg = "#0f172a"
 }) => {
-  return /* @__PURE__ */ import_react6.default.createElement("footer", { style: {
+  return /* @__PURE__ */ import_react5.default.createElement("footer", { style: {
     background: bg,
     borderTop: "1px solid rgba(255,255,255,0.06)",
     fontFamily: "system-ui, sans-serif",
     width: "100%",
     boxSizing: "border-box",
     padding: "28px 24px"
-  } }, /* @__PURE__ */ import_react6.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react5.default.createElement("div", { style: {
     maxWidth: "900px",
     margin: "0 auto",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     gap: "20px"
-  } }, /* @__PURE__ */ import_react6.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px" } }, /* @__PURE__ */ import_react6.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react5.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px" } }, /* @__PURE__ */ import_react5.default.createElement("div", { style: {
     width: "26px",
     height: "26px",
     borderRadius: "7px",
@@ -761,7 +652,7 @@ var Footer = ({
     fontSize: "12px",
     fontWeight: "800",
     color: "#fff"
-  } }, logo[0]), /* @__PURE__ */ import_react6.default.createElement("span", { style: { fontSize: "15px", fontWeight: "800", color: "#fff" } }, logo)), /* @__PURE__ */ import_react6.default.createElement("div", { style: { display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "4px" } }, links.map((link) => /* @__PURE__ */ import_react6.default.createElement(
+  } }, logo[0]), /* @__PURE__ */ import_react5.default.createElement("span", { style: { fontSize: "15px", fontWeight: "800", color: "#fff" } }, logo)), /* @__PURE__ */ import_react5.default.createElement("div", { style: { display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "4px" } }, links.map((link) => /* @__PURE__ */ import_react5.default.createElement(
     "a",
     {
       key: link,
@@ -778,11 +669,11 @@ var Footer = ({
       onMouseLeave: (e) => e.currentTarget.style.color = "rgba(255,255,255,0.4)"
     },
     link
-  ))), /* @__PURE__ */ import_react6.default.createElement("div", { style: { width: "100%", height: "1px", background: "rgba(255,255,255,0.06)" } }), /* @__PURE__ */ import_react6.default.createElement("p", { style: { fontSize: "12px", color: "rgba(255,255,255,0.22)", margin: 0 } }, "\xA9 ", (/* @__PURE__ */ new Date()).getFullYear(), " ", copyright, ". All rights reserved.")));
+  ))), /* @__PURE__ */ import_react5.default.createElement("div", { style: { width: "100%", height: "1px", background: "rgba(255,255,255,0.06)" } }), /* @__PURE__ */ import_react5.default.createElement("p", { style: { fontSize: "12px", color: "rgba(255,255,255,0.22)", margin: 0 } }, "\xA9 ", (/* @__PURE__ */ new Date()).getFullYear(), " ", copyright, ". All rights reserved.")));
 };
 
 // src/components/Sidebar/Sidebar.jsx
-var import_react7 = __toESM(require("react"));
+var import_react6 = __toESM(require("react"));
 var Sidebar = ({
   logo = "VirtualAI",
   accent = "#6366f1",
@@ -791,27 +682,27 @@ var Sidebar = ({
     {
       label: "Dashboard",
       icon: "M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z",
-      component: /* @__PURE__ */ import_react7.default.createElement("div", { style: { padding: "24px" } }, /* @__PURE__ */ import_react7.default.createElement("h2", { style: { color: "#fff", fontSize: "20px", fontWeight: "700", marginBottom: "8px" } }, "Dashboard"), /* @__PURE__ */ import_react7.default.createElement("p", { style: { color: "rgba(255,255,255,0.4)", fontSize: "14px" } }, "Welcome to your dashboard overview."))
+      component: /* @__PURE__ */ import_react6.default.createElement("div", { style: { padding: "24px" } }, /* @__PURE__ */ import_react6.default.createElement("h2", { style: { color: "#fff", fontSize: "20px", fontWeight: "700", marginBottom: "8px" } }, "Dashboard"), /* @__PURE__ */ import_react6.default.createElement("p", { style: { color: "rgba(255,255,255,0.4)", fontSize: "14px" } }, "Welcome to your dashboard overview."))
     },
     {
       label: "Analytics",
       icon: "M18 20V10M12 20V4M6 20v-6",
-      component: /* @__PURE__ */ import_react7.default.createElement("div", { style: { padding: "24px" } }, /* @__PURE__ */ import_react7.default.createElement("h2", { style: { color: "#fff", fontSize: "20px", fontWeight: "700", marginBottom: "8px" } }, "Analytics"), /* @__PURE__ */ import_react7.default.createElement("p", { style: { color: "rgba(255,255,255,0.4)", fontSize: "14px" } }, "View your stats and performance here."))
+      component: /* @__PURE__ */ import_react6.default.createElement("div", { style: { padding: "24px" } }, /* @__PURE__ */ import_react6.default.createElement("h2", { style: { color: "#fff", fontSize: "20px", fontWeight: "700", marginBottom: "8px" } }, "Analytics"), /* @__PURE__ */ import_react6.default.createElement("p", { style: { color: "rgba(255,255,255,0.4)", fontSize: "14px" } }, "View your stats and performance here."))
     },
     {
       label: "Users",
       icon: "M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75",
-      component: /* @__PURE__ */ import_react7.default.createElement("div", { style: { padding: "24px" } }, /* @__PURE__ */ import_react7.default.createElement("h2", { style: { color: "#fff", fontSize: "20px", fontWeight: "700", marginBottom: "8px" } }, "Users"), /* @__PURE__ */ import_react7.default.createElement("p", { style: { color: "rgba(255,255,255,0.4)", fontSize: "14px" } }, "Manage your users and permissions."))
+      component: /* @__PURE__ */ import_react6.default.createElement("div", { style: { padding: "24px" } }, /* @__PURE__ */ import_react6.default.createElement("h2", { style: { color: "#fff", fontSize: "20px", fontWeight: "700", marginBottom: "8px" } }, "Users"), /* @__PURE__ */ import_react6.default.createElement("p", { style: { color: "rgba(255,255,255,0.4)", fontSize: "14px" } }, "Manage your users and permissions."))
     },
     {
       label: "Settings",
       icon: "M12 15a3 3 0 100-6 3 3 0 000 6zM19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z",
-      component: /* @__PURE__ */ import_react7.default.createElement("div", { style: { padding: "24px" } }, /* @__PURE__ */ import_react7.default.createElement("h2", { style: { color: "#fff", fontSize: "20px", fontWeight: "700", marginBottom: "8px" } }, "Settings"), /* @__PURE__ */ import_react7.default.createElement("p", { style: { color: "rgba(255,255,255,0.4)", fontSize: "14px" } }, "Configure your preferences here."))
+      component: /* @__PURE__ */ import_react6.default.createElement("div", { style: { padding: "24px" } }, /* @__PURE__ */ import_react6.default.createElement("h2", { style: { color: "#fff", fontSize: "20px", fontWeight: "700", marginBottom: "8px" } }, "Settings"), /* @__PURE__ */ import_react6.default.createElement("p", { style: { color: "rgba(255,255,255,0.4)", fontSize: "14px" } }, "Configure your preferences here."))
     }
   ]
 }) => {
-  const [active, setActive] = (0, import_react7.useState)(0);
-  const [collapsed, setCollapsed] = (0, import_react7.useState)(false);
+  const [active, setActive] = (0, import_react6.useState)(0);
+  const [collapsed, setCollapsed] = (0, import_react6.useState)(false);
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -819,14 +710,14 @@ var Sidebar = ({
     return `rgba(${r},${g},${b},${op})`;
   };
   const activeItem = items[active];
-  return /* @__PURE__ */ import_react7.default.createElement("div", { style: {
+  return /* @__PURE__ */ import_react6.default.createElement("div", { style: {
     display: "flex",
     height: "480px",
     fontFamily: "system-ui, sans-serif",
     borderRadius: "16px",
     overflow: "hidden",
     border: "1px solid rgba(255,255,255,0.07)"
-  } }, /* @__PURE__ */ import_react7.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react6.default.createElement("div", { style: {
     width: collapsed ? "60px" : "200px",
     background: bg,
     borderRight: "1px solid rgba(255,255,255,0.06)",
@@ -835,7 +726,7 @@ var Sidebar = ({
     transition: "width 0.25s ease",
     flexShrink: 0,
     overflow: "hidden"
-  } }, /* @__PURE__ */ import_react7.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react6.default.createElement("div", { style: {
     height: "56px",
     display: "flex",
     alignItems: "center",
@@ -844,7 +735,7 @@ var Sidebar = ({
     borderBottom: "1px solid rgba(255,255,255,0.05)",
     overflow: "hidden",
     flexShrink: 0
-  } }, /* @__PURE__ */ import_react7.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react6.default.createElement("div", { style: {
     width: "28px",
     height: "28px",
     borderRadius: "8px",
@@ -856,7 +747,7 @@ var Sidebar = ({
     fontSize: "13px",
     fontWeight: "800",
     color: "#fff"
-  } }, logo[0]), !collapsed && /* @__PURE__ */ import_react7.default.createElement("span", { style: { fontSize: "14px", fontWeight: "800", color: "#fff", whiteSpace: "nowrap" } }, logo)), /* @__PURE__ */ import_react7.default.createElement("nav", { style: { flex: 1, padding: "10px 8px", display: "flex", flexDirection: "column", gap: "3px", overflowY: "auto" } }, items.map((item, i) => /* @__PURE__ */ import_react7.default.createElement(
+  } }, logo[0]), !collapsed && /* @__PURE__ */ import_react6.default.createElement("span", { style: { fontSize: "14px", fontWeight: "800", color: "#fff", whiteSpace: "nowrap" } }, logo)), /* @__PURE__ */ import_react6.default.createElement("nav", { style: { flex: 1, padding: "10px 8px", display: "flex", flexDirection: "column", gap: "3px", overflowY: "auto" } }, items.map((item, i) => /* @__PURE__ */ import_react6.default.createElement(
     "button",
     {
       key: i,
@@ -891,7 +782,7 @@ var Sidebar = ({
         }
       }
     },
-    /* @__PURE__ */ import_react7.default.createElement(
+    /* @__PURE__ */ import_react6.default.createElement(
       "svg",
       {
         width: "16",
@@ -904,10 +795,10 @@ var Sidebar = ({
         strokeLinejoin: "round",
         style: { flexShrink: 0 }
       },
-      /* @__PURE__ */ import_react7.default.createElement("path", { d: item.icon })
+      /* @__PURE__ */ import_react6.default.createElement("path", { d: item.icon })
     ),
-    !collapsed && /* @__PURE__ */ import_react7.default.createElement("span", { style: { fontSize: "13px", fontWeight: active === i ? "700" : "500", whiteSpace: "nowrap" } }, item.label)
-  ))), /* @__PURE__ */ import_react7.default.createElement("div", { style: { padding: "8px", borderTop: "1px solid rgba(255,255,255,0.05)" } }, /* @__PURE__ */ import_react7.default.createElement(
+    !collapsed && /* @__PURE__ */ import_react6.default.createElement("span", { style: { fontSize: "13px", fontWeight: active === i ? "700" : "500", whiteSpace: "nowrap" } }, item.label)
+  ))), /* @__PURE__ */ import_react6.default.createElement("div", { style: { padding: "8px", borderTop: "1px solid rgba(255,255,255,0.05)" } }, /* @__PURE__ */ import_react6.default.createElement(
     "button",
     {
       onClick: () => setCollapsed((c) => !c),
@@ -927,7 +818,7 @@ var Sidebar = ({
       onMouseEnter: (e) => e.currentTarget.style.color = "rgba(255,255,255,0.7)",
       onMouseLeave: (e) => e.currentTarget.style.color = "rgba(255,255,255,0.3)"
     },
-    /* @__PURE__ */ import_react7.default.createElement(
+    /* @__PURE__ */ import_react6.default.createElement(
       "svg",
       {
         width: "15",
@@ -938,29 +829,29 @@ var Sidebar = ({
         strokeWidth: "2",
         strokeLinecap: "round"
       },
-      /* @__PURE__ */ import_react7.default.createElement("path", { d: collapsed ? "M9 18l6-6-6-6" : "M15 18l-6-6 6-6" })
+      /* @__PURE__ */ import_react6.default.createElement("path", { d: collapsed ? "M9 18l6-6-6-6" : "M15 18l-6-6 6-6" })
     )
-  ))), /* @__PURE__ */ import_react7.default.createElement("div", { style: {
+  ))), /* @__PURE__ */ import_react6.default.createElement("div", { style: {
     flex: 1,
     background: "rgba(255,255,255,0.02)",
     overflow: "auto"
-  } }, /* @__PURE__ */ import_react7.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react6.default.createElement("div", { style: {
     height: "56px",
     display: "flex",
     alignItems: "center",
     padding: "0 20px",
     borderBottom: "1px solid rgba(255,255,255,0.05)",
     gap: "10px"
-  } }, /* @__PURE__ */ import_react7.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react6.default.createElement("div", { style: {
     width: "6px",
     height: "6px",
     borderRadius: "50%",
     background: accent
-  } }), /* @__PURE__ */ import_react7.default.createElement("span", { style: { fontSize: "14px", fontWeight: "700", color: "#fff" } }, activeItem == null ? void 0 : activeItem.label)), /* @__PURE__ */ import_react7.default.createElement("div", { style: { color: "#fff" } }, activeItem == null ? void 0 : activeItem.component)));
+  } }), /* @__PURE__ */ import_react6.default.createElement("span", { style: { fontSize: "14px", fontWeight: "700", color: "#fff" } }, activeItem == null ? void 0 : activeItem.label)), /* @__PURE__ */ import_react6.default.createElement("div", { style: { color: "#fff" } }, activeItem == null ? void 0 : activeItem.component)));
 };
 
 // src/components/Charts/Charts.jsx
-var import_react8 = __toESM(require("react"));
+var import_react7 = __toESM(require("react"));
 var Charts = ({
   type = "bar",
   data = [
@@ -980,7 +871,7 @@ var Charts = ({
   showGrid = true,
   showValues = true
 }) => {
-  const [hovered, setHovered] = (0, import_react8.useState)(null);
+  const [hovered, setHovered] = (0, import_react7.useState)(null);
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -1007,7 +898,7 @@ var Charts = ({
   }));
   const BarChart = () => {
     const barW = Math.min(28, chartW / data.length * 0.55);
-    return /* @__PURE__ */ import_react8.default.createElement("svg", { width: "100%", viewBox: `0 0 ${W} ${H}` }, showGrid && gridLines.map((g, i) => /* @__PURE__ */ import_react8.default.createElement("g", { key: i }, /* @__PURE__ */ import_react8.default.createElement(
+    return /* @__PURE__ */ import_react7.default.createElement("svg", { width: "100%", viewBox: `0 0 ${W} ${H}` }, showGrid && gridLines.map((g, i) => /* @__PURE__ */ import_react7.default.createElement("g", { key: i }, /* @__PURE__ */ import_react7.default.createElement(
       "line",
       {
         x1: padL,
@@ -1017,7 +908,7 @@ var Charts = ({
         stroke: "rgba(255,255,255,0.05)",
         strokeWidth: "1"
       }
-    ), /* @__PURE__ */ import_react8.default.createElement(
+    ), /* @__PURE__ */ import_react7.default.createElement(
       "text",
       {
         x: padL - 4,
@@ -1032,7 +923,7 @@ var Charts = ({
       const barH = (d.value - min) / (max - min || 1) * chartH;
       const y = padT + chartH - barH;
       const isH = hovered === i;
-      return /* @__PURE__ */ import_react8.default.createElement("g", { key: i, onMouseEnter: () => setHovered(i), onMouseLeave: () => setHovered(null) }, /* @__PURE__ */ import_react8.default.createElement(
+      return /* @__PURE__ */ import_react7.default.createElement("g", { key: i, onMouseEnter: () => setHovered(i), onMouseLeave: () => setHovered(null) }, /* @__PURE__ */ import_react7.default.createElement(
         "rect",
         {
           x,
@@ -1042,7 +933,7 @@ var Charts = ({
           fill: "transparent",
           rx: "4"
         }
-      ), /* @__PURE__ */ import_react8.default.createElement(
+      ), /* @__PURE__ */ import_react7.default.createElement(
         "rect",
         {
           x,
@@ -1053,7 +944,7 @@ var Charts = ({
           rx: "4",
           style: { transition: "fill 0.15s" }
         }
-      ), showValues && isH && /* @__PURE__ */ import_react8.default.createElement(
+      ), showValues && isH && /* @__PURE__ */ import_react7.default.createElement(
         "text",
         {
           x: x + barW / 2,
@@ -1064,7 +955,7 @@ var Charts = ({
           fontWeight: "700"
         },
         d.value
-      ), /* @__PURE__ */ import_react8.default.createElement(
+      ), /* @__PURE__ */ import_react7.default.createElement(
         "text",
         {
           x: x + barW / 2,
@@ -1077,7 +968,7 @@ var Charts = ({
       ));
     }));
   };
-  const LineChart = () => /* @__PURE__ */ import_react8.default.createElement("svg", { width: "100%", viewBox: `0 0 ${W} ${H}` }, /* @__PURE__ */ import_react8.default.createElement("defs", null, /* @__PURE__ */ import_react8.default.createElement("linearGradient", { id: "lg", x1: "0", y1: "0", x2: "0", y2: "1" }, /* @__PURE__ */ import_react8.default.createElement("stop", { offset: "0%", stopColor: accent, stopOpacity: "0.3" }), /* @__PURE__ */ import_react8.default.createElement("stop", { offset: "100%", stopColor: accent, stopOpacity: "0" }))), showGrid && gridLines.map((g, i) => /* @__PURE__ */ import_react8.default.createElement("g", { key: i }, /* @__PURE__ */ import_react8.default.createElement(
+  const LineChart = () => /* @__PURE__ */ import_react7.default.createElement("svg", { width: "100%", viewBox: `0 0 ${W} ${H}` }, /* @__PURE__ */ import_react7.default.createElement("defs", null, /* @__PURE__ */ import_react7.default.createElement("linearGradient", { id: "lg", x1: "0", y1: "0", x2: "0", y2: "1" }, /* @__PURE__ */ import_react7.default.createElement("stop", { offset: "0%", stopColor: accent, stopOpacity: "0.3" }), /* @__PURE__ */ import_react7.default.createElement("stop", { offset: "100%", stopColor: accent, stopOpacity: "0" }))), showGrid && gridLines.map((g, i) => /* @__PURE__ */ import_react7.default.createElement("g", { key: i }, /* @__PURE__ */ import_react7.default.createElement(
     "line",
     {
       x1: padL,
@@ -1087,7 +978,7 @@ var Charts = ({
       stroke: "rgba(255,255,255,0.05)",
       strokeWidth: "1"
     }
-  ), /* @__PURE__ */ import_react8.default.createElement(
+  ), /* @__PURE__ */ import_react7.default.createElement(
     "text",
     {
       x: padL - 4,
@@ -1097,7 +988,7 @@ var Charts = ({
       fontSize: "9"
     },
     g.val
-  ))), /* @__PURE__ */ import_react8.default.createElement("polygon", { points: areaPoints, fill: "url(#lg)" }), /* @__PURE__ */ import_react8.default.createElement(
+  ))), /* @__PURE__ */ import_react7.default.createElement("polygon", { points: areaPoints, fill: "url(#lg)" }), /* @__PURE__ */ import_react7.default.createElement(
     "polyline",
     {
       points,
@@ -1109,7 +1000,7 @@ var Charts = ({
     }
   ), data.map((d, i) => {
     const isH = hovered === i;
-    return /* @__PURE__ */ import_react8.default.createElement("g", { key: i, onMouseEnter: () => setHovered(i), onMouseLeave: () => setHovered(null) }, /* @__PURE__ */ import_react8.default.createElement("circle", { cx: getX(i), cy: getY(d.value), r: "10", fill: "transparent" }), /* @__PURE__ */ import_react8.default.createElement(
+    return /* @__PURE__ */ import_react7.default.createElement("g", { key: i, onMouseEnter: () => setHovered(i), onMouseLeave: () => setHovered(null) }, /* @__PURE__ */ import_react7.default.createElement("circle", { cx: getX(i), cy: getY(d.value), r: "10", fill: "transparent" }), /* @__PURE__ */ import_react7.default.createElement(
       "circle",
       {
         cx: getX(i),
@@ -1120,7 +1011,7 @@ var Charts = ({
         strokeWidth: "2",
         style: { transition: "all 0.15s" }
       }
-    ), showValues && isH && /* @__PURE__ */ import_react8.default.createElement(
+    ), showValues && isH && /* @__PURE__ */ import_react7.default.createElement(
       "text",
       {
         x: getX(i),
@@ -1131,7 +1022,7 @@ var Charts = ({
         fontWeight: "700"
       },
       d.value
-    ), /* @__PURE__ */ import_react8.default.createElement(
+    ), /* @__PURE__ */ import_react7.default.createElement(
       "text",
       {
         x: getX(i),
@@ -1171,7 +1062,7 @@ var Charts = ({
       startAngle += angle;
       return slice;
     });
-    return /* @__PURE__ */ import_react8.default.createElement("svg", { width: "100%", viewBox: `0 0 ${W} ${H}` }, slices.map((s) => /* @__PURE__ */ import_react8.default.createElement("g", { key: s.i, onMouseEnter: () => setHovered(s.i), onMouseLeave: () => setHovered(null) }, /* @__PURE__ */ import_react8.default.createElement(
+    return /* @__PURE__ */ import_react7.default.createElement("svg", { width: "100%", viewBox: `0 0 ${W} ${H}` }, slices.map((s) => /* @__PURE__ */ import_react7.default.createElement("g", { key: s.i, onMouseEnter: () => setHovered(s.i), onMouseLeave: () => setHovered(null) }, /* @__PURE__ */ import_react7.default.createElement(
       "path",
       {
         d: s.path,
@@ -1181,7 +1072,7 @@ var Charts = ({
         transform: hovered === s.i ? `translate(${Math.cos(s.angle / 2 - Math.PI / 2) * 4}, ${Math.sin(s.angle / 2 - Math.PI / 2) * 4})` : "",
         style: { transition: "transform 0.15s", cursor: "pointer" }
       }
-    ))), hovered !== null && /* @__PURE__ */ import_react8.default.createElement(import_react8.default.Fragment, null, /* @__PURE__ */ import_react8.default.createElement(
+    ))), hovered !== null && /* @__PURE__ */ import_react7.default.createElement(import_react7.default.Fragment, null, /* @__PURE__ */ import_react7.default.createElement(
       "text",
       {
         x: cx,
@@ -1192,7 +1083,7 @@ var Charts = ({
         fontWeight: "800"
       },
       (_a = data[hovered]) == null ? void 0 : _a.value
-    ), /* @__PURE__ */ import_react8.default.createElement(
+    ), /* @__PURE__ */ import_react7.default.createElement(
       "text",
       {
         x: cx,
@@ -1202,7 +1093,7 @@ var Charts = ({
         fontSize: "9"
       },
       (_b = data[hovered]) == null ? void 0 : _b.label
-    )), hovered === null && /* @__PURE__ */ import_react8.default.createElement(
+    )), hovered === null && /* @__PURE__ */ import_react7.default.createElement(
       "text",
       {
         x: cx,
@@ -1214,7 +1105,7 @@ var Charts = ({
       "Hover slice"
     ));
   };
-  const AreaChart = () => /* @__PURE__ */ import_react8.default.createElement("svg", { width: "100%", viewBox: `0 0 ${W} ${H}` }, /* @__PURE__ */ import_react8.default.createElement("defs", null, /* @__PURE__ */ import_react8.default.createElement("linearGradient", { id: "ag", x1: "0", y1: "0", x2: "0", y2: "1" }, /* @__PURE__ */ import_react8.default.createElement("stop", { offset: "0%", stopColor: accent, stopOpacity: "0.5" }), /* @__PURE__ */ import_react8.default.createElement("stop", { offset: "100%", stopColor: accent, stopOpacity: "0.02" }))), showGrid && gridLines.map((g, i) => /* @__PURE__ */ import_react8.default.createElement("g", { key: i }, /* @__PURE__ */ import_react8.default.createElement(
+  const AreaChart = () => /* @__PURE__ */ import_react7.default.createElement("svg", { width: "100%", viewBox: `0 0 ${W} ${H}` }, /* @__PURE__ */ import_react7.default.createElement("defs", null, /* @__PURE__ */ import_react7.default.createElement("linearGradient", { id: "ag", x1: "0", y1: "0", x2: "0", y2: "1" }, /* @__PURE__ */ import_react7.default.createElement("stop", { offset: "0%", stopColor: accent, stopOpacity: "0.5" }), /* @__PURE__ */ import_react7.default.createElement("stop", { offset: "100%", stopColor: accent, stopOpacity: "0.02" }))), showGrid && gridLines.map((g, i) => /* @__PURE__ */ import_react7.default.createElement("g", { key: i }, /* @__PURE__ */ import_react7.default.createElement(
     "line",
     {
       x1: padL,
@@ -1224,7 +1115,7 @@ var Charts = ({
       stroke: "rgba(255,255,255,0.05)",
       strokeWidth: "1"
     }
-  ), /* @__PURE__ */ import_react8.default.createElement(
+  ), /* @__PURE__ */ import_react7.default.createElement(
     "text",
     {
       x: padL - 4,
@@ -1234,7 +1125,7 @@ var Charts = ({
       fontSize: "9"
     },
     g.val
-  ))), /* @__PURE__ */ import_react8.default.createElement("polygon", { points: areaPoints, fill: "url(#ag)" }), /* @__PURE__ */ import_react8.default.createElement(
+  ))), /* @__PURE__ */ import_react7.default.createElement("polygon", { points: areaPoints, fill: "url(#ag)" }), /* @__PURE__ */ import_react7.default.createElement(
     "polyline",
     {
       points,
@@ -1244,7 +1135,7 @@ var Charts = ({
       strokeLinejoin: "round",
       strokeLinecap: "round"
     }
-  ), data.map((d, i) => /* @__PURE__ */ import_react8.default.createElement("g", { key: i, onMouseEnter: () => setHovered(i), onMouseLeave: () => setHovered(null) }, /* @__PURE__ */ import_react8.default.createElement("rect", { x: getX(i) - 12, y: padT, width: 24, height: chartH, fill: "transparent" }), hovered === i && /* @__PURE__ */ import_react8.default.createElement(import_react8.default.Fragment, null, /* @__PURE__ */ import_react8.default.createElement(
+  ), data.map((d, i) => /* @__PURE__ */ import_react7.default.createElement("g", { key: i, onMouseEnter: () => setHovered(i), onMouseLeave: () => setHovered(null) }, /* @__PURE__ */ import_react7.default.createElement("rect", { x: getX(i) - 12, y: padT, width: 24, height: chartH, fill: "transparent" }), hovered === i && /* @__PURE__ */ import_react7.default.createElement(import_react7.default.Fragment, null, /* @__PURE__ */ import_react7.default.createElement(
     "line",
     {
       x1: getX(i),
@@ -1255,7 +1146,7 @@ var Charts = ({
       strokeWidth: "1",
       strokeDasharray: "3 3"
     }
-  ), showValues && /* @__PURE__ */ import_react8.default.createElement(
+  ), showValues && /* @__PURE__ */ import_react7.default.createElement(
     "text",
     {
       x: getX(i),
@@ -1266,7 +1157,7 @@ var Charts = ({
       fontWeight: "700"
     },
     d.value
-  )), /* @__PURE__ */ import_react8.default.createElement(
+  )), /* @__PURE__ */ import_react7.default.createElement(
     "text",
     {
       x: getX(i),
@@ -1278,12 +1169,12 @@ var Charts = ({
     d.label
   ))));
   const renderChart = () => {
-    if (type === "line") return /* @__PURE__ */ import_react8.default.createElement(LineChart, null);
-    if (type === "pie") return /* @__PURE__ */ import_react8.default.createElement(PieChart, null);
-    if (type === "area") return /* @__PURE__ */ import_react8.default.createElement(AreaChart, null);
-    return /* @__PURE__ */ import_react8.default.createElement(BarChart, null);
+    if (type === "line") return /* @__PURE__ */ import_react7.default.createElement(LineChart, null);
+    if (type === "pie") return /* @__PURE__ */ import_react7.default.createElement(PieChart, null);
+    if (type === "area") return /* @__PURE__ */ import_react7.default.createElement(AreaChart, null);
+    return /* @__PURE__ */ import_react7.default.createElement(BarChart, null);
   };
-  return /* @__PURE__ */ import_react8.default.createElement("div", { style: {
+  return /* @__PURE__ */ import_react7.default.createElement("div", { style: {
     background: bg,
     borderRadius: radius,
     padding: "20px",
@@ -1292,7 +1183,7 @@ var Charts = ({
     width: "100%",
     maxWidth: "360px",
     boxSizing: "border-box"
-  } }, /* @__PURE__ */ import_react8.default.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" } }, /* @__PURE__ */ import_react8.default.createElement("p", { style: { fontSize: "14px", fontWeight: "700", color: "#fff", margin: 0 } }, title), /* @__PURE__ */ import_react8.default.createElement("span", { style: {
+  } }, /* @__PURE__ */ import_react7.default.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" } }, /* @__PURE__ */ import_react7.default.createElement("p", { style: { fontSize: "14px", fontWeight: "700", color: "#fff", margin: 0 } }, title), /* @__PURE__ */ import_react7.default.createElement("span", { style: {
     fontSize: "10px",
     fontWeight: "700",
     padding: "3px 9px",
@@ -1305,7 +1196,7 @@ var Charts = ({
 };
 
 // src/components/ImageCard/ImageCard.jsx
-var import_react9 = __toESM(require("react"));
+var import_react8 = __toESM(require("react"));
 var ImageCard = ({
   image = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
   tag = "Travel",
@@ -1318,14 +1209,14 @@ var ImageCard = ({
   onButtonClick = () => {
   }
 }) => {
-  const [hovered, setHovered] = (0, import_react9.useState)(false);
+  const [hovered, setHovered] = (0, import_react8.useState)(false);
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
     const b = parseInt(hex.slice(5, 7), 16);
     return `rgba(${r},${g},${b},${op})`;
   };
-  return /* @__PURE__ */ import_react9.default.createElement(
+  return /* @__PURE__ */ import_react8.default.createElement(
     "div",
     {
       onMouseEnter: () => setHovered(true),
@@ -1342,7 +1233,7 @@ var ImageCard = ({
         boxShadow: hovered ? `0 16px 40px rgba(0,0,0,0.5)` : "0 4px 20px rgba(0,0,0,0.3)"
       }
     },
-    /* @__PURE__ */ import_react9.default.createElement("div", { style: { position: "relative", width: "100%", height: "180px", overflow: "hidden" } }, /* @__PURE__ */ import_react9.default.createElement(
+    /* @__PURE__ */ import_react8.default.createElement("div", { style: { position: "relative", width: "100%", height: "180px", overflow: "hidden" } }, /* @__PURE__ */ import_react8.default.createElement(
       "img",
       {
         src: image,
@@ -1355,11 +1246,11 @@ var ImageCard = ({
           transition: "transform 0.4s ease"
         }
       }
-    ), /* @__PURE__ */ import_react9.default.createElement("div", { style: {
+    ), /* @__PURE__ */ import_react8.default.createElement("div", { style: {
       position: "absolute",
       inset: 0,
       background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%)"
-    } }), tag && /* @__PURE__ */ import_react9.default.createElement("div", { style: {
+    } }), tag && /* @__PURE__ */ import_react8.default.createElement("div", { style: {
       position: "absolute",
       top: "12px",
       left: "12px",
@@ -1372,18 +1263,18 @@ var ImageCard = ({
       letterSpacing: "0.5px",
       textTransform: "uppercase"
     } }, tag)),
-    /* @__PURE__ */ import_react9.default.createElement("div", { style: { padding: "18px" } }, /* @__PURE__ */ import_react9.default.createElement("h3", { style: {
+    /* @__PURE__ */ import_react8.default.createElement("div", { style: { padding: "18px" } }, /* @__PURE__ */ import_react8.default.createElement("h3", { style: {
       fontSize: "15px",
       fontWeight: "700",
       color: "#fff",
       margin: "0 0 8px",
       lineHeight: 1.4
-    } }, title), /* @__PURE__ */ import_react9.default.createElement("p", { style: {
+    } }, title), /* @__PURE__ */ import_react8.default.createElement("p", { style: {
       fontSize: "13px",
       color: "rgba(255,255,255,0.45)",
       lineHeight: 1.65,
       margin: "0 0 18px"
-    } }, description), /* @__PURE__ */ import_react9.default.createElement(
+    } }, description), /* @__PURE__ */ import_react8.default.createElement(
       "button",
       {
         onClick: onButtonClick,
@@ -1409,7 +1300,7 @@ var ImageCard = ({
 };
 
 // src/components/ImageSlider/ImageSlider.jsx
-var import_react10 = __toESM(require("react"));
+var import_react9 = __toESM(require("react"));
 var ImageSlider = ({
   images = [
     {
@@ -1440,8 +1331,8 @@ var ImageSlider = ({
   showCaption = true,
   autoPlay = false
 }) => {
-  const [current, setCurrent] = (0, import_react10.useState)(0);
-  const [dir, setDir] = (0, import_react10.useState)(null);
+  const [current, setCurrent] = (0, import_react9.useState)(0);
+  const [dir, setDir] = (0, import_react9.useState)(null);
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -1461,7 +1352,7 @@ var ImageSlider = ({
     setCurrent(i);
   };
   const img = images[current];
-  return /* @__PURE__ */ import_react10.default.createElement("div", { style: {
+  return /* @__PURE__ */ import_react9.default.createElement("div", { style: {
     background: bg,
     borderRadius: radius,
     overflow: "hidden",
@@ -1469,7 +1360,7 @@ var ImageSlider = ({
     border: "1px solid rgba(255,255,255,0.07)",
     fontFamily: "system-ui, sans-serif",
     boxShadow: "0 10px 40px rgba(0,0,0,0.4)"
-  } }, /* @__PURE__ */ import_react10.default.createElement("div", { style: { position: "relative", width: "100%", height: "200px", overflow: "hidden", background: "#000" } }, /* @__PURE__ */ import_react10.default.createElement(
+  } }, /* @__PURE__ */ import_react9.default.createElement("div", { style: { position: "relative", width: "100%", height: "200px", overflow: "hidden", background: "#000" } }, /* @__PURE__ */ import_react9.default.createElement(
     "img",
     {
       key: current,
@@ -1482,11 +1373,11 @@ var ImageSlider = ({
         animation: `sliderFade 0.35s ease`
       }
     }
-  ), /* @__PURE__ */ import_react10.default.createElement("style", null, `@keyframes sliderFade { from { opacity: 0; transform: scale(1.03); } to { opacity: 1; transform: scale(1); } }`), /* @__PURE__ */ import_react10.default.createElement("div", { style: {
+  ), /* @__PURE__ */ import_react9.default.createElement("style", null, `@keyframes sliderFade { from { opacity: 0; transform: scale(1.03); } to { opacity: 1; transform: scale(1); } }`), /* @__PURE__ */ import_react9.default.createElement("div", { style: {
     position: "absolute",
     inset: 0,
     background: "linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%)"
-  } }), img.tag && /* @__PURE__ */ import_react10.default.createElement("div", { style: {
+  } }), img.tag && /* @__PURE__ */ import_react9.default.createElement("div", { style: {
     position: "absolute",
     top: "12px",
     left: "12px",
@@ -1498,7 +1389,7 @@ var ImageSlider = ({
     color: "#fff",
     letterSpacing: "0.5px",
     textTransform: "uppercase"
-  } }, img.tag), /* @__PURE__ */ import_react10.default.createElement("div", { style: {
+  } }, img.tag), /* @__PURE__ */ import_react9.default.createElement("div", { style: {
     position: "absolute",
     top: "12px",
     right: "12px",
@@ -1508,7 +1399,7 @@ var ImageSlider = ({
     fontSize: "10px",
     fontWeight: "600",
     color: "rgba(255,255,255,0.7)"
-  } }, current + 1, " / ", images.length), /* @__PURE__ */ import_react10.default.createElement(
+  } }, current + 1, " / ", images.length), /* @__PURE__ */ import_react9.default.createElement(
     "button",
     {
       onClick: prev,
@@ -1533,7 +1424,7 @@ var ImageSlider = ({
       onMouseEnter: (e) => e.currentTarget.style.background = alpha(accent, 0.8),
       onMouseLeave: (e) => e.currentTarget.style.background = "rgba(0,0,0,0.5)"
     },
-    /* @__PURE__ */ import_react10.default.createElement(
+    /* @__PURE__ */ import_react9.default.createElement(
       "svg",
       {
         width: "14",
@@ -1544,9 +1435,9 @@ var ImageSlider = ({
         strokeWidth: "2.5",
         strokeLinecap: "round"
       },
-      /* @__PURE__ */ import_react10.default.createElement("polyline", { points: "15 18 9 12 15 6" })
+      /* @__PURE__ */ import_react9.default.createElement("polyline", { points: "15 18 9 12 15 6" })
     )
-  ), /* @__PURE__ */ import_react10.default.createElement(
+  ), /* @__PURE__ */ import_react9.default.createElement(
     "button",
     {
       onClick: next,
@@ -1571,7 +1462,7 @@ var ImageSlider = ({
       onMouseEnter: (e) => e.currentTarget.style.background = alpha(accent, 0.8),
       onMouseLeave: (e) => e.currentTarget.style.background = "rgba(0,0,0,0.5)"
     },
-    /* @__PURE__ */ import_react10.default.createElement(
+    /* @__PURE__ */ import_react9.default.createElement(
       "svg",
       {
         width: "14",
@@ -1582,9 +1473,9 @@ var ImageSlider = ({
         strokeWidth: "2.5",
         strokeLinecap: "round"
       },
-      /* @__PURE__ */ import_react10.default.createElement("polyline", { points: "9 18 15 12 9 6" })
+      /* @__PURE__ */ import_react9.default.createElement("polyline", { points: "9 18 15 12 9 6" })
     )
-  )), showCaption && /* @__PURE__ */ import_react10.default.createElement("div", { style: { padding: "14px 16px 4px" } }, /* @__PURE__ */ import_react10.default.createElement(
+  )), showCaption && /* @__PURE__ */ import_react9.default.createElement("div", { style: { padding: "14px 16px 4px" } }, /* @__PURE__ */ import_react9.default.createElement(
     "p",
     {
       style: {
@@ -1598,12 +1489,12 @@ var ImageSlider = ({
       key: current + "-title"
     },
     img.title
-  )), showDots && /* @__PURE__ */ import_react10.default.createElement("div", { style: {
+  )), showDots && /* @__PURE__ */ import_react9.default.createElement("div", { style: {
     display: "flex",
     justifyContent: "center",
     gap: "6px",
     padding: "12px 16px 16px"
-  } }, images.map((_, i) => /* @__PURE__ */ import_react10.default.createElement(
+  } }, images.map((_, i) => /* @__PURE__ */ import_react9.default.createElement(
     "button",
     {
       key: i,
@@ -1623,7 +1514,7 @@ var ImageSlider = ({
 };
 
 // src/components/BackgoundImageSlider/BackgoundImageSlider.jsx
-var import_react11 = __toESM(require("react"));
+var import_react10 = __toESM(require("react"));
 var BackgoundImageSlider = ({
   images = [
     {
@@ -1659,15 +1550,15 @@ var BackgoundImageSlider = ({
   autoPlay = false,
   autoPlayInterval = 4e3
 }) => {
-  const [current, setCurrent] = (0, import_react11.useState)(0);
-  const [animating, setAnimating] = (0, import_react11.useState)(false);
+  const [current, setCurrent] = (0, import_react10.useState)(0);
+  const [animating, setAnimating] = (0, import_react10.useState)(false);
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
     const b = parseInt(hex.slice(5, 7), 16);
     return `rgba(${r},${g},${b},${op})`;
   };
-  const go = (0, import_react11.useCallback)((index) => {
+  const go = (0, import_react10.useCallback)((index) => {
     if (animating) return;
     setAnimating(true);
     setCurrent((index + images.length) % images.length);
@@ -1675,17 +1566,17 @@ var BackgoundImageSlider = ({
   }, [animating, images.length]);
   const prev = () => go(current - 1);
   const next = () => go(current + 1);
-  (0, import_react11.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     if (!autoPlay) return;
     const t = setInterval(() => go(current + 1), autoPlayInterval);
     return () => clearInterval(t);
   }, [autoPlay, autoPlayInterval, current, go]);
   const img = images[current];
-  return /* @__PURE__ */ import_react11.default.createElement(import_react11.default.Fragment, null, /* @__PURE__ */ import_react11.default.createElement("style", null, `
+  return /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement("style", null, `
         @keyframes hs-fade { from { opacity: 0; transform: scale(1.04); } to { opacity: 1; transform: scale(1); } }
         @keyframes hs-up   { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
         .hs-prev:hover, .hs-next:hover { background: rgba(0,0,0,0.65) !important; border-color: rgba(255,255,255,0.35) !important; }
-      `), /* @__PURE__ */ import_react11.default.createElement("div", { style: {
+      `), /* @__PURE__ */ import_react10.default.createElement("div", { style: {
     position: "relative",
     width,
     height,
@@ -1693,7 +1584,7 @@ var BackgoundImageSlider = ({
     overflow: "hidden",
     fontFamily: "system-ui, -apple-system, sans-serif",
     userSelect: "none"
-  } }, /* @__PURE__ */ import_react11.default.createElement(
+  } }, /* @__PURE__ */ import_react10.default.createElement(
     "img",
     {
       key: current,
@@ -1708,11 +1599,11 @@ var BackgoundImageSlider = ({
         animation: "hs-fade 0.4s ease"
       }
     }
-  ), /* @__PURE__ */ import_react11.default.createElement("div", { style: {
+  ), /* @__PURE__ */ import_react10.default.createElement("div", { style: {
     position: "absolute",
     inset: 0,
     background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%)"
-  } }), img.tag && /* @__PURE__ */ import_react11.default.createElement(
+  } }), img.tag && /* @__PURE__ */ import_react10.default.createElement(
     "div",
     {
       key: current + "-tag",
@@ -1732,7 +1623,7 @@ var BackgoundImageSlider = ({
       }
     },
     img.tag
-  ), /* @__PURE__ */ import_react11.default.createElement("div", { style: {
+  ), /* @__PURE__ */ import_react10.default.createElement("div", { style: {
     position: "absolute",
     top: "24px",
     right: "28px",
@@ -1742,7 +1633,7 @@ var BackgoundImageSlider = ({
     fontSize: "11px",
     fontWeight: "600",
     color: "rgba(255,255,255,0.7)"
-  } }, current + 1, " / ", images.length), /* @__PURE__ */ import_react11.default.createElement(
+  } }, current + 1, " / ", images.length), /* @__PURE__ */ import_react10.default.createElement(
     "button",
     {
       className: "hs-prev",
@@ -1767,7 +1658,7 @@ var BackgoundImageSlider = ({
         zIndex: 10
       }
     },
-    /* @__PURE__ */ import_react11.default.createElement(
+    /* @__PURE__ */ import_react10.default.createElement(
       "svg",
       {
         width: "18",
@@ -1779,9 +1670,9 @@ var BackgoundImageSlider = ({
         strokeLinecap: "round",
         strokeLinejoin: "round"
       },
-      /* @__PURE__ */ import_react11.default.createElement("polyline", { points: "15 18 9 12 15 6" })
+      /* @__PURE__ */ import_react10.default.createElement("polyline", { points: "15 18 9 12 15 6" })
     )
-  ), /* @__PURE__ */ import_react11.default.createElement(
+  ), /* @__PURE__ */ import_react10.default.createElement(
     "button",
     {
       className: "hs-next",
@@ -1806,7 +1697,7 @@ var BackgoundImageSlider = ({
         zIndex: 10
       }
     },
-    /* @__PURE__ */ import_react11.default.createElement(
+    /* @__PURE__ */ import_react10.default.createElement(
       "svg",
       {
         width: "18",
@@ -1818,15 +1709,15 @@ var BackgoundImageSlider = ({
         strokeLinecap: "round",
         strokeLinejoin: "round"
       },
-      /* @__PURE__ */ import_react11.default.createElement("polyline", { points: "9 18 15 12 9 6" })
+      /* @__PURE__ */ import_react10.default.createElement("polyline", { points: "9 18 15 12 9 6" })
     )
-  ), /* @__PURE__ */ import_react11.default.createElement("div", { style: {
+  ), /* @__PURE__ */ import_react10.default.createElement("div", { style: {
     position: "absolute",
     bottom: showDots ? "56px" : "28px",
     left: "28px",
     right: "28px",
     zIndex: 5
-  } }, /* @__PURE__ */ import_react11.default.createElement(
+  } }, /* @__PURE__ */ import_react10.default.createElement(
     "h2",
     {
       key: current + "-title",
@@ -1842,7 +1733,7 @@ var BackgoundImageSlider = ({
       }
     },
     img.title
-  ), /* @__PURE__ */ import_react11.default.createElement(
+  ), /* @__PURE__ */ import_react10.default.createElement(
     "p",
     {
       key: current + "-desc",
@@ -1857,7 +1748,7 @@ var BackgoundImageSlider = ({
       }
     },
     img.description
-  )), showDots && /* @__PURE__ */ import_react11.default.createElement("div", { style: {
+  )), showDots && /* @__PURE__ */ import_react10.default.createElement("div", { style: {
     position: "absolute",
     bottom: "20px",
     left: 0,
@@ -1866,7 +1757,7 @@ var BackgoundImageSlider = ({
     justifyContent: "center",
     gap: "6px",
     zIndex: 5
-  } }, images.map((_, i) => /* @__PURE__ */ import_react11.default.createElement(
+  } }, images.map((_, i) => /* @__PURE__ */ import_react10.default.createElement(
     "button",
     {
       key: i,
@@ -1886,7 +1777,7 @@ var BackgoundImageSlider = ({
 };
 
 // src/components/PageLoader/PageLoader.jsx
-var import_react12 = __toESM(require("react"));
+var import_react11 = __toESM(require("react"));
 var PageLoader = ({
   logo = "VirtualAI",
   accent = "#6366f1",
@@ -1898,15 +1789,15 @@ var PageLoader = ({
   onComplete = () => {
   }
 }) => {
-  const [progress, setProgress] = (0, import_react12.useState)(0);
-  const [done, setDone] = (0, import_react12.useState)(false);
+  const [progress, setProgress] = (0, import_react11.useState)(0);
+  const [done, setDone] = (0, import_react11.useState)(false);
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
     const b = parseInt(hex.slice(5, 7), 16);
     return `rgba(${r},${g},${b},${op})`;
   };
-  (0, import_react12.useEffect)(() => {
+  (0, import_react11.useEffect)(() => {
     const steps = 100;
     const interval = duration / steps;
     let current = 0;
@@ -1924,13 +1815,13 @@ var PageLoader = ({
     return () => clearInterval(timer);
   }, [duration]);
   if (done) return null;
-  return /* @__PURE__ */ import_react12.default.createElement(import_react12.default.Fragment, null, /* @__PURE__ */ import_react12.default.createElement("style", null, `
+  return /* @__PURE__ */ import_react11.default.createElement(import_react11.default.Fragment, null, /* @__PURE__ */ import_react11.default.createElement("style", null, `
         @keyframes pl-spin  { to { transform: rotate(360deg); } }
         @keyframes pl-pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.15);opacity:0.7} }
         @keyframes pl-dot   { 0%,80%,100%{transform:scale(0.6);opacity:0.3} 40%{transform:scale(1);opacity:1} }
         @keyframes pl-fade  { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
         @keyframes pl-bar   { 0%{background-position:0% 50%} 100%{background-position:200% 50%} }
-      `), /* @__PURE__ */ import_react12.default.createElement("div", { style: {
+      `), /* @__PURE__ */ import_react11.default.createElement("div", { style: {
     width: "100%",
     height: "100%",
     background: bg,
@@ -1941,7 +1832,7 @@ var PageLoader = ({
     gap: "28px",
     fontFamily: "system-ui, -apple-system, sans-serif",
     animation: "pl-fade 0.3s ease"
-  } }, /* @__PURE__ */ import_react12.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react11.default.createElement("div", { style: {
     position: "absolute",
     top: "-100px",
     left: "-100px",
@@ -1951,7 +1842,7 @@ var PageLoader = ({
     background: `radial-gradient(circle, ${alpha(accent, 0.12)}, transparent 70%)`,
     filter: "blur(60px)",
     pointerEvents: "none"
-  } }), /* @__PURE__ */ import_react12.default.createElement("div", { style: {
+  } }), /* @__PURE__ */ import_react11.default.createElement("div", { style: {
     position: "absolute",
     bottom: "-100px",
     right: "-100px",
@@ -1961,7 +1852,7 @@ var PageLoader = ({
     background: `radial-gradient(circle, ${alpha(accent, 0.08)}, transparent 70%)`,
     filter: "blur(60px)",
     pointerEvents: "none"
-  } }), /* @__PURE__ */ import_react12.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "10px", animation: "pl-fade 0.4s ease" } }, /* @__PURE__ */ import_react12.default.createElement("div", { style: {
+  } }), /* @__PURE__ */ import_react11.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "10px", animation: "pl-fade 0.4s ease" } }, /* @__PURE__ */ import_react11.default.createElement("div", { style: {
     width: "36px",
     height: "36px",
     borderRadius: "10px",
@@ -1973,7 +1864,7 @@ var PageLoader = ({
     fontWeight: "800",
     color: "#fff",
     animation: type === "pulse" ? `pl-pulse 1.5s ease infinite` : "none"
-  } }, logo[0]), /* @__PURE__ */ import_react12.default.createElement("span", { style: { fontSize: "20px", fontWeight: "800", color: "#fff", letterSpacing: "-0.5px" } }, logo)), type === "spinner" && /* @__PURE__ */ import_react12.default.createElement("div", { style: { position: "relative", width: "56px", height: "56px" } }, /* @__PURE__ */ import_react12.default.createElement("svg", { width: "56", height: "56", viewBox: "0 0 56 56" }, /* @__PURE__ */ import_react12.default.createElement(
+  } }, logo[0]), /* @__PURE__ */ import_react11.default.createElement("span", { style: { fontSize: "20px", fontWeight: "800", color: "#fff", letterSpacing: "-0.5px" } }, logo)), type === "spinner" && /* @__PURE__ */ import_react11.default.createElement("div", { style: { position: "relative", width: "56px", height: "56px" } }, /* @__PURE__ */ import_react11.default.createElement("svg", { width: "56", height: "56", viewBox: "0 0 56 56" }, /* @__PURE__ */ import_react11.default.createElement(
     "circle",
     {
       cx: "28",
@@ -1983,7 +1874,7 @@ var PageLoader = ({
       stroke: alpha(accent, 0.12),
       strokeWidth: "4"
     }
-  ), /* @__PURE__ */ import_react12.default.createElement(
+  ), /* @__PURE__ */ import_react11.default.createElement(
     "circle",
     {
       cx: "28",
@@ -1996,7 +1887,7 @@ var PageLoader = ({
       strokeDasharray: "34.8 104.4",
       style: { transformOrigin: "center", animation: "pl-spin 0.9s linear infinite" }
     }
-  )), /* @__PURE__ */ import_react12.default.createElement("span", { style: {
+  )), /* @__PURE__ */ import_react11.default.createElement("span", { style: {
     position: "absolute",
     inset: 0,
     display: "flex",
@@ -2005,26 +1896,26 @@ var PageLoader = ({
     fontSize: "11px",
     fontWeight: "700",
     color: accent
-  } }, Math.round(progress), "%")), type === "dots" && /* @__PURE__ */ import_react12.default.createElement("div", { style: { display: "flex", gap: "10px", alignItems: "center" } }, [0, 1, 2].map((i) => /* @__PURE__ */ import_react12.default.createElement("div", { key: i, style: {
+  } }, Math.round(progress), "%")), type === "dots" && /* @__PURE__ */ import_react11.default.createElement("div", { style: { display: "flex", gap: "10px", alignItems: "center" } }, [0, 1, 2].map((i) => /* @__PURE__ */ import_react11.default.createElement("div", { key: i, style: {
     width: "12px",
     height: "12px",
     borderRadius: "50%",
     background: accent,
     animation: `pl-dot 1.2s ease infinite`,
     animationDelay: `${i * 0.2}s`
-  } }))), type === "pulse" && /* @__PURE__ */ import_react12.default.createElement("div", { style: { position: "relative", width: "56px", height: "56px" } }, [0, 1].map((i) => /* @__PURE__ */ import_react12.default.createElement("div", { key: i, style: {
+  } }))), type === "pulse" && /* @__PURE__ */ import_react11.default.createElement("div", { style: { position: "relative", width: "56px", height: "56px" } }, [0, 1].map((i) => /* @__PURE__ */ import_react11.default.createElement("div", { key: i, style: {
     position: "absolute",
     inset: 0,
     borderRadius: "50%",
     background: alpha(accent, 0.3),
     animation: `pl-pulse 1.5s ease infinite`,
     animationDelay: `${i * 0.4}s`
-  } })), /* @__PURE__ */ import_react12.default.createElement("div", { style: {
+  } })), /* @__PURE__ */ import_react11.default.createElement("div", { style: {
     position: "absolute",
     inset: "30%",
     borderRadius: "50%",
     background: accent
-  } })), type === "ring" && /* @__PURE__ */ import_react12.default.createElement("div", { style: {
+  } })), type === "ring" && /* @__PURE__ */ import_react11.default.createElement("div", { style: {
     width: "52px",
     height: "52px",
     borderRadius: "50%",
@@ -2032,13 +1923,13 @@ var PageLoader = ({
     borderTop: `4px solid ${accent}`,
     borderRight: `4px solid ${accent}`,
     animation: "pl-spin 0.9s linear infinite"
-  } }), type === "bar" && /* @__PURE__ */ import_react12.default.createElement("div", { style: { width: "200px", display: "flex", flexDirection: "column", gap: "8px" } }, /* @__PURE__ */ import_react12.default.createElement("div", { style: {
+  } }), type === "bar" && /* @__PURE__ */ import_react11.default.createElement("div", { style: { width: "200px", display: "flex", flexDirection: "column", gap: "8px" } }, /* @__PURE__ */ import_react11.default.createElement("div", { style: {
     width: "100%",
     height: "4px",
     background: alpha(accent, 0.15),
     borderRadius: "2px",
     overflow: "hidden"
-  } }, /* @__PURE__ */ import_react12.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react11.default.createElement("div", { style: {
     height: "100%",
     width: `${progress}%`,
     borderRadius: "2px",
@@ -2046,16 +1937,16 @@ var PageLoader = ({
     backgroundSize: "200% 100%",
     animation: "pl-bar 1.2s linear infinite",
     transition: "width 0.03s linear"
-  } })), /* @__PURE__ */ import_react12.default.createElement("div", { style: {
+  } })), /* @__PURE__ */ import_react11.default.createElement("div", { style: {
     display: "flex",
     justifyContent: "space-between",
     fontSize: "11px",
     color: "rgba(255,255,255,0.3)"
-  } }, /* @__PURE__ */ import_react12.default.createElement("span", null, loadingText), /* @__PURE__ */ import_react12.default.createElement("span", null, Math.round(progress), "%")), subText && /* @__PURE__ */ import_react12.default.createElement("p", { style: { fontSize: "12px", color: "rgba(255,255,255,0.18)", margin: "4px 0 0", textAlign: "center" } }, subText)), type !== "bar" && /* @__PURE__ */ import_react12.default.createElement("div", { style: { textAlign: "center" } }, /* @__PURE__ */ import_react12.default.createElement("p", { style: { fontSize: "13px", color: "rgba(255,255,255,0.3)", margin: "0 0 4px" } }, loadingText), subText && /* @__PURE__ */ import_react12.default.createElement("p", { style: { fontSize: "12px", color: "rgba(255,255,255,0.15)", margin: 0 } }, subText))));
+  } }, /* @__PURE__ */ import_react11.default.createElement("span", null, loadingText), /* @__PURE__ */ import_react11.default.createElement("span", null, Math.round(progress), "%")), subText && /* @__PURE__ */ import_react11.default.createElement("p", { style: { fontSize: "12px", color: "rgba(255,255,255,0.18)", margin: "4px 0 0", textAlign: "center" } }, subText)), type !== "bar" && /* @__PURE__ */ import_react11.default.createElement("div", { style: { textAlign: "center" } }, /* @__PURE__ */ import_react11.default.createElement("p", { style: { fontSize: "13px", color: "rgba(255,255,255,0.3)", margin: "0 0 4px" } }, loadingText), subText && /* @__PURE__ */ import_react11.default.createElement("p", { style: { fontSize: "12px", color: "rgba(255,255,255,0.15)", margin: 0 } }, subText))));
 };
 
 // src/components/OTPInput/OTPInput.jsx
-var import_react13 = __toESM(require("react"));
+var import_react12 = __toESM(require("react"));
 var OTPInput = ({
   length = 6,
   onComplete = () => {
@@ -2072,22 +1963,22 @@ var OTPInput = ({
   onResend = () => {
   }
 }) => {
-  const [otp, setOtp] = (0, import_react13.useState)(Array(length).fill(""));
-  const [focused, setFocused] = (0, import_react13.useState)(0);
-  const [completed, setCompleted] = (0, import_react13.useState)(false);
-  const [resendTimer, setResendTimer] = (0, import_react13.useState)(30);
-  const inputs = (0, import_react13.useRef)([]);
+  const [otp, setOtp] = (0, import_react12.useState)(Array(length).fill(""));
+  const [focused, setFocused] = (0, import_react12.useState)(0);
+  const [completed, setCompleted] = (0, import_react12.useState)(false);
+  const [resendTimer, setResendTimer] = (0, import_react12.useState)(30);
+  const inputs = (0, import_react12.useRef)([]);
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
     const b = parseInt(hex.slice(5, 7), 16);
     return `rgba(${r},${g},${b},${op})`;
   };
-  (0, import_react13.useEffect)(() => {
+  (0, import_react12.useEffect)(() => {
     var _a;
     (_a = inputs.current[0]) == null ? void 0 : _a.focus();
   }, []);
-  (0, import_react13.useEffect)(() => {
+  (0, import_react12.useEffect)(() => {
     if (resendTimer <= 0) return;
     const t = setInterval(() => setResendTimer((s) => s - 1), 1e3);
     return () => clearInterval(t);
@@ -2160,7 +2051,7 @@ var OTPInput = ({
     setFocused(0);
     onResend();
   };
-  return /* @__PURE__ */ import_react13.default.createElement("div", { style: {
+  return /* @__PURE__ */ import_react12.default.createElement("div", { style: {
     background: bg,
     borderRadius: radius,
     padding: "28px 24px",
@@ -2168,7 +2059,7 @@ var OTPInput = ({
     fontFamily: "system-ui, sans-serif",
     border: "1px solid rgba(255,255,255,0.07)",
     boxShadow: "0 10px 40px rgba(0,0,0,0.4)"
-  } }, /* @__PURE__ */ import_react13.default.createElement("div", { style: { textAlign: "center", marginBottom: "24px" } }, /* @__PURE__ */ import_react13.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react12.default.createElement("div", { style: { textAlign: "center", marginBottom: "24px" } }, /* @__PURE__ */ import_react12.default.createElement("div", { style: {
     width: "44px",
     height: "44px",
     borderRadius: "12px",
@@ -2178,7 +2069,7 @@ var OTPInput = ({
     alignItems: "center",
     justifyContent: "center",
     margin: "0 auto 14px"
-  } }, /* @__PURE__ */ import_react13.default.createElement(
+  } }, /* @__PURE__ */ import_react12.default.createElement(
     "svg",
     {
       width: "20",
@@ -2190,9 +2081,9 @@ var OTPInput = ({
       strokeLinecap: "round",
       strokeLinejoin: "round"
     },
-    /* @__PURE__ */ import_react13.default.createElement("rect", { x: "2", y: "7", width: "20", height: "14", rx: "2" }),
-    /* @__PURE__ */ import_react13.default.createElement("path", { d: "M16 3l-4 4-4-4" })
-  )), /* @__PURE__ */ import_react13.default.createElement("p", { style: { fontSize: "15px", fontWeight: "700", color: "#fff", margin: "0 0 5px" } }, label), /* @__PURE__ */ import_react13.default.createElement("p", { style: { fontSize: "12px", color: "rgba(255,255,255,0.35)", margin: 0 } }, subLabel)), /* @__PURE__ */ import_react13.default.createElement("div", { style: { display: "flex", gap: "10px", justifyContent: "center", marginBottom: "8px" } }, otp.map((val, i) => /* @__PURE__ */ import_react13.default.createElement(
+    /* @__PURE__ */ import_react12.default.createElement("rect", { x: "2", y: "7", width: "20", height: "14", rx: "2" }),
+    /* @__PURE__ */ import_react12.default.createElement("path", { d: "M16 3l-4 4-4-4" })
+  )), /* @__PURE__ */ import_react12.default.createElement("p", { style: { fontSize: "15px", fontWeight: "700", color: "#fff", margin: "0 0 5px" } }, label), /* @__PURE__ */ import_react12.default.createElement("p", { style: { fontSize: "12px", color: "rgba(255,255,255,0.35)", margin: 0 } }, subLabel)), /* @__PURE__ */ import_react12.default.createElement("div", { style: { display: "flex", gap: "10px", justifyContent: "center", marginBottom: "8px" } }, otp.map((val, i) => /* @__PURE__ */ import_react12.default.createElement(
     "input",
     {
       key: i,
@@ -2221,7 +2112,7 @@ var OTPInput = ({
         fontFamily: "inherit"
       }
     }
-  ))), length === 6 && /* @__PURE__ */ import_react13.default.createElement("div", { style: { display: "flex", justifyContent: "center", marginBottom: "8px" } }, /* @__PURE__ */ import_react13.default.createElement("div", { style: { display: "flex", gap: "10px" } }, [0, 1, 2].map((i) => /* @__PURE__ */ import_react13.default.createElement("div", { key: i, style: { width: "44px" } })), /* @__PURE__ */ import_react13.default.createElement("div", { style: { width: "10px", display: "flex", alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react13.default.createElement("div", { style: { width: "6px", height: "1.5px", background: "rgba(255,255,255,0.15)", borderRadius: "1px" } })), [0, 1, 2].map((i) => /* @__PURE__ */ import_react13.default.createElement("div", { key: i, style: { width: "44px" } })))), errorText && /* @__PURE__ */ import_react13.default.createElement("p", { style: {
+  ))), length === 6 && /* @__PURE__ */ import_react12.default.createElement("div", { style: { display: "flex", justifyContent: "center", marginBottom: "8px" } }, /* @__PURE__ */ import_react12.default.createElement("div", { style: { display: "flex", gap: "10px" } }, [0, 1, 2].map((i) => /* @__PURE__ */ import_react12.default.createElement("div", { key: i, style: { width: "44px" } })), /* @__PURE__ */ import_react12.default.createElement("div", { style: { width: "10px", display: "flex", alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react12.default.createElement("div", { style: { width: "6px", height: "1.5px", background: "rgba(255,255,255,0.15)", borderRadius: "1px" } })), [0, 1, 2].map((i) => /* @__PURE__ */ import_react12.default.createElement("div", { key: i, style: { width: "44px" } })))), errorText && /* @__PURE__ */ import_react12.default.createElement("p", { style: {
     fontSize: "12px",
     color: "#f87171",
     textAlign: "center",
@@ -2230,7 +2121,7 @@ var OTPInput = ({
     alignItems: "center",
     justifyContent: "center",
     gap: "5px"
-  } }, /* @__PURE__ */ import_react13.default.createElement(
+  } }, /* @__PURE__ */ import_react12.default.createElement(
     "svg",
     {
       width: "12",
@@ -2241,10 +2132,10 @@ var OTPInput = ({
       strokeWidth: "2.5",
       strokeLinecap: "round"
     },
-    /* @__PURE__ */ import_react13.default.createElement("circle", { cx: "12", cy: "12", r: "10" }),
-    /* @__PURE__ */ import_react13.default.createElement("line", { x1: "12", y1: "8", x2: "12", y2: "12" }),
-    /* @__PURE__ */ import_react13.default.createElement("line", { x1: "12", y1: "16", x2: "12.01", y2: "16" })
-  ), errorText), /* @__PURE__ */ import_react13.default.createElement(
+    /* @__PURE__ */ import_react12.default.createElement("circle", { cx: "12", cy: "12", r: "10" }),
+    /* @__PURE__ */ import_react12.default.createElement("line", { x1: "12", y1: "8", x2: "12", y2: "12" }),
+    /* @__PURE__ */ import_react12.default.createElement("line", { x1: "12", y1: "16", x2: "12.01", y2: "16" })
+  ), errorText), /* @__PURE__ */ import_react12.default.createElement(
     "button",
     {
       onClick: () => completed && onComplete(otp.join("")),
@@ -2265,7 +2156,7 @@ var OTPInput = ({
       }
     },
     completed ? "Verify Code" : `Enter ${length - otp.filter((v) => v).length} more digit${length - otp.filter((v) => v).length !== 1 ? "s" : ""}`
-  ), /* @__PURE__ */ import_react13.default.createElement("p", { style: { textAlign: "center", fontSize: "12px", color: "rgba(255,255,255,0.25)", margin: "14px 0 0" } }, "Didn't receive it?", " ", /* @__PURE__ */ import_react13.default.createElement(
+  ), /* @__PURE__ */ import_react12.default.createElement("p", { style: { textAlign: "center", fontSize: "12px", color: "rgba(255,255,255,0.25)", margin: "14px 0 0" } }, "Didn't receive it?", " ", /* @__PURE__ */ import_react12.default.createElement(
     "button",
     {
       onClick: handleResend,
@@ -2286,7 +2177,7 @@ var OTPInput = ({
 };
 
 // src/components/InvoiceCard/InvoiceCard.jsx
-var import_react14 = __toESM(require("react"));
+var import_react13 = __toESM(require("react"));
 var InvoiceCard = ({
   invoiceNumber = "INV-2024-001",
   date = "21 March 2024",
@@ -2317,7 +2208,7 @@ var InvoiceCard = ({
   onDownloadClick = () => {
   }
 }) => {
-  const [paid, setPaid] = (0, import_react14.useState)(status === "paid");
+  const [paid, setPaid] = (0, import_react13.useState)(status === "paid");
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -2333,21 +2224,21 @@ var InvoiceCard = ({
     pending: { label: "Pending", bg: "rgba(245,158,11,0.12)", color: "#fbbf24", border: "rgba(245,158,11,0.3)" }
   };
   const sc = statusConfig[paid ? "paid" : status] || statusConfig.unpaid;
-  const Row = ({ label, value, bold, large, accentColor }) => /* @__PURE__ */ import_react14.default.createElement("div", { style: {
+  const Row = ({ label, value, bold, large, accentColor }) => /* @__PURE__ */ import_react13.default.createElement("div", { style: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     padding: "5px 0"
-  } }, /* @__PURE__ */ import_react14.default.createElement("span", { style: {
+  } }, /* @__PURE__ */ import_react13.default.createElement("span", { style: {
     fontSize: large ? "14px" : "12px",
     fontWeight: bold ? "700" : "400",
     color: large ? "#fff" : "rgba(255,255,255,0.45)"
-  } }, label), /* @__PURE__ */ import_react14.default.createElement("span", { style: {
+  } }, label), /* @__PURE__ */ import_react13.default.createElement("span", { style: {
     fontSize: large ? "16px" : "13px",
     fontWeight: bold ? "800" : "600",
     color: accentColor || (large ? "#fff" : "rgba(255,255,255,0.85)")
   } }, currency, typeof value === "number" ? value.toFixed(2) : value));
-  return /* @__PURE__ */ import_react14.default.createElement("div", { style: {
+  return /* @__PURE__ */ import_react13.default.createElement("div", { style: {
     background: bg,
     borderRadius: radius,
     padding: "24px",
@@ -2356,7 +2247,7 @@ var InvoiceCard = ({
     border: "1px solid rgba(255,255,255,0.07)",
     boxShadow: "0 10px 40px rgba(0,0,0,0.4)",
     color: "#fff"
-  } }, /* @__PURE__ */ import_react14.default.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px" } }, /* @__PURE__ */ import_react14.default.createElement("div", null, /* @__PURE__ */ import_react14.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "7px", marginBottom: "4px" } }, /* @__PURE__ */ import_react14.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react13.default.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px" } }, /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "7px", marginBottom: "4px" } }, /* @__PURE__ */ import_react13.default.createElement("div", { style: {
     width: "24px",
     height: "24px",
     borderRadius: "6px",
@@ -2367,7 +2258,7 @@ var InvoiceCard = ({
     fontSize: "11px",
     fontWeight: "800",
     color: "#fff"
-  } }, "V"), /* @__PURE__ */ import_react14.default.createElement("span", { style: { fontSize: "14px", fontWeight: "800" } }, from.name)), /* @__PURE__ */ import_react14.default.createElement("p", { style: { fontSize: "11px", color: "rgba(255,255,255,0.3)", margin: 0 } }, invoiceNumber)), /* @__PURE__ */ import_react14.default.createElement("div", { style: {
+  } }, "V"), /* @__PURE__ */ import_react13.default.createElement("span", { style: { fontSize: "14px", fontWeight: "800" } }, from.name)), /* @__PURE__ */ import_react13.default.createElement("p", { style: { fontSize: "11px", color: "rgba(255,255,255,0.3)", margin: 0 } }, invoiceNumber)), /* @__PURE__ */ import_react13.default.createElement("div", { style: {
     padding: "4px 12px",
     borderRadius: "20px",
     fontSize: "11px",
@@ -2377,7 +2268,7 @@ var InvoiceCard = ({
     border: `1px solid ${sc.border}`,
     textTransform: "uppercase",
     letterSpacing: "0.5px"
-  } }, sc.label)), /* @__PURE__ */ import_react14.default.createElement("div", { style: {
+  } }, sc.label)), /* @__PURE__ */ import_react13.default.createElement("div", { style: {
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
     gap: "12px",
@@ -2386,33 +2277,33 @@ var InvoiceCard = ({
     borderRadius: "12px",
     padding: "14px",
     marginBottom: "20px"
-  } }, [{ label: "From", info: from }, { label: "To", info: to }].map(({ label, info }) => /* @__PURE__ */ import_react14.default.createElement("div", { key: label }, /* @__PURE__ */ import_react14.default.createElement("p", { style: { fontSize: "10px", fontWeight: "700", color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "0.8px", marginBottom: "5px" } }, label), /* @__PURE__ */ import_react14.default.createElement("p", { style: { fontSize: "12px", fontWeight: "700", color: "#fff", margin: "0 0 2px" } }, info.name), /* @__PURE__ */ import_react14.default.createElement("p", { style: { fontSize: "11px", color: "rgba(255,255,255,0.35)", margin: "0 0 2px" } }, info.email), /* @__PURE__ */ import_react14.default.createElement("p", { style: { fontSize: "10px", color: "rgba(255,255,255,0.25)", margin: 0, lineHeight: 1.4 } }, info.address)))), /* @__PURE__ */ import_react14.default.createElement("div", { style: { display: "flex", gap: "10px", marginBottom: "20px" } }, [{ label: "Issue Date", val: date }, { label: "Due Date", val: dueDate }].map(({ label, val }) => /* @__PURE__ */ import_react14.default.createElement("div", { key: label, style: {
+  } }, [{ label: "From", info: from }, { label: "To", info: to }].map(({ label, info }) => /* @__PURE__ */ import_react13.default.createElement("div", { key: label }, /* @__PURE__ */ import_react13.default.createElement("p", { style: { fontSize: "10px", fontWeight: "700", color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "0.8px", marginBottom: "5px" } }, label), /* @__PURE__ */ import_react13.default.createElement("p", { style: { fontSize: "12px", fontWeight: "700", color: "#fff", margin: "0 0 2px" } }, info.name), /* @__PURE__ */ import_react13.default.createElement("p", { style: { fontSize: "11px", color: "rgba(255,255,255,0.35)", margin: "0 0 2px" } }, info.email), /* @__PURE__ */ import_react13.default.createElement("p", { style: { fontSize: "10px", color: "rgba(255,255,255,0.25)", margin: 0, lineHeight: 1.4 } }, info.address)))), /* @__PURE__ */ import_react13.default.createElement("div", { style: { display: "flex", gap: "10px", marginBottom: "20px" } }, [{ label: "Issue Date", val: date }, { label: "Due Date", val: dueDate }].map(({ label, val }) => /* @__PURE__ */ import_react13.default.createElement("div", { key: label, style: {
     flex: 1,
     background: "rgba(255,255,255,0.03)",
     border: "1px solid rgba(255,255,255,0.06)",
     borderRadius: "10px",
     padding: "10px 12px"
-  } }, /* @__PURE__ */ import_react14.default.createElement("p", { style: { fontSize: "10px", color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "0.8px", margin: "0 0 3px", fontWeight: "700" } }, label), /* @__PURE__ */ import_react14.default.createElement("p", { style: { fontSize: "12px", fontWeight: "700", color: "#fff", margin: 0 } }, val)))), /* @__PURE__ */ import_react14.default.createElement("div", { style: { marginBottom: "16px" } }, /* @__PURE__ */ import_react14.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react13.default.createElement("p", { style: { fontSize: "10px", color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "0.8px", margin: "0 0 3px", fontWeight: "700" } }, label), /* @__PURE__ */ import_react13.default.createElement("p", { style: { fontSize: "12px", fontWeight: "700", color: "#fff", margin: 0 } }, val)))), /* @__PURE__ */ import_react13.default.createElement("div", { style: { marginBottom: "16px" } }, /* @__PURE__ */ import_react13.default.createElement("div", { style: {
     display: "grid",
     gridTemplateColumns: "1fr auto auto",
     gap: "8px",
     padding: "6px 8px",
     borderBottom: "1px solid rgba(255,255,255,0.06)",
     marginBottom: "4px"
-  } }, ["Item", "Qty", "Amount"].map((h) => /* @__PURE__ */ import_react14.default.createElement("span", { key: h, style: { fontSize: "10px", fontWeight: "700", color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "0.8px", textAlign: h !== "Item" ? "right" : "left" } }, h))), items.map((item, i) => /* @__PURE__ */ import_react14.default.createElement("div", { key: i, style: {
+  } }, ["Item", "Qty", "Amount"].map((h) => /* @__PURE__ */ import_react13.default.createElement("span", { key: h, style: { fontSize: "10px", fontWeight: "700", color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "0.8px", textAlign: h !== "Item" ? "right" : "left" } }, h))), items.map((item, i) => /* @__PURE__ */ import_react13.default.createElement("div", { key: i, style: {
     display: "grid",
     gridTemplateColumns: "1fr auto auto",
     gap: "8px",
     padding: "8px",
     borderRadius: "8px",
     background: i % 2 === 0 ? "rgba(255,255,255,0.02)" : "transparent"
-  } }, /* @__PURE__ */ import_react14.default.createElement("span", { style: { fontSize: "12px", color: "rgba(255,255,255,0.75)" } }, item.name), /* @__PURE__ */ import_react14.default.createElement("span", { style: { fontSize: "12px", color: "rgba(255,255,255,0.35)", textAlign: "right" } }, "\xD7", item.qty), /* @__PURE__ */ import_react14.default.createElement("span", { style: { fontSize: "12px", fontWeight: "600", color: "#fff", textAlign: "right" } }, currency, (item.qty * item.price).toFixed(2))))), /* @__PURE__ */ import_react14.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react13.default.createElement("span", { style: { fontSize: "12px", color: "rgba(255,255,255,0.75)" } }, item.name), /* @__PURE__ */ import_react13.default.createElement("span", { style: { fontSize: "12px", color: "rgba(255,255,255,0.35)", textAlign: "right" } }, "\xD7", item.qty), /* @__PURE__ */ import_react13.default.createElement("span", { style: { fontSize: "12px", fontWeight: "600", color: "#fff", textAlign: "right" } }, currency, (item.qty * item.price).toFixed(2))))), /* @__PURE__ */ import_react13.default.createElement("div", { style: {
     background: "rgba(255,255,255,0.03)",
     border: "1px solid rgba(255,255,255,0.06)",
     borderRadius: "12px",
     padding: "12px 14px",
     marginBottom: "20px"
-  } }, /* @__PURE__ */ import_react14.default.createElement(Row, { label: "Subtotal", value: subtotal }), /* @__PURE__ */ import_react14.default.createElement(Row, { label: `Tax (${taxRate}%)`, value: tax }), /* @__PURE__ */ import_react14.default.createElement("div", { style: { height: "1px", background: "rgba(255,255,255,0.07)", margin: "8px 0" } }), /* @__PURE__ */ import_react14.default.createElement(Row, { label: "Total", value: total, bold: true, large: true, accentColor: accent })), /* @__PURE__ */ import_react14.default.createElement("div", { style: { display: "flex", gap: "8px" } }, !paid && /* @__PURE__ */ import_react14.default.createElement(
+  } }, /* @__PURE__ */ import_react13.default.createElement(Row, { label: "Subtotal", value: subtotal }), /* @__PURE__ */ import_react13.default.createElement(Row, { label: `Tax (${taxRate}%)`, value: tax }), /* @__PURE__ */ import_react13.default.createElement("div", { style: { height: "1px", background: "rgba(255,255,255,0.07)", margin: "8px 0" } }), /* @__PURE__ */ import_react13.default.createElement(Row, { label: "Total", value: total, bold: true, large: true, accentColor: accent })), /* @__PURE__ */ import_react13.default.createElement("div", { style: { display: "flex", gap: "8px" } }, !paid && /* @__PURE__ */ import_react13.default.createElement(
     "button",
     {
       onClick: () => {
@@ -2438,7 +2329,7 @@ var InvoiceCard = ({
     "Pay ",
     currency,
     total.toFixed(2)
-  ), paid && /* @__PURE__ */ import_react14.default.createElement("div", { style: {
+  ), paid && /* @__PURE__ */ import_react13.default.createElement("div", { style: {
     flex: 1,
     padding: "11px",
     borderRadius: "12px",
@@ -2451,7 +2342,7 @@ var InvoiceCard = ({
     fontSize: "13px",
     fontWeight: "700",
     color: "#34d399"
-  } }, /* @__PURE__ */ import_react14.default.createElement(
+  } }, /* @__PURE__ */ import_react13.default.createElement(
     "svg",
     {
       width: "14",
@@ -2462,8 +2353,8 @@ var InvoiceCard = ({
       strokeWidth: "2.5",
       strokeLinecap: "round"
     },
-    /* @__PURE__ */ import_react14.default.createElement("polyline", { points: "20 6 9 17 4 12" })
-  ), "Payment Done"), /* @__PURE__ */ import_react14.default.createElement(
+    /* @__PURE__ */ import_react13.default.createElement("polyline", { points: "20 6 9 17 4 12" })
+  ), "Payment Done"), /* @__PURE__ */ import_react13.default.createElement(
     "button",
     {
       onClick: onDownloadClick,
@@ -2489,7 +2380,7 @@ var InvoiceCard = ({
         e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
       }
     },
-    /* @__PURE__ */ import_react14.default.createElement(
+    /* @__PURE__ */ import_react13.default.createElement(
       "svg",
       {
         width: "15",
@@ -2501,13 +2392,13 @@ var InvoiceCard = ({
         strokeLinecap: "round",
         strokeLinejoin: "round"
       },
-      /* @__PURE__ */ import_react14.default.createElement("path", { d: "M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" })
+      /* @__PURE__ */ import_react13.default.createElement("path", { d: "M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" })
     )
   )));
 };
 
 // src/components/FileUpload/FileUpload.jsx
-var import_react15 = __toESM(require("react"));
+var import_react14 = __toESM(require("react"));
 var FileUpload = ({
   accept = "*",
   multiple = true,
@@ -2520,10 +2411,10 @@ var FileUpload = ({
   onUpload = () => {
   }
 }) => {
-  const [files, setFiles] = (0, import_react15.useState)([]);
-  const [dragging, setDragging] = (0, import_react15.useState)(false);
-  const [error, setError] = (0, import_react15.useState)("");
-  const inputRef = (0, import_react15.useRef)(null);
+  const [files, setFiles] = (0, import_react14.useState)([]);
+  const [dragging, setDragging] = (0, import_react14.useState)(false);
+  const [error, setError] = (0, import_react14.useState)("");
+  const inputRef = (0, import_react14.useRef)(null);
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -2576,7 +2467,7 @@ var FileUpload = ({
     processFiles(Array.from(e.dataTransfer.files));
   };
   const removeFile = (id) => setFiles((prev) => prev.filter((f) => f.id !== id));
-  return /* @__PURE__ */ import_react15.default.createElement("div", { style: { width: "320px", fontFamily: "system-ui, sans-serif" } }, /* @__PURE__ */ import_react15.default.createElement(
+  return /* @__PURE__ */ import_react14.default.createElement("div", { style: { width: "320px", fontFamily: "system-ui, sans-serif" } }, /* @__PURE__ */ import_react14.default.createElement(
     "div",
     {
       onClick: () => {
@@ -2599,7 +2490,7 @@ var FileUpload = ({
         transition: "all 0.2s"
       }
     },
-    /* @__PURE__ */ import_react15.default.createElement(
+    /* @__PURE__ */ import_react14.default.createElement(
       "input",
       {
         ref: inputRef,
@@ -2610,7 +2501,7 @@ var FileUpload = ({
         onChange: (e) => processFiles(Array.from(e.target.files))
       }
     ),
-    /* @__PURE__ */ import_react15.default.createElement("div", { style: {
+    /* @__PURE__ */ import_react14.default.createElement("div", { style: {
       width: "48px",
       height: "48px",
       borderRadius: "14px",
@@ -2622,7 +2513,7 @@ var FileUpload = ({
       margin: "0 auto 14px",
       transition: "all 0.2s",
       transform: dragging ? "scale(1.1)" : "scale(1)"
-    } }, /* @__PURE__ */ import_react15.default.createElement(
+    } }, /* @__PURE__ */ import_react14.default.createElement(
       "svg",
       {
         width: "22",
@@ -2634,11 +2525,11 @@ var FileUpload = ({
         strokeLinecap: "round",
         strokeLinejoin: "round"
       },
-      /* @__PURE__ */ import_react15.default.createElement("path", { d: "M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" })
+      /* @__PURE__ */ import_react14.default.createElement("path", { d: "M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" })
     )),
-    /* @__PURE__ */ import_react15.default.createElement("p", { style: { fontSize: "13px", fontWeight: "600", color: "#fff", margin: "0 0 4px" } }, label),
-    /* @__PURE__ */ import_react15.default.createElement("p", { style: { fontSize: "11px", color: "rgba(255,255,255,0.3)", margin: 0 } }, subLabel, " ", maxSizeMB, "MB")
-  ), error && /* @__PURE__ */ import_react15.default.createElement("div", { style: {
+    /* @__PURE__ */ import_react14.default.createElement("p", { style: { fontSize: "13px", fontWeight: "600", color: "#fff", margin: "0 0 4px" } }, label),
+    /* @__PURE__ */ import_react14.default.createElement("p", { style: { fontSize: "11px", color: "rgba(255,255,255,0.3)", margin: 0 } }, subLabel, " ", maxSizeMB, "MB")
+  ), error && /* @__PURE__ */ import_react14.default.createElement("div", { style: {
     marginTop: "10px",
     padding: "9px 12px",
     borderRadius: "10px",
@@ -2647,7 +2538,7 @@ var FileUpload = ({
     display: "flex",
     alignItems: "center",
     gap: "8px"
-  } }, /* @__PURE__ */ import_react15.default.createElement(
+  } }, /* @__PURE__ */ import_react14.default.createElement(
     "svg",
     {
       width: "13",
@@ -2658,19 +2549,19 @@ var FileUpload = ({
       strokeWidth: "2.5",
       strokeLinecap: "round"
     },
-    /* @__PURE__ */ import_react15.default.createElement("circle", { cx: "12", cy: "12", r: "10" }),
-    /* @__PURE__ */ import_react15.default.createElement("line", { x1: "12", y1: "8", x2: "12", y2: "12" }),
-    /* @__PURE__ */ import_react15.default.createElement("line", { x1: "12", y1: "16", x2: "12.01", y2: "16" })
-  ), /* @__PURE__ */ import_react15.default.createElement("span", { style: { fontSize: "11px", color: "#f87171" } }, error)), files.length > 0 && /* @__PURE__ */ import_react15.default.createElement("div", { style: { marginTop: "12px", display: "flex", flexDirection: "column", gap: "8px" } }, files.map(({ file, id, progress, done }) => {
+    /* @__PURE__ */ import_react14.default.createElement("circle", { cx: "12", cy: "12", r: "10" }),
+    /* @__PURE__ */ import_react14.default.createElement("line", { x1: "12", y1: "8", x2: "12", y2: "12" }),
+    /* @__PURE__ */ import_react14.default.createElement("line", { x1: "12", y1: "16", x2: "12.01", y2: "16" })
+  ), /* @__PURE__ */ import_react14.default.createElement("span", { style: { fontSize: "11px", color: "#f87171" } }, error)), files.length > 0 && /* @__PURE__ */ import_react14.default.createElement("div", { style: { marginTop: "12px", display: "flex", flexDirection: "column", gap: "8px" } }, files.map(({ file, id, progress, done }) => {
     const icon = getIcon(file.type);
     const preview = file.type.startsWith("image/") ? URL.createObjectURL(file) : null;
-    return /* @__PURE__ */ import_react15.default.createElement("div", { key: id, style: {
+    return /* @__PURE__ */ import_react14.default.createElement("div", { key: id, style: {
       background: "rgba(255,255,255,0.03)",
       border: `1px solid ${done ? alpha(accent, 0.2) : "rgba(255,255,255,0.07)"}`,
       borderRadius: "12px",
       padding: "10px 12px",
       transition: "border-color 0.3s"
-    } }, /* @__PURE__ */ import_react15.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "10px" } }, /* @__PURE__ */ import_react15.default.createElement("div", { style: {
+    } }, /* @__PURE__ */ import_react14.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "10px" } }, /* @__PURE__ */ import_react14.default.createElement("div", { style: {
       width: "36px",
       height: "36px",
       borderRadius: "8px",
@@ -2681,7 +2572,7 @@ var FileUpload = ({
       alignItems: "center",
       justifyContent: "center",
       overflow: "hidden"
-    } }, !preview && /* @__PURE__ */ import_react15.default.createElement(
+    } }, !preview && /* @__PURE__ */ import_react14.default.createElement(
       "svg",
       {
         width: "16",
@@ -2693,8 +2584,8 @@ var FileUpload = ({
         strokeLinecap: "round",
         strokeLinejoin: "round"
       },
-      /* @__PURE__ */ import_react15.default.createElement("path", { d: icon.path })
-    )), /* @__PURE__ */ import_react15.default.createElement("div", { style: { flex: 1, minWidth: 0 } }, /* @__PURE__ */ import_react15.default.createElement("p", { style: {
+      /* @__PURE__ */ import_react14.default.createElement("path", { d: icon.path })
+    )), /* @__PURE__ */ import_react14.default.createElement("div", { style: { flex: 1, minWidth: 0 } }, /* @__PURE__ */ import_react14.default.createElement("p", { style: {
       fontSize: "12px",
       fontWeight: "600",
       color: "#fff",
@@ -2702,7 +2593,7 @@ var FileUpload = ({
       overflow: "hidden",
       textOverflow: "ellipsis",
       whiteSpace: "nowrap"
-    } }, file.name), /* @__PURE__ */ import_react15.default.createElement("p", { style: { fontSize: "10px", color: "rgba(255,255,255,0.3)", margin: 0 } }, formatSize(file.size))), done ? /* @__PURE__ */ import_react15.default.createElement("div", { style: {
+    } }, file.name), /* @__PURE__ */ import_react14.default.createElement("p", { style: { fontSize: "10px", color: "rgba(255,255,255,0.3)", margin: 0 } }, formatSize(file.size))), done ? /* @__PURE__ */ import_react14.default.createElement("div", { style: {
       width: "22px",
       height: "22px",
       borderRadius: "50%",
@@ -2712,7 +2603,7 @@ var FileUpload = ({
       alignItems: "center",
       justifyContent: "center",
       flexShrink: 0
-    } }, /* @__PURE__ */ import_react15.default.createElement(
+    } }, /* @__PURE__ */ import_react14.default.createElement(
       "svg",
       {
         width: "10",
@@ -2723,8 +2614,8 @@ var FileUpload = ({
         strokeWidth: "3",
         strokeLinecap: "round"
       },
-      /* @__PURE__ */ import_react15.default.createElement("polyline", { points: "20 6 9 17 4 12" })
-    )) : /* @__PURE__ */ import_react15.default.createElement(
+      /* @__PURE__ */ import_react14.default.createElement("polyline", { points: "20 6 9 17 4 12" })
+    )) : /* @__PURE__ */ import_react14.default.createElement(
       "button",
       {
         onClick: () => removeFile(id),
@@ -2740,7 +2631,7 @@ var FileUpload = ({
         onMouseEnter: (e) => e.currentTarget.style.color = "#f87171",
         onMouseLeave: (e) => e.currentTarget.style.color = "rgba(255,255,255,0.25)"
       },
-      /* @__PURE__ */ import_react15.default.createElement(
+      /* @__PURE__ */ import_react14.default.createElement(
         "svg",
         {
           width: "14",
@@ -2751,15 +2642,15 @@ var FileUpload = ({
           strokeWidth: "2.5",
           strokeLinecap: "round"
         },
-        /* @__PURE__ */ import_react15.default.createElement("path", { d: "M18 6L6 18M6 6l12 12" })
+        /* @__PURE__ */ import_react14.default.createElement("path", { d: "M18 6L6 18M6 6l12 12" })
       )
-    )), !done && /* @__PURE__ */ import_react15.default.createElement("div", { style: {
+    )), !done && /* @__PURE__ */ import_react14.default.createElement("div", { style: {
       marginTop: "8px",
       height: "3px",
       background: "rgba(255,255,255,0.06)",
       borderRadius: "2px",
       overflow: "hidden"
-    } }, /* @__PURE__ */ import_react15.default.createElement("div", { style: {
+    } }, /* @__PURE__ */ import_react14.default.createElement("div", { style: {
       height: "100%",
       borderRadius: "2px",
       width: `${progress}%`,
@@ -2770,7 +2661,7 @@ var FileUpload = ({
 };
 
 // src/components/ColorPicker/ColorPicker.jsx
-var import_react16 = __toESM(require("react"));
+var import_react15 = __toESM(require("react"));
 var ColorPicker = ({
   defaultColor = "#6366f1",
   showOpacity = true,
@@ -2804,11 +2695,11 @@ var ColorPicker = ({
     "#000000"
   ]
 }) => {
-  const [color, setColor] = (0, import_react16.useState)(defaultColor);
-  const [hex, setHex] = (0, import_react16.useState)(defaultColor);
-  const [opacity, setOpacity] = (0, import_react16.useState)(100);
-  const [inputErr, setInputErr] = (0, import_react16.useState)(false);
-  const [copied, setCopied] = (0, import_react16.useState)(false);
+  const [color, setColor] = (0, import_react15.useState)(defaultColor);
+  const [hex, setHex] = (0, import_react15.useState)(defaultColor);
+  const [opacity, setOpacity] = (0, import_react15.useState)(100);
+  const [inputErr, setInputErr] = (0, import_react15.useState)(false);
+  const [copied, setCopied] = (0, import_react15.useState)(false);
   const alpha = (hexVal, op) => {
     const r = parseInt(hexVal.slice(1, 3), 16);
     const g = parseInt(hexVal.slice(3, 5), 16);
@@ -2844,7 +2735,7 @@ var ColorPicker = ({
     setTimeout(() => setCopied(false), 1500);
   };
   const hueGradient = "linear-gradient(90deg,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00)";
-  return /* @__PURE__ */ import_react16.default.createElement("div", { style: {
+  return /* @__PURE__ */ import_react15.default.createElement("div", { style: {
     background: bg,
     borderRadius: radius,
     padding: "20px",
@@ -2852,7 +2743,7 @@ var ColorPicker = ({
     fontFamily: "system-ui, sans-serif",
     border: "1px solid rgba(255,255,255,0.07)",
     boxShadow: "0 10px 40px rgba(0,0,0,0.4)"
-  } }, /* @__PURE__ */ import_react16.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react15.default.createElement("div", { style: {
     height: "52px",
     borderRadius: "12px",
     marginBottom: "16px",
@@ -2860,7 +2751,7 @@ var ColorPicker = ({
     border: "1px solid rgba(255,255,255,0.08)",
     position: "relative",
     overflow: "hidden"
-  } }, /* @__PURE__ */ import_react16.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react15.default.createElement("div", { style: {
     position: "absolute",
     inset: 0,
     zIndex: 0,
@@ -2868,7 +2759,7 @@ var ColorPicker = ({
     backgroundSize: "10px 10px",
     backgroundPosition: "0 0,0 5px,5px -5px,-5px 0",
     opacity: 0.3
-  } }), /* @__PURE__ */ import_react16.default.createElement("div", { style: { position: "absolute", inset: 0, background: alpha(color, opacity / 100) } })), /* @__PURE__ */ import_react16.default.createElement("div", { style: { position: "relative", marginBottom: "12px" } }, /* @__PURE__ */ import_react16.default.createElement(
+  } }), /* @__PURE__ */ import_react15.default.createElement("div", { style: { position: "absolute", inset: 0, background: alpha(color, opacity / 100) } })), /* @__PURE__ */ import_react15.default.createElement("div", { style: { position: "relative", marginBottom: "12px" } }, /* @__PURE__ */ import_react15.default.createElement(
     "input",
     {
       type: "range",
@@ -2899,7 +2790,7 @@ var ColorPicker = ({
         border: "none"
       }
     }
-  )), showOpacity && /* @__PURE__ */ import_react16.default.createElement("div", { style: { marginBottom: "16px" } }, /* @__PURE__ */ import_react16.default.createElement(
+  )), showOpacity && /* @__PURE__ */ import_react15.default.createElement("div", { style: { marginBottom: "16px" } }, /* @__PURE__ */ import_react15.default.createElement(
     "input",
     {
       type: "range",
@@ -2919,14 +2810,14 @@ var ColorPicker = ({
         border: "none"
       }
     }
-  ), /* @__PURE__ */ import_react16.default.createElement("div", { style: { display: "flex", justifyContent: "space-between", marginTop: "4px" } }, /* @__PURE__ */ import_react16.default.createElement("span", { style: { fontSize: "10px", color: "rgba(255,255,255,0.25)" } }, "Opacity"), /* @__PURE__ */ import_react16.default.createElement("span", { style: { fontSize: "10px", color: "rgba(255,255,255,0.45)", fontWeight: "600" } }, opacity, "%"))), showInput && /* @__PURE__ */ import_react16.default.createElement("div", { style: { display: "flex", gap: "8px", marginBottom: "16px", alignItems: "center" } }, /* @__PURE__ */ import_react16.default.createElement("div", { style: {
+  ), /* @__PURE__ */ import_react15.default.createElement("div", { style: { display: "flex", justifyContent: "space-between", marginTop: "4px" } }, /* @__PURE__ */ import_react15.default.createElement("span", { style: { fontSize: "10px", color: "rgba(255,255,255,0.25)" } }, "Opacity"), /* @__PURE__ */ import_react15.default.createElement("span", { style: { fontSize: "10px", color: "rgba(255,255,255,0.45)", fontWeight: "600" } }, opacity, "%"))), showInput && /* @__PURE__ */ import_react15.default.createElement("div", { style: { display: "flex", gap: "8px", marginBottom: "16px", alignItems: "center" } }, /* @__PURE__ */ import_react15.default.createElement("div", { style: {
     width: "32px",
     height: "32px",
     borderRadius: "8px",
     flexShrink: 0,
     background: color,
     border: "1px solid rgba(255,255,255,0.1)"
-  } }), /* @__PURE__ */ import_react16.default.createElement(
+  } }), /* @__PURE__ */ import_react15.default.createElement(
     "input",
     {
       value: hex,
@@ -2949,7 +2840,7 @@ var ColorPicker = ({
         outline: "none"
       }
     }
-  ), /* @__PURE__ */ import_react16.default.createElement(
+  ), /* @__PURE__ */ import_react15.default.createElement(
     "button",
     {
       onClick: copyHex,
@@ -2969,8 +2860,8 @@ var ColorPicker = ({
         transition: "all 0.2s"
       }
     },
-    copied ? /* @__PURE__ */ import_react16.default.createElement("svg", { width: "13", height: "13", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round" }, /* @__PURE__ */ import_react16.default.createElement("polyline", { points: "20 6 9 17 4 12" })) : /* @__PURE__ */ import_react16.default.createElement("svg", { width: "13", height: "13", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round" }, /* @__PURE__ */ import_react16.default.createElement("rect", { x: "9", y: "9", width: "13", height: "13", rx: "2" }), /* @__PURE__ */ import_react16.default.createElement("path", { d: "M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" }))
-  )), /* @__PURE__ */ import_react16.default.createElement("div", { style: { height: "1px", background: "rgba(255,255,255,0.06)", marginBottom: "14px" } }), /* @__PURE__ */ import_react16.default.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "7px" } }, swatches.map((s) => /* @__PURE__ */ import_react16.default.createElement(
+    copied ? /* @__PURE__ */ import_react15.default.createElement("svg", { width: "13", height: "13", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round" }, /* @__PURE__ */ import_react15.default.createElement("polyline", { points: "20 6 9 17 4 12" })) : /* @__PURE__ */ import_react15.default.createElement("svg", { width: "13", height: "13", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round" }, /* @__PURE__ */ import_react15.default.createElement("rect", { x: "9", y: "9", width: "13", height: "13", rx: "2" }), /* @__PURE__ */ import_react15.default.createElement("path", { d: "M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" }))
+  )), /* @__PURE__ */ import_react15.default.createElement("div", { style: { height: "1px", background: "rgba(255,255,255,0.06)", marginBottom: "14px" } }), /* @__PURE__ */ import_react15.default.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "7px" } }, swatches.map((s) => /* @__PURE__ */ import_react15.default.createElement(
     "button",
     {
       key: s,
@@ -2991,7 +2882,7 @@ var ColorPicker = ({
       onMouseEnter: (e) => e.currentTarget.style.transform = "scale(1.2)",
       onMouseLeave: (e) => e.currentTarget.style.transform = "scale(1)"
     }
-  ))), /* @__PURE__ */ import_react16.default.createElement("div", { style: {
+  ))), /* @__PURE__ */ import_react15.default.createElement("div", { style: {
     marginTop: "14px",
     padding: "8px 10px",
     borderRadius: "8px",
@@ -3000,11 +2891,11 @@ var ColorPicker = ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center"
-  } }, /* @__PURE__ */ import_react16.default.createElement("span", { style: { fontSize: "10px", color: "rgba(255,255,255,0.25)", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.5px" } }, "RGBA"), /* @__PURE__ */ import_react16.default.createElement("span", { style: { fontSize: "10px", fontFamily: "monospace", color: "rgba(255,255,255,0.5)" } }, alpha(color, opacity / 100))));
+  } }, /* @__PURE__ */ import_react15.default.createElement("span", { style: { fontSize: "10px", color: "rgba(255,255,255,0.25)", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.5px" } }, "RGBA"), /* @__PURE__ */ import_react15.default.createElement("span", { style: { fontSize: "10px", fontFamily: "monospace", color: "rgba(255,255,255,0.5)" } }, alpha(color, opacity / 100))));
 };
 
 // src/components/RatingStars/RatingStars.jsx
-var import_react17 = __toESM(require("react"));
+var import_react16 = __toESM(require("react"));
 var RatingStars = ({
   defaultRating = 0,
   total = 5,
@@ -3020,8 +2911,8 @@ var RatingStars = ({
   onChange = () => {
   }
 }) => {
-  const [rating, setRating] = (0, import_react17.useState)(defaultRating);
-  const [hovered, setHovered] = (0, import_react17.useState)(0);
+  const [rating, setRating] = (0, import_react16.useState)(defaultRating);
+  const [hovered, setHovered] = (0, import_react16.useState)(0);
   const labels = ["", "Terrible", "Bad", "Okay", "Good", "Excellent"];
   const halfLabels = { 0.5: "Awful", 1: "Terrible", 1.5: "Very Bad", 2: "Bad", 2.5: "Below Average", 3: "Okay", 3.5: "Above Average", 4: "Good", 4.5: "Great", 5: "Excellent" };
   const alpha = (hex, op) => {
@@ -3056,7 +2947,7 @@ var RatingStars = ({
   const StarIcon = ({ index }) => {
     const fill = active >= index ? "full" : active >= index - 0.5 ? "half" : "empty";
     const id = `half-${index}`;
-    return /* @__PURE__ */ import_react17.default.createElement(
+    return /* @__PURE__ */ import_react16.default.createElement(
       "svg",
       {
         width: size,
@@ -3070,8 +2961,8 @@ var RatingStars = ({
           if (!readOnly) e.currentTarget.style.transform = "scale(1.15)";
         }
       },
-      /* @__PURE__ */ import_react17.default.createElement("defs", null, /* @__PURE__ */ import_react17.default.createElement("linearGradient", { id }, /* @__PURE__ */ import_react17.default.createElement("stop", { offset: "50%", stopColor: accent }), /* @__PURE__ */ import_react17.default.createElement("stop", { offset: "50%", stopColor: "transparent" }))),
-      /* @__PURE__ */ import_react17.default.createElement(
+      /* @__PURE__ */ import_react16.default.createElement("defs", null, /* @__PURE__ */ import_react16.default.createElement("linearGradient", { id }, /* @__PURE__ */ import_react16.default.createElement("stop", { offset: "50%", stopColor: accent }), /* @__PURE__ */ import_react16.default.createElement("stop", { offset: "50%", stopColor: "transparent" }))),
+      /* @__PURE__ */ import_react16.default.createElement(
         "polygon",
         {
           points: "12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26",
@@ -3082,7 +2973,7 @@ var RatingStars = ({
       )
     );
   };
-  return /* @__PURE__ */ import_react17.default.createElement("div", { style: {
+  return /* @__PURE__ */ import_react16.default.createElement("div", { style: {
     background: bg,
     borderRadius: radius,
     padding: "20px 22px",
@@ -3093,21 +2984,21 @@ var RatingStars = ({
     fontFamily: "system-ui, sans-serif",
     border: "1px solid rgba(255,255,255,0.07)",
     boxShadow: "0 10px 40px rgba(0,0,0,0.4)"
-  } }, /* @__PURE__ */ import_react17.default.createElement("div", { style: { display: "flex", gap: "4px", alignItems: "center" } }, Array.from({ length: total }, (_, i) => /* @__PURE__ */ import_react17.default.createElement(StarIcon, { key: i + 1, index: i + 1 }))), showLabel && /* @__PURE__ */ import_react17.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react16.default.createElement("div", { style: { display: "flex", gap: "4px", alignItems: "center" } }, Array.from({ length: total }, (_, i) => /* @__PURE__ */ import_react16.default.createElement(StarIcon, { key: i + 1, index: i + 1 }))), showLabel && /* @__PURE__ */ import_react16.default.createElement("div", { style: {
     fontSize: "14px",
     fontWeight: "700",
     minHeight: "20px",
     color: active > 0 ? accent : "rgba(255,255,255,0.2)",
     transition: "color 0.2s"
-  } }, active > 0 ? allowHalf ? halfLabels[active] : labels[Math.round(active)] : readOnly ? "Not rated" : "Rate this"), (rating > 0 || readOnly) && showCount && /* @__PURE__ */ import_react17.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px" } }, /* @__PURE__ */ import_react17.default.createElement("span", { style: {
+  } }, active > 0 ? allowHalf ? halfLabels[active] : labels[Math.round(active)] : readOnly ? "Not rated" : "Rate this"), (rating > 0 || readOnly) && showCount && /* @__PURE__ */ import_react16.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px" } }, /* @__PURE__ */ import_react16.default.createElement("span", { style: {
     fontSize: "28px",
     fontWeight: "800",
     color: "#fff",
     lineHeight: 1
-  } }, rating.toFixed(1)), /* @__PURE__ */ import_react17.default.createElement("div", null, /* @__PURE__ */ import_react17.default.createElement("div", { style: { display: "flex", gap: "1px", marginBottom: "3px" } }, Array.from({ length: total }, (_, i) => {
+  } }, rating.toFixed(1)), /* @__PURE__ */ import_react16.default.createElement("div", null, /* @__PURE__ */ import_react16.default.createElement("div", { style: { display: "flex", gap: "1px", marginBottom: "3px" } }, Array.from({ length: total }, (_, i) => {
     const fill = rating >= i + 1 ? "full" : rating >= i + 0.5 ? "half" : "empty";
     const gid = `sm-${i}`;
-    return /* @__PURE__ */ import_react17.default.createElement("svg", { key: i, width: "12", height: "12", viewBox: "0 0 24 24" }, /* @__PURE__ */ import_react17.default.createElement("defs", null, /* @__PURE__ */ import_react17.default.createElement("linearGradient", { id: gid }, /* @__PURE__ */ import_react17.default.createElement("stop", { offset: "50%", stopColor: accent }), /* @__PURE__ */ import_react17.default.createElement("stop", { offset: "50%", stopColor: "transparent" }))), /* @__PURE__ */ import_react17.default.createElement(
+    return /* @__PURE__ */ import_react16.default.createElement("svg", { key: i, width: "12", height: "12", viewBox: "0 0 24 24" }, /* @__PURE__ */ import_react16.default.createElement("defs", null, /* @__PURE__ */ import_react16.default.createElement("linearGradient", { id: gid }, /* @__PURE__ */ import_react16.default.createElement("stop", { offset: "50%", stopColor: accent }), /* @__PURE__ */ import_react16.default.createElement("stop", { offset: "50%", stopColor: "transparent" }))), /* @__PURE__ */ import_react16.default.createElement(
       "polygon",
       {
         points: "12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26",
@@ -3116,11 +3007,11 @@ var RatingStars = ({
         strokeWidth: "1.5"
       }
     ));
-  })), reviewCount > 0 && /* @__PURE__ */ import_react17.default.createElement("span", { style: { fontSize: "11px", color: "rgba(255,255,255,0.3)" } }, reviewCount.toLocaleString(), " reviews"))), !readOnly && rating === 0 && /* @__PURE__ */ import_react17.default.createElement("p", { style: { fontSize: "11px", color: "rgba(255,255,255,0.2)", margin: 0 } }, allowHalf ? "Hover to rate \u2022 Half stars supported" : "Click to rate"));
+  })), reviewCount > 0 && /* @__PURE__ */ import_react16.default.createElement("span", { style: { fontSize: "11px", color: "rgba(255,255,255,0.3)" } }, reviewCount.toLocaleString(), " reviews"))), !readOnly && rating === 0 && /* @__PURE__ */ import_react16.default.createElement("p", { style: { fontSize: "11px", color: "rgba(255,255,255,0.2)", margin: 0 } }, allowHalf ? "Hover to rate \u2022 Half stars supported" : "Click to rate"));
 };
 
 // src/components/StatCard/StatCard.jsx
-var import_react18 = __toESM(require("react"));
+var import_react17 = __toESM(require("react"));
 var StatCard = ({
   title = "Active Users",
   value = "128K",
@@ -3135,12 +3026,12 @@ var StatCard = ({
   showIcon = true,
   barPercent = 68
 }) => {
-  const [count, setCount] = (0, import_react18.useState)(0);
-  const [barWidth, setBarWidth] = (0, import_react18.useState)(0);
-  const [visible, setVisible] = (0, import_react18.useState)(false);
-  const [entered, setEntered] = (0, import_react18.useState)(false);
-  const ref = (0, import_react18.useRef)(null);
-  (0, import_react18.useEffect)(() => {
+  const [count, setCount] = (0, import_react17.useState)(0);
+  const [barWidth, setBarWidth] = (0, import_react17.useState)(0);
+  const [visible, setVisible] = (0, import_react17.useState)(false);
+  const [entered, setEntered] = (0, import_react17.useState)(false);
+  const ref = (0, import_react17.useRef)(null);
+  (0, import_react17.useEffect)(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -3153,7 +3044,7 @@ var StatCard = ({
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
-  (0, import_react18.useEffect)(() => {
+  (0, import_react17.useEffect)(() => {
     if (!visible) return;
     setEntered(true);
     const duration = 1400;
@@ -3166,7 +3057,7 @@ var StatCard = ({
     };
     requestAnimationFrame(step);
   }, [visible, numericValue]);
-  (0, import_react18.useEffect)(() => {
+  (0, import_react17.useEffect)(() => {
     if (!visible) return;
     const t = setTimeout(() => setBarWidth(barPercent), 200);
     return () => clearTimeout(t);
@@ -3183,7 +3074,7 @@ var StatCard = ({
     return `rgba(${r},${g},${b},${op})`;
   };
   const uid = accent.replace("#", "sc");
-  return /* @__PURE__ */ import_react18.default.createElement(import_react18.default.Fragment, null, /* @__PURE__ */ import_react18.default.createElement("style", null, `
+  return /* @__PURE__ */ import_react17.default.createElement(import_react17.default.Fragment, null, /* @__PURE__ */ import_react17.default.createElement("style", null, `
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap');
 
         .sc-${uid} {
@@ -3316,16 +3207,16 @@ var StatCard = ({
           transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
           box-shadow: 0 0 8px ${alpha(accent, 0.5)};
         }
-      `), /* @__PURE__ */ import_react18.default.createElement(
+      `), /* @__PURE__ */ import_react17.default.createElement(
     "div",
     {
       ref,
       className: `sc-${uid}${entered ? " entered" : ""}`
     },
-    /* @__PURE__ */ import_react18.default.createElement("div", { className: `sc-top-${uid}` }, showIcon && /* @__PURE__ */ import_react18.default.createElement("div", { className: `sc-icon-${uid}` }, icon), showBadge && /* @__PURE__ */ import_react18.default.createElement("span", { className: isPositive ? `sc-badge-up-${uid}` : `sc-badge-down-${uid}` }, isPositive ? "\u25B2" : "\u25BC", " ", change)),
-    /* @__PURE__ */ import_react18.default.createElement("div", { className: `sc-value-${uid}` }, visible ? formatCount(count) : "0"),
-    /* @__PURE__ */ import_react18.default.createElement("div", { className: `sc-label-${uid}` }, title),
-    /* @__PURE__ */ import_react18.default.createElement("div", { className: `sc-track-${uid}` }, /* @__PURE__ */ import_react18.default.createElement(
+    /* @__PURE__ */ import_react17.default.createElement("div", { className: `sc-top-${uid}` }, showIcon && /* @__PURE__ */ import_react17.default.createElement("div", { className: `sc-icon-${uid}` }, icon), showBadge && /* @__PURE__ */ import_react17.default.createElement("span", { className: isPositive ? `sc-badge-up-${uid}` : `sc-badge-down-${uid}` }, isPositive ? "\u25B2" : "\u25BC", " ", change)),
+    /* @__PURE__ */ import_react17.default.createElement("div", { className: `sc-value-${uid}` }, visible ? formatCount(count) : "0"),
+    /* @__PURE__ */ import_react17.default.createElement("div", { className: `sc-label-${uid}` }, title),
+    /* @__PURE__ */ import_react17.default.createElement("div", { className: `sc-track-${uid}` }, /* @__PURE__ */ import_react17.default.createElement(
       "div",
       {
         className: `sc-fill-${uid}`,
@@ -3336,7 +3227,7 @@ var StatCard = ({
 };
 
 // src/components/ProgressBar/ProgressBar.jsx
-var import_react19 = __toESM(require("react"));
+var import_react18 = __toESM(require("react"));
 var ProgressBar = ({
   label = "Progress",
   percentage = 75,
@@ -3350,10 +3241,10 @@ var ProgressBar = ({
   steps = 5
   // only for type="steps"
 }) => {
-  const [filled, setFilled] = (0, import_react19.useState)(0);
-  const [visible, setVisible] = (0, import_react19.useState)(false);
-  const ref = (0, import_react19.useRef)(null);
-  (0, import_react19.useEffect)(() => {
+  const [filled, setFilled] = (0, import_react18.useState)(0);
+  const [visible, setVisible] = (0, import_react18.useState)(false);
+  const ref = (0, import_react18.useRef)(null);
+  (0, import_react18.useEffect)(() => {
     const obs = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
@@ -3366,7 +3257,7 @@ var ProgressBar = ({
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, []);
-  (0, import_react19.useEffect)(() => {
+  (0, import_react18.useEffect)(() => {
     if (!visible) return;
     const duration = 1200;
     const start = performance.now();
@@ -3403,8 +3294,8 @@ var ProgressBar = ({
     transition: "opacity 0.45s ease, transform 0.45s ease"
   };
   const rowStyle = { display: "flex", justifyContent: "space-between", alignItems: "center" };
-  const labelEl = showLabel && /* @__PURE__ */ import_react19.default.createElement("span", { style: { fontSize: "0.85rem", fontWeight: 600, color: "#334155" } }, label);
-  const badgeEl = showPercent && /* @__PURE__ */ import_react19.default.createElement("span", { style: {
+  const labelEl = showLabel && /* @__PURE__ */ import_react18.default.createElement("span", { style: { fontSize: "0.85rem", fontWeight: 600, color: "#334155" } }, label);
+  const badgeEl = showPercent && /* @__PURE__ */ import_react18.default.createElement("span", { style: {
     fontSize: "0.72rem",
     fontWeight: 700,
     color: badgeColor,
@@ -3414,13 +3305,13 @@ var ProgressBar = ({
     transition: "color 0.4s,background 0.4s",
     fontVariantNumeric: "tabular-nums"
   } }, filled, "%");
-  if (type === "default") return /* @__PURE__ */ import_react19.default.createElement(import_react19.default.Fragment, null, /* @__PURE__ */ import_react19.default.createElement("style", null, `
+  if (type === "default") return /* @__PURE__ */ import_react18.default.createElement(import_react18.default.Fragment, null, /* @__PURE__ */ import_react18.default.createElement("style", null, `
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap');
         @keyframes pb-pulse-${uid} {
           0%,100%{opacity:.9;transform:translateY(-50%) scale(1)}
           50%{opacity:.4;transform:translateY(-50%) scale(1.5)}
         }
-      `), /* @__PURE__ */ import_react19.default.createElement("div", { ref, style: wrapStyle }, /* @__PURE__ */ import_react19.default.createElement("div", { style: rowStyle }, labelEl, badgeEl), /* @__PURE__ */ import_react19.default.createElement("div", { style: { width: "100%", height, borderRadius: "999px", background: "#f1f5f9", overflow: "hidden", position: "relative" } }, /* @__PURE__ */ import_react19.default.createElement("div", { style: {
+      `), /* @__PURE__ */ import_react18.default.createElement("div", { ref, style: wrapStyle }, /* @__PURE__ */ import_react18.default.createElement("div", { style: rowStyle }, labelEl, badgeEl), /* @__PURE__ */ import_react18.default.createElement("div", { style: { width: "100%", height, borderRadius: "999px", background: "#f1f5f9", overflow: "hidden", position: "relative" } }, /* @__PURE__ */ import_react18.default.createElement("div", { style: {
     height: "100%",
     width: `${filled}%`,
     borderRadius: "999px",
@@ -3428,7 +3319,7 @@ var ProgressBar = ({
     boxShadow: `0 0 10px ${alpha(accent, 0.35)}`,
     position: "relative",
     transition: "width 0.05s linear"
-  } }, /* @__PURE__ */ import_react19.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react18.default.createElement("div", { style: {
     position: "absolute",
     right: 0,
     top: "50%",
@@ -3438,15 +3329,15 @@ var ProgressBar = ({
     background: accent,
     boxShadow: `0 0 8px 2px ${alpha(accent, 0.5)}`,
     animation: `pb-pulse-${uid} 1.5s ease-in-out infinite`
-  } }))), /* @__PURE__ */ import_react19.default.createElement("div", { style: rowStyle }, /* @__PURE__ */ import_react19.default.createElement("span", { style: { fontSize: "0.7rem", color: "#94a3b8" } }, filled < 100 ? `${filled} of 100 completed` : "Completed \u2713"), /* @__PURE__ */ import_react19.default.createElement("span", { style: { fontSize: "0.7rem", color: "#94a3b8" } }, filled >= 80 ? "Almost there!" : filled >= 50 ? "Halfway done" : "Just started"))));
-  if (type === "striped") return /* @__PURE__ */ import_react19.default.createElement(import_react19.default.Fragment, null, /* @__PURE__ */ import_react19.default.createElement("style", null, `
+  } }))), /* @__PURE__ */ import_react18.default.createElement("div", { style: rowStyle }, /* @__PURE__ */ import_react18.default.createElement("span", { style: { fontSize: "0.7rem", color: "#94a3b8" } }, filled < 100 ? `${filled} of 100 completed` : "Completed \u2713"), /* @__PURE__ */ import_react18.default.createElement("span", { style: { fontSize: "0.7rem", color: "#94a3b8" } }, filled >= 80 ? "Almost there!" : filled >= 50 ? "Halfway done" : "Just started"))));
+  if (type === "striped") return /* @__PURE__ */ import_react18.default.createElement(import_react18.default.Fragment, null, /* @__PURE__ */ import_react18.default.createElement("style", null, `
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap');
         @keyframes pb-stripe-${uid} { from{background-position:0 0} to{background-position:32px 0} }
         @keyframes pb-pulse-${uid} {
           0%,100%{opacity:.9;transform:translateY(-50%) scale(1)}
           50%{opacity:.4;transform:translateY(-50%) scale(1.5)}
         }
-      `), /* @__PURE__ */ import_react19.default.createElement("div", { ref, style: wrapStyle }, /* @__PURE__ */ import_react19.default.createElement("div", { style: rowStyle }, labelEl, badgeEl), /* @__PURE__ */ import_react19.default.createElement("div", { style: { width: "100%", height, borderRadius: "999px", background: "#f1f5f9", overflow: "hidden", position: "relative" } }, /* @__PURE__ */ import_react19.default.createElement("div", { style: {
+      `), /* @__PURE__ */ import_react18.default.createElement("div", { ref, style: wrapStyle }, /* @__PURE__ */ import_react18.default.createElement("div", { style: rowStyle }, labelEl, badgeEl), /* @__PURE__ */ import_react18.default.createElement("div", { style: { width: "100%", height, borderRadius: "999px", background: "#f1f5f9", overflow: "hidden", position: "relative" } }, /* @__PURE__ */ import_react18.default.createElement("div", { style: {
     height: "100%",
     width: `${filled}%`,
     borderRadius: "999px",
@@ -3454,13 +3345,13 @@ var ProgressBar = ({
     boxShadow: `0 0 10px ${alpha(accent, 0.35)}`,
     position: "relative",
     transition: "width 0.05s linear"
-  } }, /* @__PURE__ */ import_react19.default.createElement("div", { style: {
+  } }, /* @__PURE__ */ import_react18.default.createElement("div", { style: {
     position: "absolute",
     inset: 0,
     borderRadius: "999px",
     background: "repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(255,255,255,0.18) 8px,rgba(255,255,255,0.18) 16px)",
     animation: `pb-stripe-${uid} 0.7s linear infinite`
-  } }), /* @__PURE__ */ import_react19.default.createElement("div", { style: {
+  } }), /* @__PURE__ */ import_react18.default.createElement("div", { style: {
     position: "absolute",
     right: 0,
     top: "50%",
@@ -3470,17 +3361,17 @@ var ProgressBar = ({
     background: accent,
     boxShadow: `0 0 8px 2px ${alpha(accent, 0.5)}`,
     animation: `pb-pulse-${uid} 1.5s ease-in-out infinite`
-  } }))), /* @__PURE__ */ import_react19.default.createElement("div", { style: rowStyle }, /* @__PURE__ */ import_react19.default.createElement("span", { style: { fontSize: "0.7rem", color: "#94a3b8" } }, filled < 100 ? `${filled} of 100 completed` : "Completed \u2713"), /* @__PURE__ */ import_react19.default.createElement("span", { style: { fontSize: "0.7rem", color: "#94a3b8" } }, filled >= 80 ? "Almost there!" : filled >= 50 ? "Halfway done" : "Just started"))));
+  } }))), /* @__PURE__ */ import_react18.default.createElement("div", { style: rowStyle }, /* @__PURE__ */ import_react18.default.createElement("span", { style: { fontSize: "0.7rem", color: "#94a3b8" } }, filled < 100 ? `${filled} of 100 completed` : "Completed \u2713"), /* @__PURE__ */ import_react18.default.createElement("span", { style: { fontSize: "0.7rem", color: "#94a3b8" } }, filled >= 80 ? "Almost there!" : filled >= 50 ? "Halfway done" : "Just started"))));
   if (type === "circular") {
     const r = 54;
     const cx = 70;
     const cy = 70;
     const circ = 2 * Math.PI * r;
     const offset = circ - filled / 100 * circ;
-    return /* @__PURE__ */ import_react19.default.createElement(import_react19.default.Fragment, null, /* @__PURE__ */ import_react19.default.createElement("style", null, `
+    return /* @__PURE__ */ import_react18.default.createElement(import_react18.default.Fragment, null, /* @__PURE__ */ import_react18.default.createElement("style", null, `
           @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap');
           @keyframes pb-spin-${uid} { from{stroke-dashoffset:${circ}} to{stroke-dashoffset:${offset}} }
-        `), /* @__PURE__ */ import_react19.default.createElement("div", { ref, style: { ...wrapStyle, alignItems: "center", gap: 16 } }, /* @__PURE__ */ import_react19.default.createElement("svg", { width: "140", height: "140", viewBox: "0 0 140 140" }, /* @__PURE__ */ import_react19.default.createElement("circle", { cx, cy, r, fill: "none", stroke: "#f1f5f9", strokeWidth: "10" }), /* @__PURE__ */ import_react19.default.createElement(
+        `), /* @__PURE__ */ import_react18.default.createElement("div", { ref, style: { ...wrapStyle, alignItems: "center", gap: 16 } }, /* @__PURE__ */ import_react18.default.createElement("svg", { width: "140", height: "140", viewBox: "0 0 140 140" }, /* @__PURE__ */ import_react18.default.createElement("circle", { cx, cy, r, fill: "none", stroke: "#f1f5f9", strokeWidth: "10" }), /* @__PURE__ */ import_react18.default.createElement(
       "circle",
       {
         cx,
@@ -3495,7 +3386,7 @@ var ProgressBar = ({
         transform: `rotate(-90 ${cx} ${cy})`,
         style: { transition: "stroke-dashoffset 0.05s linear", filter: `drop-shadow(0 0 6px ${alpha(accent, 0.5)})` }
       }
-    ), /* @__PURE__ */ import_react19.default.createElement(
+    ), /* @__PURE__ */ import_react18.default.createElement(
       "text",
       {
         x: cx,
@@ -3506,7 +3397,7 @@ var ProgressBar = ({
       },
       filled,
       "%"
-    ), /* @__PURE__ */ import_react19.default.createElement(
+    ), /* @__PURE__ */ import_react18.default.createElement(
       "text",
       {
         x: cx,
@@ -3516,25 +3407,25 @@ var ProgressBar = ({
         style: { fontFamily: "'Sora',sans-serif", fontSize: "0.68rem", fontWeight: 600, fill: "#94a3b8", letterSpacing: "0.05em" }
       },
       filled >= 80 ? "GREAT" : filled >= 50 ? "GOOD" : "LOW"
-    )), showLabel && /* @__PURE__ */ import_react19.default.createElement("span", { style: { fontSize: "0.85rem", fontWeight: 600, color: "#334155" } }, label)));
+    )), showLabel && /* @__PURE__ */ import_react18.default.createElement("span", { style: { fontSize: "0.85rem", fontWeight: 600, color: "#334155" } }, label)));
   }
   if (type === "gradient") {
     const colors = ["#ef4444", "#f97316", "#eab308", "#22c55e", "#6366f1"];
     const gradStr = colors.map((c, i) => `${c} ${i * 25}%`).join(",");
-    return /* @__PURE__ */ import_react19.default.createElement(import_react19.default.Fragment, null, /* @__PURE__ */ import_react19.default.createElement("style", null, `
+    return /* @__PURE__ */ import_react18.default.createElement(import_react18.default.Fragment, null, /* @__PURE__ */ import_react18.default.createElement("style", null, `
           @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap');
           @keyframes pb-pulse-${uid} {
             0%,100%{opacity:.9;transform:translateY(-50%) scale(1)}
             50%{opacity:.4;transform:translateY(-50%) scale(1.5)}
           }
-        `), /* @__PURE__ */ import_react19.default.createElement("div", { ref, style: wrapStyle }, /* @__PURE__ */ import_react19.default.createElement("div", { style: rowStyle }, labelEl, badgeEl), /* @__PURE__ */ import_react19.default.createElement("div", { style: { width: "100%", height, borderRadius: "999px", background: "#f1f5f9", overflow: "hidden", position: "relative" } }, /* @__PURE__ */ import_react19.default.createElement("div", { style: { position: "absolute", inset: 0, background: `linear-gradient(90deg,${gradStr})`, opacity: 0.15 } }), /* @__PURE__ */ import_react19.default.createElement("div", { style: {
+        `), /* @__PURE__ */ import_react18.default.createElement("div", { ref, style: wrapStyle }, /* @__PURE__ */ import_react18.default.createElement("div", { style: rowStyle }, labelEl, badgeEl), /* @__PURE__ */ import_react18.default.createElement("div", { style: { width: "100%", height, borderRadius: "999px", background: "#f1f5f9", overflow: "hidden", position: "relative" } }, /* @__PURE__ */ import_react18.default.createElement("div", { style: { position: "absolute", inset: 0, background: `linear-gradient(90deg,${gradStr})`, opacity: 0.15 } }), /* @__PURE__ */ import_react18.default.createElement("div", { style: {
       height: "100%",
       width: `${filled}%`,
       borderRadius: "999px",
       background: `linear-gradient(90deg,${gradStr})`,
       transition: "width 0.05s linear",
       position: "relative"
-    } }, /* @__PURE__ */ import_react19.default.createElement("div", { style: {
+    } }, /* @__PURE__ */ import_react18.default.createElement("div", { style: {
       position: "absolute",
       right: 0,
       top: "50%",
@@ -3544,20 +3435,20 @@ var ProgressBar = ({
       background: "#fff",
       border: `2px solid ${accent}`,
       animation: `pb-pulse-${uid} 1.5s ease-in-out infinite`
-    } }))), /* @__PURE__ */ import_react19.default.createElement("div", { style: rowStyle }, /* @__PURE__ */ import_react19.default.createElement("span", { style: { fontSize: "0.7rem", color: "#94a3b8" } }, filled < 100 ? `${filled} of 100` : "Completed \u2713"), /* @__PURE__ */ import_react19.default.createElement("span", { style: { fontSize: "0.7rem", color: "#94a3b8" } }, filled >= 80 ? "Almost there!" : filled >= 50 ? "Halfway done" : "Just started"))));
+    } }))), /* @__PURE__ */ import_react18.default.createElement("div", { style: rowStyle }, /* @__PURE__ */ import_react18.default.createElement("span", { style: { fontSize: "0.7rem", color: "#94a3b8" } }, filled < 100 ? `${filled} of 100` : "Completed \u2713"), /* @__PURE__ */ import_react18.default.createElement("span", { style: { fontSize: "0.7rem", color: "#94a3b8" } }, filled >= 80 ? "Almost there!" : filled >= 50 ? "Halfway done" : "Just started"))));
   }
   if (type === "steps") {
     const completedSteps = Math.round(filled / 100 * steps);
-    return /* @__PURE__ */ import_react19.default.createElement(import_react19.default.Fragment, null, /* @__PURE__ */ import_react19.default.createElement("style", null, `
+    return /* @__PURE__ */ import_react18.default.createElement(import_react18.default.Fragment, null, /* @__PURE__ */ import_react18.default.createElement("style", null, `
           @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap');
           @keyframes pb-popin-${uid} {
             from{transform:scale(0.5);opacity:0}
             to{transform:scale(1);opacity:1}
           }
-        `), /* @__PURE__ */ import_react19.default.createElement("div", { ref, style: wrapStyle }, /* @__PURE__ */ import_react19.default.createElement("div", { style: rowStyle }, labelEl, badgeEl), /* @__PURE__ */ import_react19.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: 0 } }, Array.from({ length: steps }, (_, i) => {
+        `), /* @__PURE__ */ import_react18.default.createElement("div", { ref, style: wrapStyle }, /* @__PURE__ */ import_react18.default.createElement("div", { style: rowStyle }, labelEl, badgeEl), /* @__PURE__ */ import_react18.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: 0 } }, Array.from({ length: steps }, (_, i) => {
       const done = i < completedSteps;
       const active = i === completedSteps - 1;
-      return /* @__PURE__ */ import_react19.default.createElement(import_react19.default.Fragment, { key: i }, /* @__PURE__ */ import_react19.default.createElement("div", { style: {
+      return /* @__PURE__ */ import_react18.default.createElement(import_react18.default.Fragment, { key: i }, /* @__PURE__ */ import_react18.default.createElement("div", { style: {
         width: 32,
         height: 32,
         borderRadius: "50%",
@@ -3570,20 +3461,20 @@ var ProgressBar = ({
         boxShadow: active ? `0 0 12px ${alpha(accent, 0.4)}` : "none",
         transition: "background 0.3s,box-shadow 0.3s",
         animation: done ? `pb-popin-${uid} 0.3s ease ${i * 0.08}s both` : "none"
-      } }, done ? /* @__PURE__ */ import_react19.default.createElement("svg", { width: "14", height: "14", viewBox: "0 0 14 14", fill: "none" }, /* @__PURE__ */ import_react19.default.createElement("path", { d: "M2.5 7l3.5 3.5 5.5-6", stroke: "#fff", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" })) : /* @__PURE__ */ import_react19.default.createElement("span", { style: { fontSize: "0.7rem", fontWeight: 700, color: "#cbd5e1" } }, i + 1)), i < steps - 1 && /* @__PURE__ */ import_react19.default.createElement("div", { style: {
+      } }, done ? /* @__PURE__ */ import_react18.default.createElement("svg", { width: "14", height: "14", viewBox: "0 0 14 14", fill: "none" }, /* @__PURE__ */ import_react18.default.createElement("path", { d: "M2.5 7l3.5 3.5 5.5-6", stroke: "#fff", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" })) : /* @__PURE__ */ import_react18.default.createElement("span", { style: { fontSize: "0.7rem", fontWeight: 700, color: "#cbd5e1" } }, i + 1)), i < steps - 1 && /* @__PURE__ */ import_react18.default.createElement("div", { style: {
         flex: 1,
         height: 3,
         borderRadius: "999px",
         background: i < completedSteps - 1 ? accent : "#f1f5f9",
         transition: "background 0.3s"
       } }));
-    })), /* @__PURE__ */ import_react19.default.createElement("div", { style: rowStyle }, /* @__PURE__ */ import_react19.default.createElement("span", { style: { fontSize: "0.7rem", color: "#94a3b8" } }, "Step ", completedSteps, " of ", steps), /* @__PURE__ */ import_react19.default.createElement("span", { style: { fontSize: "0.7rem", color: "#94a3b8" } }, filled >= 80 ? "Almost there!" : filled >= 50 ? "Halfway done" : "Just started"))));
+    })), /* @__PURE__ */ import_react18.default.createElement("div", { style: rowStyle }, /* @__PURE__ */ import_react18.default.createElement("span", { style: { fontSize: "0.7rem", color: "#94a3b8" } }, "Step ", completedSteps, " of ", steps), /* @__PURE__ */ import_react18.default.createElement("span", { style: { fontSize: "0.7rem", color: "#94a3b8" } }, filled >= 80 ? "Almost there!" : filled >= 50 ? "Halfway done" : "Just started"))));
   }
   return null;
 };
 
 // src/components/EcommerceCard/EcommerceCard.jsx
-var import_react20 = __toESM(require("react"));
+var import_react19 = __toESM(require("react"));
 var EcommerceCard = ({
   image = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80",
   title = "Wireless Headphones",
@@ -3597,12 +3488,12 @@ var EcommerceCard = ({
   onViewDetails = () => {
   }
 }) => {
-  const [hovered, setHovered] = (0, import_react20.useState)(false);
+  const [hovered, setHovered] = (0, import_react19.useState)(false);
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
     return "rgba(" + r + "," + g + "," + b + "," + op + ")";
   };
-  return /* @__PURE__ */ import_react20.default.createElement(
+  return /* @__PURE__ */ import_react19.default.createElement(
     "div",
     {
       onMouseEnter: () => setHovered(true),
@@ -3619,15 +3510,15 @@ var EcommerceCard = ({
         boxShadow: hovered ? "0 16px 40px rgba(0,0,0,0.5)" : "0 4px 20px rgba(0,0,0,0.3)"
       }
     },
-    /* @__PURE__ */ import_react20.default.createElement("div", { style: { position: "relative", width: "100%", height: "200px", overflow: "hidden" } }, /* @__PURE__ */ import_react20.default.createElement("img", { src: image, alt: title, style: { width: "100%", height: "100%", objectFit: "cover", transform: hovered ? "scale(1.05)" : "scale(1)", transition: "transform 0.4s ease" } }), /* @__PURE__ */ import_react20.default.createElement("div", { style: { position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%)" } })),
-    /* @__PURE__ */ import_react20.default.createElement("div", { style: { padding: "18px" } }, /* @__PURE__ */ import_react20.default.createElement("h3", { style: { fontSize: "15px", fontWeight: "700", color: "#fff", margin: "0 0 8px", lineHeight: 1.4 } }, title), /* @__PURE__ */ import_react20.default.createElement("p", { style: { fontSize: "13px", color: "rgba(255,255,255,0.45)", lineHeight: 1.65, margin: "0 0 18px" } }, description), /* @__PURE__ */ import_react20.default.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "18px" } }, /* @__PURE__ */ import_react20.default.createElement("span", { style: { fontSize: "24px", fontWeight: "800", color: "#fff" } }, currency, price), /* @__PURE__ */ import_react20.default.createElement(
+    /* @__PURE__ */ import_react19.default.createElement("div", { style: { position: "relative", width: "100%", height: "200px", overflow: "hidden" } }, /* @__PURE__ */ import_react19.default.createElement("img", { src: image, alt: title, style: { width: "100%", height: "100%", objectFit: "cover", transform: hovered ? "scale(1.05)" : "scale(1)", transition: "transform 0.4s ease" } }), /* @__PURE__ */ import_react19.default.createElement("div", { style: { position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%)" } })),
+    /* @__PURE__ */ import_react19.default.createElement("div", { style: { padding: "18px" } }, /* @__PURE__ */ import_react19.default.createElement("h3", { style: { fontSize: "15px", fontWeight: "700", color: "#fff", margin: "0 0 8px", lineHeight: 1.4 } }, title), /* @__PURE__ */ import_react19.default.createElement("p", { style: { fontSize: "13px", color: "rgba(255,255,255,0.45)", lineHeight: 1.65, margin: "0 0 18px" } }, description), /* @__PURE__ */ import_react19.default.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "18px" } }, /* @__PURE__ */ import_react19.default.createElement("span", { style: { fontSize: "24px", fontWeight: "800", color: "#fff" } }, currency, price), /* @__PURE__ */ import_react19.default.createElement(
       "button",
       {
         onClick: onAddToCart,
         style: { padding: "8px 16px", borderRadius: "12px", border: "none", background: accent, color: "#fff", fontSize: "13px", fontWeight: "700", cursor: "pointer", fontFamily: "inherit" }
       },
       "Add to Cart"
-    )), /* @__PURE__ */ import_react20.default.createElement(
+    )), /* @__PURE__ */ import_react19.default.createElement(
       "button",
       {
         onClick: onViewDetails,
@@ -3639,7 +3530,7 @@ var EcommerceCard = ({
 };
 
 // src/components/AnimatedForm/AnimatedForm.jsx
-var import_react21 = __toESM(require("react"));
+var import_react20 = __toESM(require("react"));
 var AnimatedForm = ({
   title = "Contact Us",
   description = "We'll get back to you shortly",
@@ -3649,15 +3540,15 @@ var AnimatedForm = ({
   onSubmit = () => {
   }
 }) => {
-  const [name, setName] = (0, import_react21.useState)("");
-  const [email, setEmail] = (0, import_react21.useState)("");
-  const [message, setMessage] = (0, import_react21.useState)("");
-  const [hovered, setHovered] = (0, import_react21.useState)(false);
+  const [name, setName] = (0, import_react20.useState)("");
+  const [email, setEmail] = (0, import_react20.useState)("");
+  const [message, setMessage] = (0, import_react20.useState)("");
+  const [hovered, setHovered] = (0, import_react20.useState)(false);
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
     return "rgba(" + r + "," + g + "," + b + "," + op + ")";
   };
-  return /* @__PURE__ */ import_react21.default.createElement(
+  return /* @__PURE__ */ import_react20.default.createElement(
     "div",
     {
       onMouseEnter: () => setHovered(true),
@@ -3674,9 +3565,9 @@ var AnimatedForm = ({
         boxShadow: hovered ? "0 16px 40px rgba(0,0,0,0.5)" : "0 4px 20px rgba(0,0,0,0.3)"
       }
     },
-    /* @__PURE__ */ import_react21.default.createElement("h2", { style: { fontSize: "20px", fontWeight: "700", color: "#fff", margin: "0 0 8px" } }, title),
-    /* @__PURE__ */ import_react21.default.createElement("p", { style: { fontSize: "14px", color: "rgba(255,255,255,0.45)", margin: "0 0 24px" } }, description),
-    /* @__PURE__ */ import_react21.default.createElement(
+    /* @__PURE__ */ import_react20.default.createElement("h2", { style: { fontSize: "20px", fontWeight: "700", color: "#fff", margin: "0 0 8px" } }, title),
+    /* @__PURE__ */ import_react20.default.createElement("p", { style: { fontSize: "14px", color: "rgba(255,255,255,0.45)", margin: "0 0 24px" } }, description),
+    /* @__PURE__ */ import_react20.default.createElement(
       "input",
       {
         type: "text",
@@ -3698,7 +3589,7 @@ var AnimatedForm = ({
         }
       }
     ),
-    /* @__PURE__ */ import_react21.default.createElement(
+    /* @__PURE__ */ import_react20.default.createElement(
       "input",
       {
         type: "email",
@@ -3720,7 +3611,7 @@ var AnimatedForm = ({
         }
       }
     ),
-    /* @__PURE__ */ import_react21.default.createElement(
+    /* @__PURE__ */ import_react20.default.createElement(
       "textarea",
       {
         placeholder: "Your Message",
@@ -3743,7 +3634,7 @@ var AnimatedForm = ({
         }
       }
     ),
-    /* @__PURE__ */ import_react21.default.createElement(
+    /* @__PURE__ */ import_react20.default.createElement(
       "button",
       {
         onClick: () => onSubmit({ name, email, message }),
@@ -3766,7 +3657,7 @@ var AnimatedForm = ({
 };
 
 // src/components/ReviewCard/ReviewCard.jsx
-var import_react22 = __toESM(require("react"));
+var import_react21 = __toESM(require("react"));
 var ReviewCard = ({
   avatar = "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=800&q=80",
   name = "John Doe",
@@ -3782,11 +3673,11 @@ var ReviewCard = ({
     const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
     return "rgba(" + r + "," + g + "," + b + "," + op + ")";
   };
-  return /* @__PURE__ */ import_react22.default.createElement("div", { style: { background: bg, borderRadius: "16px", padding: "16px", width: "320px", fontFamily: "system-ui,sans-serif", border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 4px 16px rgba(0,0,0,0.3)" } }, /* @__PURE__ */ import_react22.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" } }, /* @__PURE__ */ import_react22.default.createElement("img", { src: avatar, alt: name, onClick: onProfileClick, style: { width: "40px", height: "40px", borderRadius: "50%", cursor: "pointer" } }), /* @__PURE__ */ import_react22.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "2px" } }, /* @__PURE__ */ import_react22.default.createElement("div", { style: { fontSize: "14px", fontWeight: "700", color: "#fff" } }, name), /* @__PURE__ */ import_react22.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "4px" } }, Array.from({ length: 5 }).map((_, i) => /* @__PURE__ */ import_react22.default.createElement("svg", { key: i, width: "14", height: "14", viewBox: "0 0 24 24", fill: i < rating ? accent : "rgba(255,255,255,0.15)", stroke: "none" }, /* @__PURE__ */ import_react22.default.createElement("path", { d: "M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" })))))), /* @__PURE__ */ import_react22.default.createElement("div", { style: { fontSize: "13px", color: "rgba(255,255,255,0.7)", lineHeight: 1.5, marginBottom: "12px" } }, review), /* @__PURE__ */ import_react22.default.createElement("div", { style: { fontSize: "11px", color: "rgba(255,255,255,0.4)" } }, date));
+  return /* @__PURE__ */ import_react21.default.createElement("div", { style: { background: bg, borderRadius: "16px", padding: "16px", width: "320px", fontFamily: "system-ui,sans-serif", border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 4px 16px rgba(0,0,0,0.3)" } }, /* @__PURE__ */ import_react21.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" } }, /* @__PURE__ */ import_react21.default.createElement("img", { src: avatar, alt: name, onClick: onProfileClick, style: { width: "40px", height: "40px", borderRadius: "50%", cursor: "pointer" } }), /* @__PURE__ */ import_react21.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "2px" } }, /* @__PURE__ */ import_react21.default.createElement("div", { style: { fontSize: "14px", fontWeight: "700", color: "#fff" } }, name), /* @__PURE__ */ import_react21.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "4px" } }, Array.from({ length: 5 }).map((_, i) => /* @__PURE__ */ import_react21.default.createElement("svg", { key: i, width: "14", height: "14", viewBox: "0 0 24 24", fill: i < rating ? accent : "rgba(255,255,255,0.15)", stroke: "none" }, /* @__PURE__ */ import_react21.default.createElement("path", { d: "M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" })))))), /* @__PURE__ */ import_react21.default.createElement("div", { style: { fontSize: "13px", color: "rgba(255,255,255,0.7)", lineHeight: 1.5, marginBottom: "12px" } }, review), /* @__PURE__ */ import_react21.default.createElement("div", { style: { fontSize: "11px", color: "rgba(255,255,255,0.4)" } }, date));
 };
 
 // src/components/Card/Card.jsx
-var import_react23 = __toESM(require("react"));
+var import_react22 = __toESM(require("react"));
 var Card = ({
   title = "Performance",
   description = "Real-time metrics with live dashboard updates every second.",
@@ -3794,8 +3685,8 @@ var Card = ({
   tag = "Active",
   onClick
 }) => {
-  const [hovered, setHovered] = (0, import_react23.useState)(false);
-  return /* @__PURE__ */ import_react23.default.createElement(
+  const [hovered, setHovered] = (0, import_react22.useState)(false);
+  return /* @__PURE__ */ import_react22.default.createElement(
     "div",
     {
       onMouseEnter: () => setHovered(true),
@@ -3815,7 +3706,7 @@ var Card = ({
         width: "260px"
       }
     },
-    /* @__PURE__ */ import_react23.default.createElement("div", { style: {
+    /* @__PURE__ */ import_react22.default.createElement("div", { style: {
       position: "absolute",
       top: 0,
       left: 0,
@@ -3824,7 +3715,7 @@ var Card = ({
       background: "#1D9E75",
       borderRadius: "12px 12px 0 0"
     } }),
-    /* @__PURE__ */ import_react23.default.createElement("div", { style: {
+    /* @__PURE__ */ import_react22.default.createElement("div", { style: {
       width: 40,
       height: 40,
       borderRadius: 8,
@@ -3835,22 +3726,22 @@ var Card = ({
       fontSize: 18,
       marginBottom: 14
     } }, icon),
-    /* @__PURE__ */ import_react23.default.createElement("p", { style: { fontSize: 15, fontWeight: 700, color: "#111", margin: "0 0 6px" } }, title),
-    /* @__PURE__ */ import_react23.default.createElement("p", { style: { fontSize: 13, color: "#666", lineHeight: 1.6, margin: "0 0 16px" } }, description),
-    /* @__PURE__ */ import_react23.default.createElement("div", { style: {
+    /* @__PURE__ */ import_react22.default.createElement("p", { style: { fontSize: 15, fontWeight: 700, color: "#111", margin: "0 0 6px" } }, title),
+    /* @__PURE__ */ import_react22.default.createElement("p", { style: { fontSize: 13, color: "#666", lineHeight: 1.6, margin: "0 0 16px" } }, description),
+    /* @__PURE__ */ import_react22.default.createElement("div", { style: {
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
       borderTop: "0.5px solid #0000001a",
       paddingTop: 12
-    } }, /* @__PURE__ */ import_react23.default.createElement("span", { style: {
+    } }, /* @__PURE__ */ import_react22.default.createElement("span", { style: {
       fontSize: 11,
       fontWeight: 500,
       padding: "3px 9px",
       borderRadius: 20,
       background: "#E1F5EE",
       color: "#0F6E56"
-    } }, tag), /* @__PURE__ */ import_react23.default.createElement("span", { style: {
+    } }, tag), /* @__PURE__ */ import_react22.default.createElement("span", { style: {
       fontSize: 14,
       color: "#999",
       display: "inline-block",
@@ -3861,7 +3752,7 @@ var Card = ({
 };
 
 // src/components/Button/Button.jsx
-var import_react24 = __toESM(require("react"));
+var import_react23 = __toESM(require("react"));
 var Button = ({
   text = "Click Me",
   variant = "gradient",
@@ -3873,7 +3764,7 @@ var Button = ({
   disabled = false,
   onClick
 }) => {
-  const [hovered, setHovered] = (0, import_react24.useState)(false);
+  const [hovered, setHovered] = (0, import_react23.useState)(false);
   const variants = {
     primary: {
       background: "#2563eb",
@@ -3901,7 +3792,7 @@ var Button = ({
     md: { padding: "10px 18px", fontSize: "14px" },
     lg: { padding: "14px 24px", fontSize: "16px" }
   };
-  return /* @__PURE__ */ import_react24.default.createElement(
+  return /* @__PURE__ */ import_react23.default.createElement(
     "button",
     {
       onClick,
@@ -3927,7 +3818,7 @@ var Button = ({
         overflow: "hidden"
       }
     },
-    /* @__PURE__ */ import_react24.default.createElement(
+    /* @__PURE__ */ import_react23.default.createElement(
       "span",
       {
         style: {
@@ -3939,12 +3830,12 @@ var Button = ({
         }
       }
     ),
-    loading ? /* @__PURE__ */ import_react24.default.createElement("span", null, "Loading...") : /* @__PURE__ */ import_react24.default.createElement(import_react24.default.Fragment, null, icon && /* @__PURE__ */ import_react24.default.createElement("span", null, icon), /* @__PURE__ */ import_react24.default.createElement("span", null, text))
+    loading ? /* @__PURE__ */ import_react23.default.createElement("span", null, "Loading...") : /* @__PURE__ */ import_react23.default.createElement(import_react23.default.Fragment, null, icon && /* @__PURE__ */ import_react23.default.createElement("span", null, icon), /* @__PURE__ */ import_react23.default.createElement("span", null, text))
   );
 };
 
 // src/components/AnimatedButton/AnimatedButton.jsx
-var import_react25 = __toESM(require("react"));
+var import_react24 = __toESM(require("react"));
 var AnimatedButton = ({
   text = "Click Me!",
   bg = "#7c3aed",
@@ -3958,8 +3849,8 @@ var AnimatedButton = ({
   onClick
 }) => {
   const sizes = { sm: "8px 16px", md: "12px 24px", lg: "16px 32px" };
-  const [hovered, setHovered] = (0, import_react25.useState)(false);
-  return /* @__PURE__ */ import_react25.default.createElement(
+  const [hovered, setHovered] = (0, import_react24.useState)(false);
+  return /* @__PURE__ */ import_react24.default.createElement(
     "button",
     {
       onClick,
@@ -3988,6 +3879,273 @@ var AnimatedButton = ({
     text
   );
 };
+
+// src/components/loding/loding.jsx
+var import_react25 = __toESM(require("react"));
+var LoaderPanel = ({
+  title = "System Syncing",
+  subtitle = "Deploying cloud assets & establishing secure sockets",
+  accent = "#6366f1",
+  bg = "#0f172a",
+  cardBg = "#020617",
+  initialProgress = 65,
+  autoProgress = true,
+  onComplete = () => {
+  },
+  onCancel = () => {
+  }
+}) => {
+  const [progress, setProgress] = (0, import_react25.useState)(initialProgress);
+  const [activeTab, setActiveTab] = (0, import_react25.useState)("ring");
+  const [isPaused, setIsPaused] = (0, import_react25.useState)(false);
+  const alpha = (hex, op) => {
+    const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+    return "rgba(" + r + "," + g + "," + b + "," + op + ")";
+  };
+  (0, import_react25.useEffect)(() => {
+    if (!autoProgress || isPaused || progress >= 100) return;
+    const timer = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(timer);
+          onComplete();
+          return 100;
+        }
+        return prev + 1;
+      });
+    }, 150);
+    return () => clearInterval(timer);
+  }, [autoProgress, isPaused, progress, onComplete]);
+  const tasks = [
+    { name: "Authentication Handshake", completed: progress > 20 },
+    { name: "Downloading Model Weights (2.4 GB)", completed: progress > 55 },
+    { name: "Optimizing Tensor Cache", completed: progress > 85 },
+    { name: "Finalizing Workspace Environment", completed: progress === 100 }
+  ];
+  return /* @__PURE__ */ import_react25.default.createElement(
+    "div",
+    {
+      style: {
+        background: bg,
+        padding: "32px",
+        borderRadius: "24px",
+        width: "100%",
+        maxWidth: "480px",
+        boxSizing: "border-box",
+        fontFamily: "system-ui, -apple-system, sans-serif",
+        color: "#fff",
+        border: "1px solid " + alpha("#ffffff", 0.08),
+        boxShadow: "0 20px 50px rgba(0, 0, 0, 0.6)",
+        position: "relative",
+        overflow: "hidden",
+        margin: "0 auto"
+      }
+    },
+    /* @__PURE__ */ import_react25.default.createElement("style", null, "@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }\n@keyframes pulseGlow { 0%, 100% { opacity: 0.4; transform: scale(0.98); } 50% { opacity: 0.9; transform: scale(1.02); } }\n@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }\n@keyframes bounceDot { 0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; } 40% { transform: scale(1); opacity: 1; } }"),
+    /* @__PURE__ */ import_react25.default.createElement(
+      "div",
+      {
+        style: {
+          position: "absolute",
+          top: "-80px",
+          right: "-80px",
+          width: "200px",
+          height: "200px",
+          borderRadius: "50%",
+          background: accent,
+          filter: "blur(90px)",
+          opacity: 0.25,
+          pointerEvents: "none"
+        }
+      }
+    ),
+    /* @__PURE__ */ import_react25.default.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" } }, /* @__PURE__ */ import_react25.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "10px" } }, /* @__PURE__ */ import_react25.default.createElement(
+      "div",
+      {
+        style: {
+          width: "10px",
+          height: "10px",
+          borderRadius: "50%",
+          background: progress === 100 ? "#10b981" : accent,
+          boxShadow: "0 0 10px " + (progress === 100 ? "#10b981" : accent)
+        }
+      }
+    ), /* @__PURE__ */ import_react25.default.createElement("span", { style: { fontSize: "12px", fontWeight: "700", letterSpacing: "1px", textTransform: "uppercase", color: "rgba(255,255,255,0.6)" } }, progress === 100 ? "Ready" : "Processing")), /* @__PURE__ */ import_react25.default.createElement("div", { style: { display: "flex", background: alpha("#ffffff", 0.05), borderRadius: "10px", padding: "3px" } }, ["ring", "bar", "dots", "skeleton"].map((type) => /* @__PURE__ */ import_react25.default.createElement(
+      "button",
+      {
+        key: type,
+        onClick: () => setActiveTab(type),
+        style: {
+          border: "none",
+          background: activeTab === type ? alpha(accent, 0.25) : "transparent",
+          color: activeTab === type ? "#fff" : "rgba(255,255,255,0.4)",
+          padding: "4px 10px",
+          borderRadius: "7px",
+          fontSize: "11px",
+          fontWeight: "600",
+          cursor: "pointer",
+          textTransform: "capitalize",
+          transition: "all 0.2s ease"
+        }
+      },
+      type
+    )))),
+    /* @__PURE__ */ import_react25.default.createElement("div", { style: { marginBottom: "28px" } }, /* @__PURE__ */ import_react25.default.createElement("h3", { style: { margin: "0 0 6px 0", fontSize: "20px", fontWeight: "700", color: "#ffffff" } }, title), /* @__PURE__ */ import_react25.default.createElement("p", { style: { margin: 0, fontSize: "13px", color: "rgba(255,255,255,0.5)", lineHeight: "1.5" } }, subtitle)),
+    /* @__PURE__ */ import_react25.default.createElement(
+      "div",
+      {
+        style: {
+          background: cardBg,
+          borderRadius: "16px",
+          padding: "28px 20px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyInhalt: "center",
+          border: "1px solid " + alpha("#ffffff", 0.05),
+          marginBottom: "24px",
+          position: "relative"
+        }
+      },
+      activeTab === "ring" && /* @__PURE__ */ import_react25.default.createElement("div", { style: { position: "relative", width: "110px", height: "110px", display: "flex", alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react25.default.createElement("svg", { width: "110", height: "110", viewBox: "0 0 100 100", style: { transform: "rotate(-90deg)" } }, /* @__PURE__ */ import_react25.default.createElement("circle", { cx: "50", cy: "50", r: "42", stroke: alpha("#ffffff", 0.08), strokeWidth: "8", fill: "transparent" }), /* @__PURE__ */ import_react25.default.createElement(
+        "circle",
+        {
+          cx: "50",
+          cy: "50",
+          r: "42",
+          stroke: accent,
+          strokeWidth: "8",
+          strokeDasharray: 264,
+          strokeDashoffset: 264 - 264 * progress / 100,
+          strokeLinecap: "round",
+          fill: "transparent",
+          style: { transition: "stroke-dashoffset 0.3s ease" }
+        }
+      )), /* @__PURE__ */ import_react25.default.createElement("div", { style: { position: "absolute", textAlign: "center" } }, /* @__PURE__ */ import_react25.default.createElement("span", { style: { fontSize: "22px", fontWeight: "800", letterSpacing: "-0.5px" } }, progress, "%"))),
+      activeTab === "bar" && /* @__PURE__ */ import_react25.default.createElement("div", { style: { width: "100%", padding: "10px 0" } }, /* @__PURE__ */ import_react25.default.createElement("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: "10px", fontSize: "14px", fontWeight: "600" } }, /* @__PURE__ */ import_react25.default.createElement("span", { style: { color: "rgba(255,255,255,0.7)" } }, "Overall Progress"), /* @__PURE__ */ import_react25.default.createElement("span", { style: { color: accent, fontWeight: "700" } }, progress, "%")), /* @__PURE__ */ import_react25.default.createElement("div", { style: { width: "100%", height: "10px", background: alpha("#ffffff", 0.08), borderRadius: "10px", overflow: "hidden", position: "relative" } }, /* @__PURE__ */ import_react25.default.createElement(
+        "div",
+        {
+          style: {
+            height: "100%",
+            width: progress + "%",
+            background: "linear-gradient(90deg, " + accent + ", #38bdf8)",
+            borderRadius: "10px",
+            transition: "width 0.3s ease",
+            boxShadow: "0 0 12px " + alpha(accent, 0.8)
+          }
+        }
+      ))),
+      activeTab === "dots" && /* @__PURE__ */ import_react25.default.createElement("div", { style: { padding: "20px 0", textAlign: "center" } }, /* @__PURE__ */ import_react25.default.createElement("div", { style: { display: "flex", gap: "10px", justifyContent: "center", marginBottom: "16px" } }, [0, 1, 2, 3].map((i) => /* @__PURE__ */ import_react25.default.createElement(
+        "div",
+        {
+          key: i,
+          style: {
+            width: "14px",
+            height: "14px",
+            borderRadius: "50%",
+            background: accent,
+            animation: "bounceDot 1.4s infinite ease-in-out both",
+            animationDelay: i * 0.16 + "s"
+          }
+        }
+      ))), /* @__PURE__ */ import_react25.default.createElement("div", { style: { fontSize: "14px", fontWeight: "600", color: "rgba(255,255,255,0.8)" } }, "Synchronizing Node Data (", progress, "%)")),
+      activeTab === "skeleton" && /* @__PURE__ */ import_react25.default.createElement("div", { style: { width: "100%", display: "flex", flexDirection: "column", gap: "12px" } }, [70, 100, 45].map((w, idx) => /* @__PURE__ */ import_react25.default.createElement(
+        "div",
+        {
+          key: idx,
+          style: {
+            height: "16px",
+            width: w + "%",
+            borderRadius: "6px",
+            background: "linear-gradient(90deg, " + alpha("#ffffff", 0.06) + " 25%, " + alpha("#ffffff", 0.15) + " 37%, " + alpha("#ffffff", 0.06) + " 63%)",
+            backgroundSize: "400% 100%",
+            animation: "shimmer 1.8s ease-in-out infinite"
+          }
+        }
+      )))
+    ),
+    /* @__PURE__ */ import_react25.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "12px", marginBottom: "28px" } }, tasks.map((task, idx) => /* @__PURE__ */ import_react25.default.createElement(
+      "div",
+      {
+        key: idx,
+        style: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          fontSize: "13px",
+          color: task.completed ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.35)",
+          transition: "color 0.3s ease"
+        }
+      },
+      /* @__PURE__ */ import_react25.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "10px" } }, /* @__PURE__ */ import_react25.default.createElement(
+        "div",
+        {
+          style: {
+            width: "18px",
+            height: "18px",
+            borderRadius: "50%",
+            border: "1.5px solid " + (task.completed ? "#10b981" : alpha("#ffffff", 0.2)),
+            background: task.completed ? alpha("#10b981", 0.15) : "transparent",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+            transition: "all 0.3s ease"
+          }
+        },
+        task.completed ? /* @__PURE__ */ import_react25.default.createElement("svg", { width: "10", height: "10", viewBox: "0 0 12 12", fill: "none", stroke: "#10b981", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round" }, /* @__PURE__ */ import_react25.default.createElement("polyline", { points: "1.5,6 4.5,9 10.5,3" })) : /* @__PURE__ */ import_react25.default.createElement(
+          "div",
+          {
+            style: {
+              width: "5px",
+              height: "5px",
+              borderRadius: "50%",
+              background: alpha("#ffffff", 0.2)
+            }
+          }
+        )
+      ), /* @__PURE__ */ import_react25.default.createElement("span", null, task.name)),
+      /* @__PURE__ */ import_react25.default.createElement("span", { style: { fontSize: "11px", fontFamily: "monospace", opacity: 0.6 } }, task.completed ? "DONE" : "WAITING")
+    ))),
+    /* @__PURE__ */ import_react25.default.createElement("div", { style: { display: "flex", gap: "12px" } }, /* @__PURE__ */ import_react25.default.createElement(
+      "button",
+      {
+        onClick: () => setIsPaused(!isPaused),
+        style: {
+          flex: 1,
+          padding: "11px",
+          borderRadius: "12px",
+          border: "1px solid " + alpha("#ffffff", 0.12),
+          background: alpha("#ffffff", 0.04),
+          color: "#ffffff",
+          fontSize: "13px",
+          fontWeight: "600",
+          cursor: "pointer",
+          transition: "background 0.2s"
+        }
+      },
+      isPaused ? "Resume" : "Pause Sync"
+    ), /* @__PURE__ */ import_react25.default.createElement(
+      "button",
+      {
+        onClick: onCancel,
+        style: {
+          flex: 1,
+          padding: "11px",
+          borderRadius: "12px",
+          border: "none",
+          background: "linear-gradient(135deg, " + accent + ", " + alpha(accent, 0.7) + ")",
+          color: "#ffffff",
+          fontSize: "13px",
+          fontWeight: "700",
+          cursor: "pointer",
+          boxShadow: "0 4px 15px " + alpha(accent, 0.35)
+        }
+      },
+      progress === 100 ? "Complete" : "Cancel"
+    ))
+  );
+};
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   AnimatedButton,
@@ -4004,7 +4162,6 @@ var AnimatedButton = ({
   ImageCard,
   ImageSlider,
   InvoiceCard,
-  Loader,
   Navbar,
   NotificationToast,
   OTPInput,
@@ -4014,5 +4171,6 @@ var AnimatedButton = ({
   RatingStars,
   ReviewCard,
   Sidebar,
-  StatCard
+  StatCard,
+  loding
 });
