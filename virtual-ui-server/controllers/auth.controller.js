@@ -1,3 +1,8 @@
+import { genToken } from "../configs/token.js"
+import User from "../models/user.model.js"
+
+
+
 export const googleSignup = async (req, res) => {
     try {
         const { name, email } = req.body;
