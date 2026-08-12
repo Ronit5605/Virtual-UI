@@ -322,16 +322,18 @@ const npmrcPath = path.join(libPath, ".npmrc");
 
 fs.writeFileSync(
   npmrcPath,
-  `//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}\n`
+  `registry=https://registry.npmjs.org/\n//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}\n`
 );
 
 try {
-  const publishOutput = execSync("npm publish --access public", {
+  const publishOutput = execSync(
+  "npm publish --access public --registry=https://registry.npmjs.org/",
+  {
     cwd: libPath,
     encoding: "utf8",
     stdio: "pipe"
-  });
-
+  }
+);
   console.log("npm publish output:");
   console.log(publishOutput);
 } finally {
