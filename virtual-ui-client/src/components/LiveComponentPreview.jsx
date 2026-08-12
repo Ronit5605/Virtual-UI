@@ -9,8 +9,6 @@ export default function LiveComponentPreview({ code }) {
   const refreshPreview = () => {
     setRefreshKey((prev) => prev + 1);
   };
-
-  // ─── Sanitize Code ─────────────────────────────────────
   let sanitized = code
     .replace(/import\s+.*?from\s+["'].*?["'];?/g, "")
     .replace(/export\s+/g, "");
@@ -35,7 +33,7 @@ export default function LiveComponentPreview({ code }) {
         maxWidth: "100%",
       }}
     >
-      {/* 🔄 Refresh Button */}
+      {/*Refresh Button */}
       <motion.button
         onClick={refreshPreview}
         whileTap={{ scale: 0.9, rotate: 90 }}
@@ -62,7 +60,7 @@ export default function LiveComponentPreview({ code }) {
         scope={{ React, useState, useEffect, useRef, useCallback }}
         noInline
       >
-        {/* 🔥 MAIN CONTAINER */}
+        {/*  MAIN CONTAINER */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -71,7 +69,7 @@ export default function LiveComponentPreview({ code }) {
             width: "100%",
             minHeight: "300px",
 
-            // 🔥 Responsive max width
+            //Responsive max width
             maxWidth: "100%",
 
             border: "1px solid #1e293b",
@@ -81,7 +79,7 @@ export default function LiveComponentPreview({ code }) {
             position: "relative",
             overflow: "hidden",
 
-            // 🔥 Responsive padding
+            // Responsive padding
             padding: "clamp(10px, 2vw, 20px)",
           }}
         >
@@ -91,7 +89,7 @@ export default function LiveComponentPreview({ code }) {
               height: "100%",
               position: "relative",
 
-              // 🔥 Prevent overflow breaking layout
+              // Prevent overflow breaking layout
               overflow: "auto",
             }}
           >
@@ -99,7 +97,7 @@ export default function LiveComponentPreview({ code }) {
           </div>
         </motion.div>
 
-        {/* ❌ Errors */}
+        {/*Errors */}
         <LiveError
           style={{
             marginTop: "10px",
@@ -112,7 +110,7 @@ export default function LiveComponentPreview({ code }) {
           }}
         />
 
-        {/* ⚠️ No Component */}
+        {/*No Component */}
         {!componentName && (
           <motion.div
             initial={{ opacity: 0 }}
