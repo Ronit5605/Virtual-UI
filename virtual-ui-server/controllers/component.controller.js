@@ -278,7 +278,8 @@ if (namedExport) {
     // -----------------------------
     // BUILD LIBRARY
     // -----------------------------
-    console.log("Installing library dependencies...");
+console.log("Installing library dependencies...");
+
 execSync("npm install", {
   cwd: libPath,
   stdio: "inherit"
@@ -287,10 +288,14 @@ execSync("npm install", {
 console.log("Building library...");
 publishStep = "building the library";
 
-execSync("npm run build", {
+const buildOutput = execSync("npm run build", {
   cwd: libPath,
-  stdio: "inherit"
+  encoding: "utf8",
+  stdio: "pipe"
 });
+
+console.log("Library build output:");
+console.log(buildOutput);
 
     // -----------------------------
     // UPDATE VERSION
