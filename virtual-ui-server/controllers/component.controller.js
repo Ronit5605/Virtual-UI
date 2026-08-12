@@ -312,13 +312,33 @@ console.log(buildOutput);
     // PUBLISH TO NPM
     // -----------------------------
     console.log("Publishing to npm...");
-    publishStep = "publishing the package to npm";
+publishStep = "publishing the package to npm";
 
-    execSync("npm publish --access public", {
-      cwd: libPath,
-      encoding: "utf8",
-      stdio: "pipe"
-    });
+if (!process.env.NPM_TOKEN) {
+  throw new Error("NPM_TOKEN is not configured on the server");
+}
+
+const npmrcPath = path.join(libPath, ".npmrc");
+
+fs.writeFileSync(
+  npmrcPath,
+  `//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}\n`
+);
+
+try {
+  const publishOutput = execSync("npm publish --access public", {
+    cwd: libPath,
+    encoding: "utf8",
+    stdio: "pipe"
+  });
+
+  console.log("npm publish output:");
+  console.log(publishOutput);
+} finally {
+  if (fs.existsSync(npmrcPath)) {
+    fs.unlinkSync(npmrcPath);
+  }
+}
 
     // update component visibility
     component.visibility = "public";
