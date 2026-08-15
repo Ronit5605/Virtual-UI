@@ -30,7 +30,7 @@ app.use(
   })
 );;
 
-/* ✅ Body parser */
+/* Body parser */
 app.use(express.json());
 app.use(cookieParser()); 
 app.get("/", (req, res) => {
@@ -45,6 +45,6 @@ app.use("/api/payment" , paymentRouter)
 const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
   connectDB()
 });

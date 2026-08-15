@@ -54,13 +54,10 @@ export const askAI = async (messages) => {
     return text;
 
   } catch (error) {
-    console.error("====================================");
-    console.error("❌ GEMINI API ERROR");
-    console.error("====================================");
+    console.error("GEMINI API ERROR");
     console.error("Message:", error.message);
     console.error("Status:", error.status);
     console.error("Code:", error.code);
-    console.error("====================================");
 
     throw new Error(
       error.message || "Gemini API Error"

@@ -141,7 +141,7 @@ export const saveComponent = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // 🔴 Admin — public components mein duplicate check
+    //Admin — public components mein duplicate check
     if (user.role === "admin") {
       const existing = await Component.findOne({ name, visibility: "public" });
 
@@ -152,7 +152,7 @@ export const saveComponent = async (req, res) => {
       }
     }
 
-    // 🟢 Normal user — apne khud ke components mein duplicate check
+    //Normal user — apne khud ke components mein duplicate check
     if (user.role !== "admin") {
       const existing = await Component.findOne({
         name,
