@@ -184,37 +184,109 @@ export const saveComponent = async (req, res) => {
 export const publishComponent = async (req, res) => {
   let publishStep = "preparing the component";
 
-  try {
+  // Required imports:
+  // fs, path, execSync are already imported at the top of your file.
 
+  let tempLibPath = null;
+
+  try {
+    // -----------------------------------------
+    // 1. CHECK ADMIN
+    // -----------------------------------------
     const user = await User.findById(req.userId);
 
     if (!user || user.role !== "admin") {
       return res.status(403).json({
-        message: "Only admin can publish"
+        message: "Only admin can publish",
       });
     }
 
+    // -----------------------------------------
+    // 2. GET COMPONENT
+    // -----------------------------------------
     const { componentId } = req.body;
 
     const component = await Component.findById(componentId);
 
     if (!component) {
       return res.status(404).json({
-        message: "Component not found"
+        message: "Component not found",
       });
     }
 
-    if (!component.owner || component.owner.toString() !== req.userId.toString()) {
+    if (
+      !component.owner ||
+      component.owner.toString() !== req.userId.toString()
+    ) {
       return res.status(403).json({
-        message: "You can only publish your own components"
+        message: "You can only publish your own components",
       });
     }
 
-    const libPath = path.resolve(process.cwd(), "../virtual-ui-lib");
+    // -----------------------------------------
+    // 3. CHECK NPM TOKEN
+    // -----------------------------------------
+    if (!process.env.NPM_TOKEN) {
+      throw new Error("NPM_TOKEN is not configured on the server");
+    }
 
-    const componentDir = path.join(
+    // -----------------------------------------
+    // 4. ORIGINAL LIBRARY PATH
+    // -----------------------------------------
+    const libPath = path.resolve(
+      process.cwd(),
+      "../virtual-ui-lib"
+    );
+
+    // -----------------------------------------
+    // 5. CREATE UNIQUE TEMP DIRECTORY
+    // -----------------------------------------
+    const tempRoot = path.join(
+      process.cwd(),
+      "tmp"
+    );
+
+    if (!fs.existsSync(tempRoot)) {
+      fs.mkdirSync(tempRoot, { recursive: true });
+    }
+
+    tempLibPath = fs.mkdtempSync(
+      path.join(tempRoot, "virtual-ui-lib-")
+    );
+
+    console.log("Temporary library:", tempLibPath);
+
+    // -----------------------------------------
+    // 6. COPY LIBRARY SOURCE
+    // -----------------------------------------
+    fs.cpSync(
       libPath,
-      "src/components",
+      tempLibPath,
+      {
+        recursive: true,
+        filter: (src) => {
+          const normalized = src.replace(/\\/g, "/");
+
+          // Don't copy node_modules or dist
+          if (
+            normalized.includes("/node_modules") ||
+            normalized.includes("/dist")
+          ) {
+            return false;
+          }
+
+          return true;
+        },
+      }
+    );
+
+    // -----------------------------------------
+    // 7. COMPONENT PATHS
+    // -----------------------------------------
+    const componentDir = path.join(
+      tempLibPath,
+      "src",
+      "components",
       component.name
     );
 
@@ -223,151 +295,335 @@ export const publishComponent = async (req, res) => {
       `${component.name}.jsx`
     );
 
-    const indexFile = path.join(libPath, "src/index.js");
+    const indexFile = path.join(
+      tempLibPath,
+      "src",
+      "index.js"
+    );
 
-    // create component folder
-    if (!fs.existsSync(componentDir)) {
-      fs.mkdirSync(componentDir, { recursive: true });
-    }
-
-    // write component code
-    fs.writeFileSync(componentFile, component.code);
-
-    // read index file
-    let indexContent = fs.readFileSync(indexFile, "utf8");
-
-    const code = fs.readFileSync(componentFile, "utf8");
-
-let exportLine;
-
-const namedExport = code.match(
-  /export\s+(?:const|function|class)\s+([A-Za-z0-9_$]+)/
-);
-
-const defaultExport = code.match(
-  /export\s+default\s+([A-Za-z0-9_$]+)/
-);
-
-if (namedExport) {
-  exportLine =
-    `export { ${namedExport[1]} as ${component.name} } from "./components/${component.name}/${component.name}.jsx";`;
-} else if (defaultExport) {
-  exportLine =
-    `export { default as ${component.name} } from "./components/${component.name}/${component.name}.jsx";`;
-} else {
-  throw new Error(
-    `Could not detect export from ${component.name}.jsx`
-  );
-}
-    // prevent duplicate export
-    if (!indexContent.includes(exportLine)) {
-      fs.appendFileSync(indexFile, `\n${exportLine}\n`);
-    }
-
-    // -----------------------------
-    // CLEAN OLD BUILD
-    // -----------------------------
-    console.log("Cleaning old build...");
-
-    const distPath = path.join(libPath, "dist");
-
-    if (fs.existsSync(distPath)) {
-      fs.rmSync(distPath, { recursive: true, force: true });
-    }
-
-    // -----------------------------
-    // BUILD LIBRARY
-    // -----------------------------
-console.log("Installing library dependencies...");
-
-execSync("npm install", {
-  cwd: libPath,
-  stdio: "inherit"
-});
-
-console.log("Building library...");
-publishStep = "building the library";
-
-const buildOutput = execSync("npm run build", {
-  cwd: libPath,
-  encoding: "utf8",
-  stdio: "pipe"
-});
-
-console.log("Library build output:");
-console.log(buildOutput);
-
-    // -----------------------------
-    // UPDATE VERSION
-    // -----------------------------
-    console.log("Updating version...");
-    publishStep = "updating the package version";
-
-    execSync("npm version patch --no-git-tag-version", {
-      cwd: libPath,
-      stdio: "inherit"
+    // -----------------------------------------
+    // 8. CREATE COMPONENT DIRECTORY
+    // -----------------------------------------
+    fs.mkdirSync(componentDir, {
+      recursive: true,
     });
 
-    // -----------------------------
-    // PUBLISH TO NPM
-    // -----------------------------
-    console.log("Publishing to npm...");
-publishStep = "publishing the package to npm";
+    // -----------------------------------------
+    // 9. WRITE COMPONENT
+    // -----------------------------------------
+    fs.writeFileSync(
+      componentFile,
+      component.code,
+      "utf8"
+    );
 
-if (!process.env.NPM_TOKEN) {
-  throw new Error("NPM_TOKEN is not configured on the server");
-}
+    // -----------------------------------------
+    // 10. UPDATE INDEX.JS
+    // -----------------------------------------
+    let indexContent = fs.readFileSync(
+      indexFile,
+      "utf8"
+    );
 
-const npmrcPath = path.join(libPath, ".npmrc");
+    const code = fs.readFileSync(
+      componentFile,
+      "utf8"
+    );
 
-fs.writeFileSync(
-  npmrcPath,
-  `registry=https://registry.npmjs.org/\n//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}\n`
-);
+    let exportLine;
 
-try {
-  const publishOutput = execSync(
-  "npm publish --access public --registry=https://registry.npmjs.org/",
-  {
-    cwd: libPath,
-    encoding: "utf8",
-    stdio: "pipe"
-  }
-);
-  console.log("npm publish output:");
-  console.log(publishOutput);
-} finally {
-  if (fs.existsSync(npmrcPath)) {
-    fs.unlinkSync(npmrcPath);
-  }
-}
+    const namedExport = code.match(
+      /export\s+(?:const|function|class)\s+([A-Za-z0-9_$]+)/
+    );
 
-    // update component visibility
+    const defaultExport = code.match(
+      /export\s+default\s+([A-Za-z0-9_$]+)/
+    );
+
+    if (namedExport) {
+      exportLine =
+        `export { ${namedExport[1]} as ${component.name} } from "./components/${component.name}/${component.name}.jsx";`;
+    } else if (defaultExport) {
+      exportLine =
+        `export { default as ${component.name} } from "./components/${component.name}/${component.name}.jsx";`;
+    } else {
+      throw new Error(
+        `Could not detect export from ${component.name}.jsx`
+      );
+    }
+
+    // Prevent duplicate export
+    if (!indexContent.includes(exportLine)) {
+      indexContent += `\n${exportLine}\n`;
+
+      fs.writeFileSync(
+        indexFile,
+        indexContent,
+        "utf8"
+      );
+    }
+
+    // -----------------------------------------
+    // 11. GET LATEST NPM VERSION
+    // -----------------------------------------
+    console.log("Checking latest npm version...");
+
+    publishStep = "checking npm package version";
+
+    let latestVersion;
+
+    try {
+      latestVersion = execSync(
+        "npm view @ronit5605/virtual-ui-library version --registry=https://registry.npmjs.org/",
+        {
+          encoding: "utf8",
+          stdio: ["ignore", "pipe", "pipe"],
+        }
+      ).trim();
+    } catch (error) {
+      // If package doesn't exist yet
+      latestVersion = "1.0.0";
+
+      console.log(
+        "Package not found on npm. Starting from:",
+        latestVersion
+      );
+    }
+
+    console.log(
+      "Latest published version:",
+      latestVersion
+    );
+
+    // -----------------------------------------
+    // 12. CALCULATE NEXT VERSION
+    // -----------------------------------------
+    const versionParts = latestVersion
+      .replace(/^v/, "")
+      .split(".")
+      .map(Number);
+
+    if (
+      versionParts.length !== 3 ||
+      versionParts.some(Number.isNaN)
+    ) {
+      throw new Error(
+        `Invalid npm version returned: ${latestVersion}`
+      );
+    }
+
+    const [major, minor, patch] = versionParts;
+
+    const nextVersion =
+      `${major}.${minor}.${patch + 1}`;
+
+    console.log(
+      "Next version:",
+      nextVersion
+    );
+
+    // -----------------------------------------
+    // 13. UPDATE TEMP PACKAGE.JSON
+    // -----------------------------------------
+    const packageJsonPath = path.join(
+      tempLibPath,
+      "package.json"
+    );
+
+    const packageJson = JSON.parse(
+      fs.readFileSync(
+        packageJsonPath,
+        "utf8"
+      )
+    );
+
+    packageJson.version = nextVersion;
+
+    fs.writeFileSync(
+      packageJsonPath,
+      JSON.stringify(packageJson, null, 2) + "\n",
+      "utf8"
+    );
+
+    // -----------------------------------------
+    // 14. INSTALL DEPENDENCIES
+    // -----------------------------------------
+    console.log(
+      "Installing library dependencies..."
+    );
+
+    publishStep =
+      "installing library dependencies";
+
+    execSync(
+      "npm install --no-audit --no-fund",
+      {
+        cwd: tempLibPath,
+        stdio: "inherit",
+      }
+    );
+
+    // -----------------------------------------
+    // 15. BUILD LIBRARY
+    // -----------------------------------------
+    console.log(
+      "Building library..."
+    );
+
+    publishStep =
+      "building the library";
+
+    execSync(
+      "npm run build",
+      {
+        cwd: tempLibPath,
+        stdio: "inherit",
+      }
+    );
+
+    console.log(
+      "Library build successful."
+    );
+
+    // -----------------------------------------
+    // 16. CREATE TEMP .NPMRC
+    // -----------------------------------------
+    const npmrcPath = path.join(
+      tempLibPath,
+      ".npmrc"
+    );
+
+    fs.writeFileSync(
+      npmrcPath,
+      [
+        "registry=https://registry.npmjs.org/",
+        `//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}`,
+      ].join("\n") + "\n",
+      "utf8"
+    );
+
+    // -----------------------------------------
+    // 17. PUBLISH TO NPM
+    // -----------------------------------------
+    console.log(
+      `Publishing version ${nextVersion} to npm...`
+    );
+
+    publishStep =
+      "publishing the package to npm";
+
+    try {
+      const publishOutput = execSync(
+        "npm publish --access public --registry=https://registry.npmjs.org/",
+        {
+          cwd: tempLibPath,
+          encoding: "utf8",
+          stdio: "pipe",
+        }
+      );
+
+      console.log(
+        "npm publish output:"
+      );
+
+      console.log(
+        publishOutput
+      );
+
+    } finally {
+      // Remove npm credentials immediately
+      if (fs.existsSync(npmrcPath)) {
+        fs.unlinkSync(npmrcPath);
+      }
+    }
+
+    // -----------------------------------------
+    // 18. UPDATE DATABASE
+    // -----------------------------------------
     component.visibility = "public";
-    component.npmPackage = "@ronit5605/virtual-ui-library";;
+
+    component.npmPackage =
+      "@ronit5605/virtual-ui-library";
 
     await component.save();
 
+    // -----------------------------------------
+    // 19. SUCCESS
+    // -----------------------------------------
     res.json({
-      message: "Component published successfully"
+      message:
+        "Component published successfully",
+      version: nextVersion,
+      package:
+        "@ronit5605/virtual-ui-library",
     });
 
   } catch (error) {
-  const commandOutput = [error.stdout, error.stderr]
-    .filter(Boolean)
-    .map((output) => output.toString().trim())
-    .join("\n");
-  const npmErrorCode = commandOutput.match(/npm (?:ERR!|error) code ([A-Z0-9_]+)/i)?.[1];
-  const detail = npmErrorCode ? ` (${npmErrorCode})` : "";
 
-  console.error(`Publish Error while ${publishStep}:`, error.message);
-  if (commandOutput) console.error(commandOutput);
+    const commandOutput = [
+      error.stdout,
+      error.stderr,
+    ]
+      .filter(Boolean)
+      .map((output) =>
+        output.toString().trim()
+      )
+      .join("\n");
 
-  res.status(500).json({
-    message: `${publishStep} failed${detail}. Check the server log for details.`,
-    error: error.message,
-  });
-}
+    const npmErrorCode =
+      commandOutput.match(
+        /npm (?:ERR!|error) code ([A-Z0-9_]+)/i
+      )?.[1];
+
+    const detail = npmErrorCode
+      ? ` (${npmErrorCode})`
+      : "";
+
+    console.error(
+      `Publish Error while ${publishStep}:`,
+      error.message
+    );
+
+    if (commandOutput) {
+      console.error(commandOutput);
+    }
+
+    res.status(500).json({
+      message:
+        `${publishStep} failed${detail}. Check the server log for details.`,
+      error: error.message,
+    });
+
+  } finally {
+
+    // -----------------------------------------
+    // 20. DELETE TEMP DIRECTORY
+    // -----------------------------------------
+    if (
+      tempLibPath &&
+      fs.existsSync(tempLibPath)
+    ) {
+      try {
+        fs.rmSync(
+          tempLibPath,
+          {
+            recursive: true,
+            force: true,
+          }
+        );
+
+        console.log(
+          "Temporary library deleted."
+        );
+
+      } catch (cleanupError) {
+        console.error(
+          "Failed to clean temporary directory:",
+          cleanupError.message
+        );
+      }
+    }
+  }
 };
 
 
