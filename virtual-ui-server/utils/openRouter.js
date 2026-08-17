@@ -27,7 +27,7 @@ export const askAI = async (messages) => {
       .map((message) => message.content)
       .join("\n\n");
 
-    console.log("🤖 Sending request to Gemini 3.6 Flash...");
+    console.log("Sending request to Gemini 3.6 Flash...");
 
     const response = await ai.models.generateContent({
       model: "gemini-3.6-flash",
@@ -49,7 +49,7 @@ export const askAI = async (messages) => {
       throw new Error("Gemini returned an empty response.");
     }
 
-    console.log("✅ Gemini response received");
+    console.log("Gemini response received");
 
     return text;
 
