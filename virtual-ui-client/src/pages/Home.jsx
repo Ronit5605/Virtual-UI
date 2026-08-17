@@ -250,7 +250,7 @@ export default function Home() {
         <motion.div {...fadeUp(0.27)} className="flex justify-center mb-7 sm:mb-8 px-2">
           <div className="flex items-center gap-2 sm:gap-3 bg-white/[0.04] border border-white/10 rounded-xl px-4 sm:px-5 py-3 text-xs sm:text-sm font-mono w-full max-w-xs sm:max-w-fit">
             <span className="text-[#3be8ff]/60">$</span>
-            <span className="text-white/80 truncate">npm install virtual-ui-lib</span>
+            <span className="text-white/80 truncate">npm install  @ronit5605/virtual-ui-library</span>
             <button onClick={handleCopy}
               className="ml-1 text-white/30 hover:text-[#3be8ff] transition-colors cursor-pointer bg-transparent border-none flex-shrink-0"
             >
@@ -285,7 +285,7 @@ export default function Home() {
             <span className="ml-3 text-[11px] text-white/20 font-mono">App.jsx</span>
           </div>
           <div className="font-mono text-[11px] sm:text-[12.5px] leading-6 space-y-0.5 min-w-[280px]">
-            <p><span className="text-[#3be8ff]/60">import</span> <span className="text-white/80">{"{ Button, Card }"}</span> <span className="text-[#3be8ff]/60">from</span> <span className="text-[#aaff80]/70">'virtual-ui-lib'</span><span className="text-white/30">;</span></p>
+            <p><span className="text-[#3be8ff]/60">import</span> <span className="text-white/80">{"{ Button, Card }"}</span> <span className="text-[#3be8ff]/60">from</span> <span className="text-[#aaff80]/70">' @ronit5605/virtual-ui-library'</span><span className="text-white/30">;</span></p>
             <p className="text-white/20">{" "}</p>
             <p><span className="text-[#3be8ff]/60">export default function</span> <span className="text-[#ffd580]/80">App</span><span className="text-white/50">() {"{"}</span></p>
             <p><span className="text-white/30">{"  return ("}</span></p>
